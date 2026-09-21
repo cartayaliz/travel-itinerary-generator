@@ -1,0 +1,12 @@
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/bin/Debug/net10.0/ItineraryManager.ActivitiesGraph.deps.json
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/bin/Debug/net10.0/ItineraryManager.ActivitiesGraph.dll
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/bin/Debug/net10.0/ItineraryManager.ActivitiesGraph.pdb
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.GeneratedMSBuildEditorConfig.editorconfig
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.AssemblyInfoInputs.cache
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.AssemblyInfo.cs
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.csproj.CoreCompileInputs.cache
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.sourcelink.json
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.dll
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/refint/ItineraryManager.ActivitiesGraph.dll
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ItineraryManager.ActivitiesGraph.pdb
+/home/david/Proyectos/travel-itinerary-generator/src/ItineraryManager.ActivitiesGraph/obj/Debug/net10.0/ref/ItineraryManager.ActivitiesGraph.dll
