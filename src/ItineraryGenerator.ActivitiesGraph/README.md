@@ -5,4 +5,4 @@
 ### Funcionalidad:
 - Librería de clases para relacionar actividades y atracciones dentro red de rutas por transportes con costos y tiempos asociados.
 - La red debe poderse gestionar dinámicamente (añadir, comparar, eliminar rutas no fijadas).
-- Al ser en sí un grafo ponderado puede 
+- El peso de cada arista será la suma de tiempo y costo del transporte desde un nodo a otro.  
