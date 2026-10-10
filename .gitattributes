@@ -1,0 +1,32 @@
+# Normalizar finales de línea a LF en el repositorio
+* text=auto eol=lf
+
+# C# / .NET
+*.cs     text eol=lf
+*.csproj text eol=lf
+*.sln    text eol=lf
+
+# Frontend
+*.js     text eol=lf
+*.jsx    text eol=lf
+*.ts     text eol=lf
+*.tsx    text eol=lf
+*.json   text eol=lf
+*.css    text eol=lf
+*.html   text eol=lf
+
+# Configuración y documentación
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.md     text eol=lf
+*.sh     text eol=lf
+
+# Archivos binarios (no tocar)
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.pdf    binary
+*.woff   binary
+*.woff2  binary
