@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../Turist.Api/Turist.Api.csproj" />
+  </ItemGroup>
+
 </Project>
