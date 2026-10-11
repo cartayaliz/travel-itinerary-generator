@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Turist.Api/Turist.Api.csproj" />
+  <Project Path="Turist.Domain/Turist.Domain.csproj" />
+</Solution>
