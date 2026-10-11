@@ -2,7 +2,7 @@ namespace Turist.Api.Models;
 
 public class GuiaTuristico
 {
-    public int GuiaID { get; set; }
+    public int GuiaId { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public string Especialidad { get; set; } = string.Empty;
     public bool EsJefe { get; set; }

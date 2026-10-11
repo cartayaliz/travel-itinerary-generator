@@ -2,9 +2,9 @@ namespace Turist.Api.Models;
 
 public class Validacion
 {
-    public int ValidacionID { get; set; }
-    public int ItinerarioID { get; set; }
-    public int GuiaID { get; set; }
+    public int ValidacionId { get; set; }
+    public int ItinerarioId { get; set; }
+    public int GuiaId { get; set; }
     public string Estado { get; set; } = string.Empty;
     public DateTime FechaValidacion { get; set; }
 

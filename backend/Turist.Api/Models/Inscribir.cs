@@ -2,8 +2,8 @@ namespace Turist.Api.Models;
 
 public class Inscribir
 {
-    public int TuristaID { get; set; }
-    public int PaqueteID { get; set; }
+    public int TuristaId { get; set; }
+    public int PaqueteId { get; set; }
 
     // Navegación
     public Turista Turista { get; set; } = null!;

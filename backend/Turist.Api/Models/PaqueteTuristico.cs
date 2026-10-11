@@ -2,7 +2,7 @@ namespace Turist.Api.Models;
 
 public class PaqueteTuristico
 {
-    public int PaqueteID { get; set; }
+    public int PaqueteId { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public string Destino { get; set; } = string.Empty;
 

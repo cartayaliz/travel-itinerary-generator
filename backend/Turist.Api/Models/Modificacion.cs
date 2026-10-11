@@ -2,10 +2,10 @@ namespace Turist.Api.Models;
 
 public class Modificacion
 {
-    public int ModificacionID { get; set; }
-    public int ItinerarioID { get; set; }
-    public int TuristaID { get; set; }
-    public int? GuiaID { get; set; }   // permite null
+    public int ModificacionId { get; set; }
+    public int ItinerarioId { get; set; }
+    public int TuristaId { get; set; }
+    public int? GuiaId { get; set; }   // permite null
     public DateTime FechaSolicitud { get; set; }
     public DateTime? FechaRespuesta { get; set; }
 

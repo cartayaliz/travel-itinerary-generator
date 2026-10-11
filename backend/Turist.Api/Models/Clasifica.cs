@@ -2,8 +2,8 @@ namespace Turist.Api.Models;
 
 public class Clasifica
 {
-    public int PaqueteID { get; set; }
-    public int CategoriaID { get; set; }
+    public int PaqueteId { get; set; }
+    public int CategoriaId { get; set; }
 
     // Navegación
     public PaqueteTuristico Paquete { get; set; } = null!;

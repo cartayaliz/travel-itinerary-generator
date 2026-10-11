@@ -2,14 +2,14 @@ namespace Turist.Api.Models;
 
 public class Visita
 {
-    public int VisitaID { get; set; }
-    public int ItinerarioID { get; set; }
-    public int TuristaID { get; set; }
-    public int ActividadID { get; set; }
+    public int VisitaId { get; set; }
+    public int ItinerarioId { get; set; }
+    public int TuristaId { get; set; }
+    public int ActividadId { get; set; }
     public DateTime Fecha { get; set; }
-    public int? ValidacionID { get; set; }
-    public int? ModificacionID { get; set; }
-    public int? ValoracionID { get; set; }
+    public int? ValidacionId { get; set; }
+    public int? ModificacionId { get; set; }
+    public int? ValoracionId { get; set; }
 
     // Navegación
     public Itinerario Itinerario { get; set; } = null!;

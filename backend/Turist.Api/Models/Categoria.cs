@@ -2,7 +2,7 @@ namespace Turist.Api.Models;
 
 public class Categoria
 {
-    public int CategoriaID { get; set; }
+    public int CategoriaId { get; set; }
     public string Nombre { get; set; } = string.Empty;
 
     // Navegación

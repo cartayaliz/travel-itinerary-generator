@@ -1,6 +1,5 @@
 ﻿using Turist.Domain.Interfaces;
 using static System.Double;
-using System.Linq;
 
 namespace Turist.Domain;
 

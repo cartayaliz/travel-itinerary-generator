@@ -28,23 +28,23 @@ public class TuristDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     // Claves primarias de las entidades
-    modelBuilder.Entity<GuiaTuristico>().HasKey(g => g.GuiaID);
-    modelBuilder.Entity<PaqueteTuristico>().HasKey(p => p.PaqueteID);
-    modelBuilder.Entity<Categoria>().HasKey(c => c.CategoriaID);
-    modelBuilder.Entity<Grupo>().HasKey(g => g.GrupoID);
-    modelBuilder.Entity<Turista>().HasKey(t => t.TuristaID);
-    modelBuilder.Entity<Itinerario>().HasKey(i => i.ItinerarioID);
-    modelBuilder.Entity<Actividad>().HasKey(a => a.ActividadID);
-    modelBuilder.Entity<Validacion>().HasKey(v => v.ValidacionID);
-    modelBuilder.Entity<Modificacion>().HasKey(m => m.ModificacionID);
-    modelBuilder.Entity<Valoracion>().HasKey(v => v.ValoracionID);
-    modelBuilder.Entity<Visita>().HasKey(v => v.VisitaID);
+    modelBuilder.Entity<GuiaTuristico>().HasKey(g => g.GuiaId);
+    modelBuilder.Entity<PaqueteTuristico>().HasKey(p => p.PaqueteId);
+    modelBuilder.Entity<Categoria>().HasKey(c => c.CategoriaId);
+    modelBuilder.Entity<Grupo>().HasKey(g => g.GrupoId);
+    modelBuilder.Entity<Turista>().HasKey(t => t.TuristaId);
+    modelBuilder.Entity<Itinerario>().HasKey(i => i.ItinerarioId);
+    modelBuilder.Entity<Actividad>().HasKey(a => a.ActividadId);
+    modelBuilder.Entity<Validacion>().HasKey(v => v.ValidacionId);
+    modelBuilder.Entity<Modificacion>().HasKey(m => m.ModificacionId);
+    modelBuilder.Entity<Valoracion>().HasKey(v => v.ValoracionId);
+    modelBuilder.Entity<Visita>().HasKey(v => v.VisitaId);
 
     // Claves primarias compuestas de las tablas intermedias
-    modelBuilder.Entity<Autorizado>().HasKey(a => new { a.GuiaID, a.PaqueteID });
-    modelBuilder.Entity<Clasifica>().HasKey(c => new { c.PaqueteID, c.CategoriaID });
-    modelBuilder.Entity<Inscribir>().HasKey(i => new { i.TuristaID, i.PaqueteID });
-    modelBuilder.Entity<Asignar>().HasKey(a => new { a.ItinerarioID, a.TuristaID });
-    modelBuilder.Entity<Contiene>().HasKey(c => new { c.ItinerarioID, c.ActividadID });
+    modelBuilder.Entity<Autorizado>().HasKey(a => new { GuiaId = a.GuiaId, a.PaqueteId });
+    modelBuilder.Entity<Clasifica>().HasKey(c => new { c.PaqueteId, c.CategoriaId });
+    modelBuilder.Entity<Inscribir>().HasKey(i => new { i.TuristaId, i.PaqueteId });
+    modelBuilder.Entity<Asignar>().HasKey(a => new { ItinerarioID = a.ItinerarioId, TuristaID = a.TuristaId });
+    modelBuilder.Entity<Contiene>().HasKey(c => new { c.ItinerarioId, c.ActividadId });
 }
 }

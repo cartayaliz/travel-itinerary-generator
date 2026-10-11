@@ -2,8 +2,8 @@ namespace Turist.Api.Models;
 
 public class Turista
 {
-    public int TuristaID { get; set; }
-    public int GrupoID { get; set; }
+    public int TuristaId { get; set; }
+    public int GrupoId { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public int Edad { get; set; }
 

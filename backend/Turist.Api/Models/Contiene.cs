@@ -2,8 +2,8 @@ namespace Turist.Api.Models;
 
 public class Contiene
 {
-    public int ItinerarioID { get; set; }
-    public int ActividadID { get; set; }
+    public int ItinerarioId { get; set; }
+    public int ActividadId { get; set; }
     public int Orden { get; set; }
 
     // Navegación

@@ -2,9 +2,9 @@ namespace Turist.Api.Models;
 
 public class Itinerario
 {
-    public int ItinerarioID { get; set; }
-    public int PaqueteID { get; set; }
-    public int GuiaID { get; set; }
+    public int ItinerarioId { get; set; }
+    public int PaqueteId { get; set; }
+    public int GuiaId { get; set; }
     public DateTime FechaCreacion { get; set; }
 
     // Navegación

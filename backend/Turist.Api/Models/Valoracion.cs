@@ -2,9 +2,9 @@ namespace Turist.Api.Models;
 
 public class Valoracion
 {
-    public int ValoracionID { get; set; }
-    public int TuristaID { get; set; }
-    public int ItinerarioID { get; set; }
+    public int ValoracionId { get; set; }
+    public int TuristaId { get; set; }
+    public int ItinerarioId { get; set; }
     public string Comentario { get; set; } = string.Empty;
     public DateTime Fecha { get; set; }
     public int Puntuacion { get; set; }
