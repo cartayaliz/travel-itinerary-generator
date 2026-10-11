@@ -58,7 +58,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("GuiaID");
 
-                    b.ToTable("Actividades");
+                    b.ToTable("Actividad");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Actividad_Atraccion", b =>
@@ -73,7 +73,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("AtraccionID");
 
-                    b.ToTable("ActividadAtracciones");
+                    b.ToTable("Actividad_Atraccion");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Atraccion", b =>
@@ -114,7 +114,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("GuiaID");
 
-                    b.ToTable("Atracciones");
+                    b.ToTable("Atraccion");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Categoria", b =>
@@ -131,7 +131,7 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("CategoriaID");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categoria");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Grupo", b =>
@@ -144,7 +144,7 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("GrupoID");
 
-                    b.ToTable("Grupos");
+                    b.ToTable("Grupo");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.GuiaTuristico", b =>
@@ -168,7 +168,7 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("GuiaID");
 
-                    b.ToTable("GuiasTuristicos");
+                    b.ToTable("GuiaTuristico");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Guia_Paquete", b =>
@@ -183,7 +183,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("GuiaPaquetes");
+                    b.ToTable("Guia_Paquete");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Itinerario", b =>
@@ -209,7 +209,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("Itinerarios");
+                    b.ToTable("Itinerario");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Itinerario_Actividad", b =>
@@ -227,7 +227,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("ActividadID");
 
-                    b.ToTable("ItinerarioActividades");
+                    b.ToTable("Itinerario_Actividad");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Itinerario_Turista", b =>
@@ -245,7 +245,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("TuristaID");
 
-                    b.ToTable("ItinerarioTuristas");
+                    b.ToTable("Itinerario_Turista");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Modificacion", b =>
@@ -279,7 +279,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("TuristaID");
 
-                    b.ToTable("Modificaciones");
+                    b.ToTable("Modificacion");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.PaqueteTuristico", b =>
@@ -300,7 +300,7 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("PaqueteID");
 
-                    b.ToTable("PaquetesTuristicos");
+                    b.ToTable("PaqueteTuristico");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Paquete_Categoria", b =>
@@ -315,7 +315,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("CategoriaID");
 
-                    b.ToTable("PaqueteCategorias");
+                    b.ToTable("Paquete_Categoria");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Turista", b =>
@@ -340,7 +340,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("GrupoID");
 
-                    b.ToTable("Turistas");
+                    b.ToTable("Turista");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Turista_Paquete", b =>
@@ -355,7 +355,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("TuristaPaquetes");
+                    b.ToTable("Turista_Paquete");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Validacion", b =>
@@ -385,7 +385,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("ItinerarioID");
 
-                    b.ToTable("Validaciones");
+                    b.ToTable("Validacion");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Valoracion", b =>
@@ -418,7 +418,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("TuristaID");
 
-                    b.ToTable("Valoraciones");
+                    b.ToTable("Valoracion");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Visita", b =>
@@ -464,7 +464,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("ValoracionID");
 
-                    b.ToTable("Visitas");
+                    b.ToTable("Visita");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Actividad", b =>
