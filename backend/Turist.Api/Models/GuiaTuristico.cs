@@ -8,9 +8,10 @@ public class GuiaTuristico
     public bool EsJefe { get; set; }
 
     // Navegación
-    public List<Autorizado> Autorizados { get; set; } = new();
+    public List<Guia_Paquete> GuiaPaquetes { get; set; } = new();
     public List<Itinerario> Itinerarios { get; set; } = new();
     public List<Actividad> Actividades { get; set; } = new();
+    public List<Atraccion> Atracciones { get; set; } = new(); 
     public List<Validacion> Validaciones { get; set; } = new();
     public List<Modificacion> Modificaciones { get; set; } = new();
 }

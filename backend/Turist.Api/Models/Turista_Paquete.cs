@@ -1,11 +1,11 @@
 namespace Turist.Api.Models;
 
-public class Autorizado
+public class Turista_Paquete
 {
-    public int GuiaID { get; set; }
+    public int TuristaID { get; set; }
     public int PaqueteID { get; set; }
 
     // Navegación
-    public GuiaTuristico Guia { get; set; } = null!;
+    public Turista Turista { get; set; } = null!;
     public PaqueteTuristico Paquete { get; set; } = null!;
 }

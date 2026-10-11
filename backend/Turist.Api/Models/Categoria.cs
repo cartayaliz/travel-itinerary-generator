@@ -6,6 +6,7 @@ public class Categoria
     public string Nombre { get; set; } = string.Empty;
 
     // Navegación
-    public List<Clasifica> Clasificaciones { get; set; } = new();
+    public List<Paquete_Categoria> PaqueteCategorias { get; set; } = new();
     public List<Actividad> Actividades { get; set; } = new();
+    public List<Atraccion> Atracciones { get; set; } = new();
 }

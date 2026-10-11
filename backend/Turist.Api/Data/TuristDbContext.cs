@@ -15,11 +15,13 @@ public class TuristDbContext : DbContext
     public DbSet<Turista> Turistas { get; set; }
     public DbSet<Itinerario> Itinerarios { get; set; }
     public DbSet<Actividad> Actividades { get; set; }
-    public DbSet<Autorizado> Autorizados { get; set; }
-    public DbSet<Clasifica> Clasificaciones { get; set; }
-    public DbSet<Inscribir> Inscripciones { get; set; }
-    public DbSet<Asignar> Asignaciones { get; set; }
-    public DbSet<Contiene> Contiene { get; set; }
+    public DbSet<Atraccion> Atracciones { get; set; }
+    public DbSet<Guia_Paquete> GuiaPaquetes { get; set; }
+    public DbSet<Paquete_Categoria> PaqueteCategorias { get; set; }
+    public DbSet<Turista_Paquete> TuristaPaquetes { get; set; }
+    public DbSet<Itinerario_Turista> ItinerarioTuristas { get; set; }
+    public DbSet<Itinerario_Actividad> ItinerarioActividades { get; set; }
+    public DbSet<Actividad_Atraccion> ActividadAtracciones { get; set; } 
     public DbSet<Validacion> Validaciones { get; set; }
     public DbSet<Modificacion> Modificaciones { get; set; }
     public DbSet<Valoracion> Valoraciones { get; set; }
@@ -39,12 +41,14 @@ public class TuristDbContext : DbContext
     modelBuilder.Entity<Modificacion>().HasKey(m => m.ModificacionID);
     modelBuilder.Entity<Valoracion>().HasKey(v => v.ValoracionID);
     modelBuilder.Entity<Visita>().HasKey(v => v.VisitaID);
+    modelBuilder.Entity<Atraccion>().HasKey(a => a.AtraccionID);
 
     // Claves primarias compuestas de las tablas intermedias
-    modelBuilder.Entity<Autorizado>().HasKey(a => new { a.GuiaID, a.PaqueteID });
-    modelBuilder.Entity<Clasifica>().HasKey(c => new { c.PaqueteID, c.CategoriaID });
-    modelBuilder.Entity<Inscribir>().HasKey(i => new { i.TuristaID, i.PaqueteID });
-    modelBuilder.Entity<Asignar>().HasKey(a => new { a.ItinerarioID, a.TuristaID });
-    modelBuilder.Entity<Contiene>().HasKey(c => new { c.ItinerarioID, c.ActividadID });
+    modelBuilder.Entity<Guia_Paquete>().HasKey(gp => new { gp.GuiaID, gp.PaqueteID });
+        modelBuilder.Entity<Paquete_Categoria>().HasKey(pc => new { pc.PaqueteID, pc.CategoriaID });
+        modelBuilder.Entity<Turista_Paquete>().HasKey(tp => new { tp.TuristaID, tp.PaqueteID });
+        modelBuilder.Entity<Itinerario_Turista>().HasKey(it => new { it.ItinerarioID, it.TuristaID });
+        modelBuilder.Entity<Itinerario_Actividad>().HasKey(ia => new { ia.ItinerarioID, ia.ActividadID });
+        modelBuilder.Entity<Actividad_Atraccion>().HasKey(aa => new { aa.ActividadID, aa.AtraccionID }); 
 }
 }

@@ -10,8 +10,8 @@ public class Itinerario
     // Navegación
     public PaqueteTuristico Paquete { get; set; } = null!;
     public GuiaTuristico Guia { get; set; } = null!;
-    public List<Asignar> Asignaciones { get; set; } = new();
-    public List<Contiene> Contiene { get; set; } = new();
+    public List<Itinerario_Turista> ItinerarioTuristas { get; set; } = new();
+    public List<Itinerario_Actividad> ItinerarioActividades { get; set; } = new();
     public List<Visita> Visitas { get; set; } = new();
     public List<Valoracion> Valoraciones { get; set; } = new();
     public List<Modificacion> Modificaciones { get; set; } = new();

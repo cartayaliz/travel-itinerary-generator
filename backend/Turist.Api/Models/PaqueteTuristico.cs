@@ -7,8 +7,8 @@ public class PaqueteTuristico
     public string Destino { get; set; } = string.Empty;
 
     // Navegación
-    public List<Autorizado> Autorizados { get; set; } = new();
-    public List<Clasifica> Clasificaciones { get; set; } = new();
-    public List<Inscribir> Inscripciones { get; set; } = new();
+    public List<Guia_Paquete> GuiaPaquetes { get; set; } = new();
+    public List<Paquete_Categoria> PaqueteCategorias { get; set; } = new();
+    public List<Turista_Paquete> TuristaPaquetes { get; set; } = new();
     public List<Itinerario> Itinerarios { get; set; } = new();
 }

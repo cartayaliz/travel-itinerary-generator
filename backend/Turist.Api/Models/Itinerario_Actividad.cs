@@ -1,6 +1,6 @@
 namespace Turist.Api.Models;
 
-public class Contiene
+public class Itinerario_Actividad
 {
     public int ItinerarioID { get; set; }
     public int ActividadID { get; set; }

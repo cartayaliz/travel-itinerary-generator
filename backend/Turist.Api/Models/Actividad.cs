@@ -13,6 +13,7 @@ public class Actividad
     // Navegación
     public GuiaTuristico Guia { get; set; } = null!;
     public Categoria Categoria { get; set; } = null!;
-    public List<Contiene> Contiene { get; set; } = new();
+    public List<Itinerario_Actividad> ItinerarioActividades { get; set; } = new();
     public List<Visita> Visitas { get; set; } = new();
+    public List<Actividad_Atraccion> ActividadAtracciones { get; set; } = new();
 }

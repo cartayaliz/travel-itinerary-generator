@@ -1,6 +1,6 @@
 namespace Turist.Api.Models;
 
-public class Asignar
+public class Itinerario_Turista
 {
     public int ItinerarioID { get; set; }
     public int TuristaID { get; set; }
