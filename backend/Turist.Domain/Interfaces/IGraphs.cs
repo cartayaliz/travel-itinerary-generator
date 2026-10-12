@@ -14,7 +14,7 @@ public interface IWeightedGraph : INodeSet
     IEnumerable<(int from, int to, double weight)> GetEdges();
     IEnumerable<(int to, double weight)> GetNeighbors(int from);
     void AddEdge(int from, int to, double weight);
-    void RemoveEdge(int from, int to);
+    int RemoveEdge(int from, int to);
     bool HasEdge(int from, int to);
     double GetWeight(int from, int to);
     bool SetWeight(int from, int to, double newWeight);

@@ -1,46 +1,46 @@
 using Turist.Domain;
 using Turist.Domain.Interfaces;
 
-namespace Turist.Api;
+namespace Turist.Infrastructure;
 
-public class GraphFactory
+public static class GraphFactory
 {
-    private double WeightFunction(IAvailableTransportation transportation)
+    private static double WeightFunction(IAvailable transportation)
     {
         throw new NotImplementedException();
     }
     
-    private int CreateActivityId(int locationId)
+    private static int GetActivityId(int locationId)
     {
-        throw new NotImplementedException();
+        return locationId;
     }
     
-    private int CreateAttractionId(int locationId)
+    private static int GetAttractionId(int locationId)
     {
-        throw new NotImplementedException();
+        return locationId;
     }
     
-    public IWeightedGraph Build(IEnumerable<ILocation> activities, 
+    public static IWeightedGraph Build(IEnumerable<ILocation> activities, 
                                 IEnumerable<ILocation> attractions, 
-                                IEnumerable<IAvailableTransportation> availableTransportations)
+                                IEnumerable<IAvailable> availableTransportations)
     {
         var graph = new WeightedGraph();
         foreach (var activity in activities)
         {
             var node = activity.LocationId;
-            graph.AddNode(CreateActivityId(node));
+            graph.AddNode(GetActivityId(node));
         }
         foreach (var attraction in attractions)
         {
             var node = attraction.LocationId;
-            graph.AddNode(CreateAttractionId(node));
+            graph.AddNode(GetAttractionId(node));
         }
         foreach (var avail in availableTransportations)
         {
             var weight = WeightFunction(avail);
             var n1 = avail.LocationIdLeft;
             var n2 = avail.LocationIdRight;
-            graph.AddEdge(n1, n2, weight);
+            graph.AddEdge(GetActivityId(n1), GetAttractionId(n2), weight);
         }
         return graph;
     }

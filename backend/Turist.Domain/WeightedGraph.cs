@@ -42,10 +42,13 @@ public class WeightedGraph : IWeightedGraph
 
     public void AddEdge(int from, int to, double weight) => _adj[from].Add((to, weight));
 
-    public void RemoveEdge(int from, int to)
+    public int RemoveEdge(int from, int to)
     {
         if (_adj.TryGetValue(from, out var neighbors))
-            neighbors.RemoveAll(n => n.to == to);
+        {
+            return neighbors.RemoveAll(n => n.to == to);
+        }
+        return 0;
     }
 
     public bool HasEdge(int from, int to) => _adj.ContainsKey(from) && _adj[from].Any(n => n.to == to);
@@ -64,13 +67,13 @@ public class WeightedGraph : IWeightedGraph
     {
         weight = NaN;
         if (!_adj.TryGetValue(from, out var neighbors)) return false;
-        foreach (var v in from (int to, double weight) v in neighbors
-                          where v.to == to
-                          select v)
+        foreach (var v in neighbors)
         {
+            if (v.to != to) continue;
             weight = v.weight;
             return true;
         }
+
         return false;
     }
 
