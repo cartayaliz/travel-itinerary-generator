@@ -5,7 +5,7 @@ namespace Turist.Domain;
 
 public class WeightedGraph : IWeightedGraph
 {
-    private readonly Dictionary<int, List<(int to, double weight)>> _adj = new();
+    private readonly Dictionary<int, List<(int to, double weight)>> _adj = [];
 
     public int GetNodesCount() => _adj.Keys.Count;
 

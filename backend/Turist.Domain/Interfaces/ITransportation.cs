@@ -1,23 +1,16 @@
 namespace Turist.Domain.Interfaces;
 
-public enum TransportationMedium
+public interface IVehicle
 {
-    WALKING,
-    BIKE,
-    VEHICLE
+    public double EstimatedDistance {get;}
+    public double EstimatedSpeed { get; }
+    double Cost { get; }
 }
 
 public interface ITransportation
 {
-    public double Distance { get; }
-
-    public TransportationMedium Medium { get; }
-}
-
-public interface IAvailable
-{
-    public int LocationIdLeft { get; set; }
-    public int LocationIdRight { get; set; }
-
-    public IEnumerable<ITransportation> Transportations { get; }
+    public int StartLocationId { get; }
+    public int StopLocationId { get; }
+    public double TotalTime { get; }
+    public double TotalCost { get; }
 }

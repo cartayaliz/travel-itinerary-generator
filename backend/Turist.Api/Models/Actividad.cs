@@ -2,7 +2,7 @@ using Turist.Domain.Interfaces;
 
 namespace Turist.Api.Models;
 
-public class Actividad : ILocation
+public class Actividad
 {
     public int ActividadId { get; set; }
     public string Nombre { get; set; }

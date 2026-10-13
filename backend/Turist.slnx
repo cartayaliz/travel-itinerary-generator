@@ -2,4 +2,5 @@
   <Project Path="Turist.Api/Turist.Api.csproj" />
   <Project Path="Turist.Domain/Turist.Domain.csproj" />
   <Project Path="Turist.Infrastructure/Turist.Infrastructure.csproj" />
+  <Project Path="Turist.Tests/Turist.Tests.csproj" />
 </Solution>
