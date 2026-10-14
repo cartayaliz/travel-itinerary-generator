@@ -1,15 +1,16 @@
-﻿using System.Reflection.Metadata;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Turist.Domain.Interfaces;
 
-namespace Turist.Infrastructure.Services.RouteSystem;
+namespace Turist.Infrastructure.Services;
 
 /// <summary>
 /// Representa el recorrido turístico de varias localizaciones geográficas y con horarios fijos.
 /// </summary>
 public class Route : IRoute
 {
-    public DateTime StartTime {get;}
-    public List<IVisitableLocation> Steps {get;}
+    public DateTime StartTime { get; }
+    public List<IVisitableLocation> Steps { get; }
     public Route(List<IVisitableLocation> steps, DateTime startTime)
     {
         Steps = steps;
@@ -18,18 +19,16 @@ public class Route : IRoute
 }
 
 /// <summary>
-/// Chequeo de validación de una ruta. Muestra los conflictos entre horarios y tiempos de espera.
+/// Resultado de validación de una ruta. Muestra los conflictos entre horarios y tiempos de espera.
 /// </summary>
-public class RouteValidationResult
+public class RouteValidationResult(IEnumerable<string> problems)
 {
-    public List<string> Problems {get; private set;}
-    public RouteValidationResult(IEnumerable<string> problems) => Problems = [.. problems];
-    public void AddProblem(string problem) => Problems.Add(problem);
+    public List<string> Problems { get; private set; } = [.. problems];
 }
 
 public class RouteSystem
 {
-    private readonly IWeightedGraph _graph;
+    private readonly IWeightedGraph<double> _graph;
     private GraphFactory _factory;
     private IEnumerable<IVisitableLocation> _locations;
     public RouteSystem(IEnumerable<IVisitableLocation> activities,
@@ -63,15 +62,15 @@ public class RouteSystem
 
         foreach (var step in route.Steps)
         {
-            IVisitableLocation? loc = GetLocation(step.Id);
-            
-            if (loc is null) 
+            var loc = GetLocation(step.Id);
+
+            if (loc is null)
             {
                 problems.Add($"No existe localización con ID:'{step.Id}'.");
                 continue;
             }
             if (!loc.Schedule.IsOpen(now))
-            { 
+            {
                 problems.Add($"'{loc.Name}' está cerrado al llegar ({now:HH:mm}). Abre a las {loc.Schedule.NextAperture(now):HH:mm}");
                 continue;
             }
@@ -90,9 +89,25 @@ public class RouteSystem
         return new RouteValidationResult(problems);
     }
 
-    public IRoute GetRoute(int from, int to)
+    private Route? GetRoute(List<int> path, DateTime startTime)
     {
-        throw new NotImplementedException();
+        List<IVisitableLocation> locations = [];
+        foreach (var n in path)
+        {
+            locations.Add(_factory.GetLocation(n));
+        }
+        Route route = new(locations, startTime);
+        return IsValidRoute(route).Problems.Count == 0 ? route : null;
     }
 
+    Route GetMinRoute(DateTime startTime, int from, int to)
+    {
+        List<int> path = INodeSet.GetPath(_graph.DijkstraGetMst(from).pi, from, to);
+        var steps = new List<IVisitableLocation>();
+        foreach (var node in path)
+        {
+            steps.Add(_factory.GetLocation(node));
+        }
+        return new(steps, startTime);
+    }
 }

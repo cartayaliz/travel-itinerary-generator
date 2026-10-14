@@ -2,8 +2,8 @@ namespace Turist.Domain.Interfaces;
 
 public interface IGeoPoint
 {
-    public double Latitude {get;}
-    public double Longitude {get;}
+    public double Latitude { get; }
+    public double Longitude { get; }
 
     /// <summary>
     /// Convertir grados a radianes.
@@ -42,8 +42,8 @@ public interface ISchedule
 
 public interface IVisitableLocation
 {
-    int Id {get;}
-    string Name {get;}
+    int Id { get; }
+    string Name { get; }
     ISchedule Schedule { get; }
     TimeSpan VisitDelay { get; }
     string Category { get; }

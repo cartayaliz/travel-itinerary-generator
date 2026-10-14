@@ -1,5 +1,5 @@
-using Turist.Domain;
 using Turist.Domain.Interfaces;
+using Turist.Domain.Classes;
 
 namespace Turist.Infrastructure.Services;
 
@@ -23,16 +23,6 @@ public class GraphFactory
     public IVisitableLocation GetLocation(int node) => _nodeVisitLocDict[node];
 
     /// <summary>
-    /// Función de peso para las aristas del grafo. Recibe la red de transporte disponible de un nodo a otro.
-    /// </summary>
-    /// <param name="transp"></param>
-    /// <returns></returns>
-    private double WeightFunction(ITransportation transp)
-    {
-        return transp.TotalCost + transp.TotalTime;
-    }
-
-    /// <summary>
     /// Recibe el identificador de la actividad o atracción, y devuelve el identificador del nodo en el grafo.
     /// </summary>
     /// <param name="locId"></param>
@@ -42,9 +32,9 @@ public class GraphFactory
     /// <summary>
     /// Dado un nodo devuelve el identificador de la localización que representa.
     /// </summary>
-    /// <param name="nodeId"></param>
+    /// <param name="node"></param>
     /// <returns></returns>
-    public int GetLocationId(int nodeId) => nodeId;
+    public int GetLocationId(int node) => node;
 
     /// <summary>
     /// Construye el grafo dado las actividades y atracciones, las relacionan entre sí según la red de transporte disponible.
@@ -70,14 +60,14 @@ public class GraphFactory
             _nodeVisitLocDict[node] = attraction;
             graph.AddNode(node);
         }
-        foreach (var availableTransp in transpWeb)
+        foreach (var transp in transpWeb)
         {
-            double weight = WeightFunction(availableTransp);
+            double weight = transp.TotalCost + transp.TotalTime;;
             
-            int n1 = GetNode(availableTransp.StartLocationId);
+            int n1 = GetNode(transp.StartLocationId);
             if (!graph.HasNode(n1)) continue;
 
-            int n2 = GetNode(availableTransp.StopLocationId);
+            int n2 = GetNode(transp.StopLocationId);
             if (!graph.HasNode(n1)) continue;
             
             graph.AddEdge(n1, n2, weight);

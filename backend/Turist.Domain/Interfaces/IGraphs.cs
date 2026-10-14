@@ -8,13 +8,13 @@ public interface INodeSet
     /// Devuelve la cantidad de nodos.
     /// </summary>
     /// <returns></returns>
-    int GetNodesCount();
+    int NodesCount { get; }
 
     /// <summary>
     /// Devuelve el conjunto de nodos.
     /// </summary>
     /// <returns></returns>
-    IEnumerable<int> GetNodes();
+    IEnumerable<int> Nodes { get; }
 
     /// <summary>
     /// Añade un nodo.
@@ -40,31 +40,45 @@ public interface INodeSet
     /// <param name="node"></param>
     /// <returns></returns>
     bool HasNode(int node);
+
+    static List<int> GetPath(int[] pi, int from, int to)
+    {
+        List<int> ints = [];
+        var temp = to;
+        ints.Add(temp);
+        while (pi[temp] != int.MaxValue)
+        {
+            ints.Add(pi[temp]);
+            temp = pi[temp];
+        }
+        ints.Reverse();
+        return ints;
+    }
 }
 
 /// <summary>
 /// Representa un grafo ponderado dirigido.
 /// </summary>
-public interface IWeightedGraph : INodeSet
+public interface IWeightedGraph<TWeight> : INodeSet
 {
     /// <summary>
     /// Devuelve la cantidad de aristas. 
     /// </summary>
     /// <returns></returns>
-    int GetEdgesCount();
+    int EdgesCount { get; }
 
     /// <summary>
     /// Devuelve el conjunto de aristas.
     /// </summary>
     /// <returns></returns>
-    IEnumerable<(int from, int to, double weight)> GetEdges();
+    IEnumerable<(int from, int to, TWeight weight)> Edges { get; }
 
     /// <summary>
     /// Devuelve los vecinos. 
     /// </summary>
     /// <param name="from"></param>
     /// <returns></returns>
-    IEnumerable<(int to, double weight)> GetNeighbors(int from);
+    IEnumerable<(int to, TWeight weight)> GetNeighbors(int from);
 
     /// <summary>
     /// Añade una arista con peso.
@@ -72,7 +86,7 @@ public interface IWeightedGraph : INodeSet
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="weight"></param>
-    void AddEdge(int from, int to, double weight);
+    void AddEdge(int from, int to, TWeight weight);
 
     /// <summary>
     /// Elimina una arista.
@@ -98,7 +112,7 @@ public interface IWeightedGraph : INodeSet
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
-    double GetWeight(int from, int to);
+    TWeight? GetWeight(int from, int to);
 
     /// <summary>
     /// Devuelve:
@@ -109,8 +123,8 @@ public interface IWeightedGraph : INodeSet
     /// <param name="to"></param>
     /// <param name="weight"></param>
     /// <returns></returns>
-    bool TryGetWeight(int from, int to, out double weight);
-    
+    bool TryGetWeight(int from, int to, out TWeight? weight);
+
     /// <summary>
     /// Asigna el peso a una arista dada.
     /// Devuelve:
@@ -121,7 +135,14 @@ public interface IWeightedGraph : INodeSet
     /// <param name="to"></param>
     /// <param name="newWeight"></param>
     /// <returns></returns>
-    bool SetWeight(int from, int to, double newWeight);
+    bool SetWeight(int from, int to, TWeight newWeight);
+
+    /// <summary>
+    /// Árbol abarcador de costo mínimo desde un punto de origen por algoritmo de Dijkstra.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <returns></returns>
+    (int[] pi, TWeight[] d) DijkstraGetMst(int from);
 }
 
 // public interface IWeightlessGraph : INodeSet
