@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Turist.Domain.Classes;
 using Turist.Domain.Interfaces;
 
 namespace Turist.Infrastructure.Services;
@@ -28,26 +29,69 @@ public class RouteValidationResult(IEnumerable<string> problems)
 
 public class RouteSystem
 {
+    private enum Location { ACT, ATT }
     private readonly IWeightedGraph<double> _graph;
-    private GraphFactory _factory;
-    private IEnumerable<IVisitableLocation> _locations;
+    private List<int, int, IVisitableLocation)> _activities = [];
     public RouteSystem(IEnumerable<IVisitableLocation> activities,
                        IEnumerable<IVisitableLocation> attractions,
                        IEnumerable<ITransportation> availableTransportations)
     {
-        _factory = new();
-        _graph = _factory.Build(activities, attractions, availableTransportations);
-        _locations = activities.Concat(attractions);
+        foreach (var item in activities)
+        {
+            _activities.Add(GetNode(item.Id, ), );
+        }
+        _graph = BuildGraph(activities, attractions, availableTransportations);
     }
 
     /// <summary>
-    /// Devuelve el objeto IVisitableLocation a partir de un indentificador. 
+    /// Recibe el identificador de la actividad o atracción, y devuelve el identificador del nodo en el grafo.
     /// </summary>
     /// <param name="locId"></param>
     /// <returns></returns>
-    private IVisitableLocation? GetLocation(int locId)
+    private int GetNode(int locId) => locId;
+
+    /// <summary>
+    /// Dado un nodo devuelve el identificador de la localización que representa.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public int GetLocationId(int node) => node;
+
+    /// <summary>
+    /// Construye el grafo dado las actividades y atracciones, las relacionan entre sí según la red de transporte disponible.
+    /// </summary>
+    /// <param name="activities"></param>
+    /// <param name="attractions"></param>
+    /// <param name="transpWeb"></param>
+    /// <returns></returns>
+    private IWeightedGraph<double> BuildGraph(IEnumerable<IVisitableLocation> activities,
+                                              IEnumerable<IVisitableLocation> attractions,
+                                              IEnumerable<ITransportation> transpWeb)
     {
-        return _locations.FirstOrDefault(l => l.Id == locId);
+        var graph = new WeightedGraph<double>();
+        foreach (var activity in activities)
+        {
+            int node = GetNode(activity.Id);
+            graph.AddNode(node);
+        }
+        foreach (var attraction in attractions)
+        {
+            int node = GetNode(attraction.Id);
+            graph.AddNode(node);
+        }
+        foreach (var transp in transpWeb)
+        {
+            double weight = transp.TotalCost + transp.TotalTime; ;
+
+            int n1 = GetNode(transp.StartLocationId);
+            if (!graph.HasNode(n1)) continue;
+
+            int n2 = GetNode(transp.StopLocationId);
+            if (!graph.HasNode(n1)) continue;
+
+            graph.AddEdge(n1, n2, weight);
+        }
+        return graph;
     }
 
     /// <summary>
@@ -62,11 +106,10 @@ public class RouteSystem
 
         foreach (var step in route.Steps)
         {
-            var loc = GetLocation(step.Id);
 
             if (loc is null)
             {
-                problems.Add($"No existe localización con ID:'{step.Id}'.");
+                problems.Add($"No existe nodo:'{step.Id}'.");
                 continue;
             }
             if (!loc.Schedule.IsOpen(now))
@@ -94,19 +137,19 @@ public class RouteSystem
         List<IVisitableLocation> locations = [];
         foreach (var n in path)
         {
-            locations.Add(_factory.GetLocation(n));
+            locations.Add(GetLocation(n));
         }
         Route route = new(locations, startTime);
         return IsValidRoute(route).Problems.Count == 0 ? route : null;
     }
 
-    Route GetMinRoute(DateTime startTime, int from, int to)
+    public Route GetMinRoute(DateTime startTime, int from, int to)
     {
         List<int> path = INodeSet.GetPath(_graph.DijkstraGetMst(from).pi, from, to);
         var steps = new List<IVisitableLocation>();
         foreach (var node in path)
         {
-            steps.Add(_factory.GetLocation(node));
+            steps.Add(GetLocation(node));
         }
         return new(steps, startTime);
     }

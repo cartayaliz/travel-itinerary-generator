@@ -1,18 +1,20 @@
 ﻿using System.Data.SqlTypes;
-using System.IO.Compression;
 using System.Numerics;
 using Turist.Domain.Interfaces;
-using static System.Double;
 
 namespace Turist.Domain.Classes;
 
 /// <summary>
 /// Representa un grafo ponderado dirigido.
 /// </summary>
-public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IComparable, 
-                                                                            //   IComparable<TWeight>,
-                                                                              INullable, IAdditiveIdentity<TWeight, TWeight>, 
-                                                                              IAdditionOperators<TWeight, TWeight, TWeight>
+public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IComparable,
+                                                                              IEquatable<TWeight>,
+                                                                              IEqualityOperators<TWeight, TWeight, bool>,
+                                                                              IComparable<TWeight>,
+                                                                              IComparisonOperators<TWeight, TWeight, bool>,
+                                                                              IAdditiveIdentity<TWeight, TWeight>, 
+                                                                              IAdditionOperators<TWeight, TWeight, TWeight>,
+                                                                              IMinMaxValue<TWeight>
 {
     private readonly Dictionary<int, List<(int to, TWeight weight)>> _adj = [];
 
@@ -140,7 +142,7 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
 
         void Relax(int u, int v, TWeight w)
         {
-            if (d[v] > d[u] + w)
+            if (d[v].CompareTo(d[u] + w) > 0)
             {
                 d[v] = d[u] + w;
                 pi[v] = u;
@@ -151,7 +153,7 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
         {
             foreach (var n in V)
             {
-                d[n] = default;
+                d[n] = TWeight.MaxValue;
                 pi[n] = int.MaxValue;
             }
             d[from] = TWeight.AdditiveIdentity;
