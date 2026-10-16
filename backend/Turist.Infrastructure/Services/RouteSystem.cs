@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Microsoft.VisualBasic;
 using Turist.Domain.Classes;
 using Turist.Domain.Interfaces;
 
@@ -11,10 +13,10 @@ namespace Turist.Infrastructure.Services;
 public class Route : IRoute
 {
     public DateTime StartTime { get; }
-    public List<IVisitableLocation> Steps { get; }
-    public Route(List<IVisitableLocation> steps, DateTime startTime)
+    public List<IVisitable> visitablesId { get; }
+    public Route(List<IVisitable> steps, DateTime startTime)
     {
-        Steps = steps;
+        visitablesId = steps;
         StartTime = startTime;
     }
 }
@@ -29,69 +31,54 @@ public class RouteValidationResult(IEnumerable<string> problems)
 
 public class RouteSystem
 {
-    private enum Location { ACT, ATT }
     private readonly IWeightedGraph<double> _graph;
-    private List<int, int, IVisitableLocation)> _activities = [];
-    public RouteSystem(IEnumerable<IVisitableLocation> activities,
-                       IEnumerable<IVisitableLocation> attractions,
-                       IEnumerable<ITransportation> availableTransportations)
+    private readonly Dictionary<int, IVisitable> _visitables = [];
+    private readonly Dictionary<(int, int), ITransportation> _transp = [];
+
+    public RouteSystem(IEnumerable<IVisitable> visitables,
+                       IEnumerable<ITransportation> transpWeb)
     {
-        foreach (var item in activities)
-        {
-            _activities.Add(GetNode(item.Id, ), );
-        }
-        _graph = BuildGraph(activities, attractions, availableTransportations);
+        _graph = BuildGraph(visitables, transpWeb);
     }
 
-    /// <summary>
-    /// Recibe el identificador de la actividad o atracción, y devuelve el identificador del nodo en el grafo.
-    /// </summary>
-    /// <param name="locId"></param>
-    /// <returns></returns>
-    private int GetNode(int locId) => locId;
-
-    /// <summary>
-    /// Dado un nodo devuelve el identificador de la localización que representa.
-    /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
-    public int GetLocationId(int node) => node;
-
-    /// <summary>
-    /// Construye el grafo dado las actividades y atracciones, las relacionan entre sí según la red de transporte disponible.
-    /// </summary>
-    /// <param name="activities"></param>
-    /// <param name="attractions"></param>
-    /// <param name="transpWeb"></param>
-    /// <returns></returns>
-    private IWeightedGraph<double> BuildGraph(IEnumerable<IVisitableLocation> activities,
-                                              IEnumerable<IVisitableLocation> attractions,
+    private IWeightedGraph<double> BuildGraph(IEnumerable<IVisitable> visitables,
                                               IEnumerable<ITransportation> transpWeb)
     {
         var graph = new WeightedGraph<double>();
-        foreach (var activity in activities)
+        foreach (var v in visitables)
         {
-            int node = GetNode(activity.Id);
+            int node = _graph.NodesCount;
             graph.AddNode(node);
-        }
-        foreach (var attraction in attractions)
-        {
-            int node = GetNode(attraction.Id);
-            graph.AddNode(node);
+            _visitables[node] = v;
         }
         foreach (var transp in transpWeb)
         {
-            double weight = transp.TotalCost + transp.TotalTime; ;
-
-            int n1 = GetNode(transp.StartLocationId);
-            if (!graph.HasNode(n1)) continue;
-
-            int n2 = GetNode(transp.StopLocationId);
-            if (!graph.HasNode(n1)) continue;
-
+            double weight = transp.TravelTimeSpan.Minutes + transp.TotalCost;
+            var n1 = transp.StartVisitableId;
+            var n2 = transp.StopVisitableId;
             graph.AddEdge(n1, n2, weight);
+            _transp[(n1, n2)] = transp;
         }
         return graph;
+    }
+
+    public void Update(IEnumerable<IVisitable> visitables,
+                       IEnumerable<ITransportation> transpWeb)
+    {
+        foreach (var v in visitables)
+        {
+            int node = _graph.NodesCount;
+            _graph.AddNode(node);
+            _visitables[node] = v;
+        }
+        foreach (var transp in transpWeb)
+        {
+            double weight = transp.TravelTimeSpan.Minutes + transp.TotalCost;
+            var n1 = transp.StartVisitableId;
+            var n2 = transp.StopVisitableId;
+            _graph.AddEdge(n1, n2, weight);
+            _transp[(n1, n2)] = transp;
+        }
     }
 
     /// <summary>
@@ -99,14 +86,14 @@ public class RouteSystem
     /// </summary>
     /// <param name="route"></param>
     /// <returns></returns>
-    public RouteValidationResult IsValidRoute(IRoute route)
+    public static RouteValidationResult ValidateRoute(IRoute route)
     {
         var problems = new List<string>();
         var now = route.StartTime;
 
-        foreach (var step in route.Steps)
+        foreach (var step in route.visitablesId)
         {
-
+            var loc = step;
             if (loc is null)
             {
                 problems.Add($"No existe nodo:'{step.Id}'.");
@@ -114,14 +101,14 @@ public class RouteSystem
             }
             if (!loc.Schedule.IsOpen(now))
             {
-                problems.Add($"'{loc.Name}' está cerrado al llegar ({now:HH:mm}). Abre a las {loc.Schedule.NextAperture(now):HH:mm}");
+                problems.Add($"'{loc.Id}' está cerrado al llegar ({now:HH:mm}).");
                 continue;
             }
 
-            var desiredExitTime = now + loc.VisitDelay;
-            if (!loc.Schedule.IsOpen(desiredExitTime))
+            var desiredExitTime = now + loc.Schedule.VisitTimeSpan;
+            if (!loc.Schedule.IsOpen(now, desiredExitTime))
             {
-                problems.Add($"No se alcanza a visitar '{loc.Name}'."
+                problems.Add($"No se alcanza a visitar '{loc.Id}'."
                 );
                 continue;
             }
@@ -132,25 +119,70 @@ public class RouteSystem
         return new RouteValidationResult(problems);
     }
 
-    private Route? GetRoute(List<int> path, DateTime startTime)
+    private Route? GetRoute(IEnumerable<int> path, DateTime startTime)
     {
-        List<IVisitableLocation> locations = [];
-        foreach (var n in path)
+        List<IVisitable> visList = [];
+        foreach (int node in path)
         {
-            locations.Add(GetLocation(n));
+            visList.Add(_visitables[node]);
         }
-        Route route = new(locations, startTime);
-        return IsValidRoute(route).Problems.Count == 0 ? route : null;
+        Route route = new(visList, startTime);
+        return ValidateRoute(route).Problems.Count == 0 ? route : null;
     }
 
-    public Route GetMinRoute(DateTime startTime, int from, int to)
+    public Route? GetBestRoute(DateTime startDt,
+                               DateTime stopDt,
+                               int start,
+                               int stop)
     {
-        List<int> path = INodeSet.GetPath(_graph.DijkstraGetMst(from).pi, from, to);
-        var steps = new List<IVisitableLocation>();
-        foreach (var node in path)
+        Dictionary<int, bool> blocked = [];
+        foreach (var item in _visitables)
         {
-            steps.Add(GetLocation(node));
+            blocked[item.Key] = item.Value.IsBlocked;
         }
-        return new(steps, startTime);
+        var path = GetBestVisitedPath(_graph, startDt, stopDt, blocked, start, stop);
+        return GetRoute(path, startDt, stopDt);
+    }
+
+    private int GetBestVisitedPath(IWeightedGraph<double> graph,
+                                  DateTime startDt,
+                                  DateTime stopDt,
+                                  Dictionary<int, bool> blocked,
+                                  int s,
+                                  out List<int> bestPath)
+    {
+        var (count, path) = GbvpBacktrack(s, startDt);
+        bestPath = [.. path];
+        return count;
+
+        (int count, IEnumerable<int> path) GbvpBacktrack(int currNode,
+                                                         DateTime now)
+        {
+            if (blocked[currNode]) return (0, []);
+
+            var visitTs = _visitables[currNode].Schedule.VisitTimeSpan;
+            var departureTime = now + visitTs;
+            if (departureTime >= stopDt || !_visitables[currNode].Schedule.IsOpen(now, departureTime))
+                return (0, []);
+
+            blocked[currNode] = true;
+            int bestCount = 1;
+            List<int> bestSubPath = [currNode];
+
+            foreach (var (to, weight) in graph.GetNeighbors(currNode))
+            {
+                var travelTs = _transp[(currNode, to)].TravelTimeSpan;
+                var (childCount, childPath) = GbvpBacktrack(to, departureTime + travelTs);
+                if (childCount++ > bestCount)
+                {
+                    bestCount = childCount;
+                    bestSubPath = [currNode, ..childPath];
+                }
+            }
+
+            blocked[currNode] = false;
+
+            return (bestCount, bestSubPath);
+        }
     }
 }

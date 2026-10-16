@@ -2,6 +2,6 @@ namespace Turist.Domain.Interfaces;
 
 public interface IRoute
 {
-    List<IVisitableLocation> Steps { get; }
+    List<IVisitable> visitablesId { get; }
     DateTime StartTime { get; }
 }

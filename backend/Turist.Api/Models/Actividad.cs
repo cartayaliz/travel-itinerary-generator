@@ -17,11 +17,4 @@ public class Actividad
     public Categoria Categoria { get; set; } = null!;
     public List<Contiene> Contiene { get; set; } = new();
     public List<Visita> Visitas { get; set; } = new();
-    
-    //Grafo
-    public int LocationId
-    {
-        get => ActividadId;
-        set => ActividadId = value;
-    }
 }

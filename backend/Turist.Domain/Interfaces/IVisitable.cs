@@ -36,15 +36,14 @@ public interface IGeoPoint
 
 public interface ISchedule
 {
+    bool IsOpen(DateTime since, DateTime until);
     bool IsOpen(DateTime now);
-    DateTime? NextAperture(DateTime since);
+    TimeSpan VisitTimeSpan { get; }
 }
 
-public interface IVisitableLocation
+public interface IVisitable
 {
     int Id { get; }
-    string Name { get; }
+    bool IsBlocked { get; set;}
     ISchedule Schedule { get; }
-    TimeSpan VisitDelay { get; }
-    string Category { get; }
 }

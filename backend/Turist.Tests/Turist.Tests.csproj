@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Turist.Domain/Turist.Domain.csproj" />
     <ProjectReference Include="../Turist.Infrastructure/Turist.Infrastructure.csproj" />
   </ItemGroup>
 
