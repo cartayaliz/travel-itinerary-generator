@@ -16,4 +16,10 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Turist.Domain\Turist.Domain.csproj" />
+    <ProjectReference Include="..\Turist.Data\Turist.Data.csproj" />
+    <ProjectReference Include="..\Turist.Services\Turist.Services.csproj" />
+  </ItemGroup>
+
 </Project>

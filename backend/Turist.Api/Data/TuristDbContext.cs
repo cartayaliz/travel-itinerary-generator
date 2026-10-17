@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Turist.Api.Models;
+using Turist.Domain.Models;
 
 namespace Turist.Api.Data;
 

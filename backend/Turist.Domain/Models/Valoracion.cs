@@ -1,4 +1,4 @@
-namespace Turist.Api.Models;
+namespace Turist.Domain.Models;
 
 public class Valoracion
 {
