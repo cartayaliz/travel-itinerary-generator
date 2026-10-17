@@ -18,7 +18,7 @@ public static class RouteSystemTestHelper
         int id,
         double rate = 5,
         int categoryId = 1,
-        Turist.Domain.Interfaces.ISchedule? schedule = null,
+        Domain.Interfaces.ISchedule? schedule = null,
         bool blocked = false)
         => new()
         {
@@ -44,7 +44,7 @@ public static class RouteSystemTestHelper
         => new(visitables, transportes);
 
     public static int[] Ids(Route route)
-        => route.visitablesId.Select(v => v.Id).ToArray();
+        => [.. route.visitablesId.Select(v => v.Id)];
 
-    public static Dictionary<int, bool> SinFiltro() => new();
+    public static Dictionary<int, bool> SinFiltro() => [];
 }

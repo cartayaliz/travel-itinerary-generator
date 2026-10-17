@@ -15,7 +15,7 @@ public class GetBestRatedRouteTests
         var sistema = Sistema([Lugar(0)], []);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([0], Ids(ruta));
         Assert.Equal(Hour(9), ruta.StartTime);
@@ -30,7 +30,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5), T(1, 2, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([0, 1, 2], Ids(ruta));
     }
@@ -41,7 +41,7 @@ public class GetBestRatedRouteTests
         var sistema = Sistema([Lugar(0)], []);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Single(ruta.visitablesId);
         Assert.Equal(0, ruta.visitablesId[0].Id);
@@ -54,7 +54,7 @@ public class GetBestRatedRouteTests
         var start = Hour(7).AddMinutes(30);
 
         var ruta = sistema.GetBestRatedRoute(
-            start, Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            start, Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal(start, ruta.StartTime);
     }
@@ -67,7 +67,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5), T(1, 2, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         var idsPermitidos = new HashSet<int> { 0, 1, 2 };
         Assert.All(ruta.visitablesId, v => Assert.Contains(v.Id, idsPermitidos));
@@ -95,7 +95,7 @@ public class GetBestRatedRouteTests
             ]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([0, 1, 3], Ids(ruta));
     }
@@ -116,7 +116,7 @@ public class GetBestRatedRouteTests
             ]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([0, 1, 2, 3], Ids(ruta));
     }
@@ -140,7 +140,7 @@ public class GetBestRatedRouteTests
             ]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([0, 1, 2, 3, 4], Ids(ruta));
     }
@@ -163,7 +163,7 @@ public class GetBestRatedRouteTests
             ]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.DoesNotContain(2, Ids(ruta));
         Assert.Contains(3, Ids(ruta));
@@ -181,7 +181,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5, cost: 10), T(0, 2, 5, cost: 3)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 5, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 5, categoriesFilter: SinFiltro());
 
         Assert.Contains(2, Ids(ruta));
         Assert.DoesNotContain(1, Ids(ruta));
@@ -195,7 +195,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5, cost: 1)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 0, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 0, categoriesFilter: SinFiltro());
 
         Assert.Equal([0], Ids(ruta));
     }
@@ -209,7 +209,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5, cost: 3), T(1, 2, 5, cost: 3)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 5, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 5, categoriesFilter: SinFiltro());
 
         Assert.DoesNotContain(2, Ids(ruta));
     }
@@ -227,7 +227,7 @@ public class GetBestRatedRouteTests
 
         var ruta = sistema.GetBestRatedRoute(
             Hour(9), Hour(18), origin: 0, maxCost: 100,
-            categories: new Dictionary<int, bool>());
+            categoriesFilter: new Dictionary<int, bool>());
 
         Assert.Equal([0, 1], Ids(ruta));
     }
@@ -245,7 +245,7 @@ public class GetBestRatedRouteTests
 
         var ruta = sistema.GetBestRatedRoute(
             Hour(9), Hour(18), origin: 0, maxCost: 100,
-            categories: new Dictionary<int, bool> { [1] = true, [2] = false });
+            categoriesFilter: new Dictionary<int, bool> { [1] = true, [2] = false });
 
         Assert.DoesNotContain(1, Ids(ruta));
         Assert.Contains(2, Ids(ruta));
@@ -260,7 +260,7 @@ public class GetBestRatedRouteTests
 
         var ruta = sistema.GetBestRatedRoute(
             Hour(9), Hour(18), origin: 0, maxCost: 100,
-            categories: new Dictionary<int, bool> { [1] = true, [7] = true });
+            categoriesFilter: new Dictionary<int, bool> { [1] = true, [7] = true });
 
         Assert.Equal([0, 1], Ids(ruta));
     }
@@ -277,7 +277,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.DoesNotContain(1, Ids(ruta));
     }
@@ -299,7 +299,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 30), T(1, 2, 30)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(9).AddMinutes(40), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(9).AddMinutes(40), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([0], Ids(ruta));
     }
@@ -318,7 +318,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.DoesNotContain(1, Ids(ruta));
     }
@@ -337,7 +337,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Empty(Ids(ruta));
     }
@@ -358,7 +358,7 @@ public class GetBestRatedRouteTests
             []);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal(20, ruta.visitablesId[0].Rate);
     }
@@ -376,12 +376,12 @@ public class GetBestRatedRouteTests
 
         var rutaConCat2 = sistema.GetBestRatedRoute(
             Hour(9), Hour(18), origin: 1, maxCost: 100,
-            categories: new Dictionary<int, bool> { [2] = true, [3] = false });
+            categoriesFilter: new Dictionary<int, bool> { [2] = true, [3] = false });
         Assert.Empty(Ids(rutaConCat2));
 
         var rutaConCat3 = sistema.GetBestRatedRoute(
             Hour(9), Hour(18), origin: 1, maxCost: 100,
-            categories: new Dictionary<int, bool> { [2] = false, [3] = true });
+            categoriesFilter: new Dictionary<int, bool> { [2] = false, [3] = true });
         Assert.Single(Ids(rutaConCat3));
     }
 
@@ -393,7 +393,7 @@ public class GetBestRatedRouteTests
             [T(1, 2, 5)]);
 
         var antes = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.Contains(2, Ids(antes));
 
         sistema.UpdateGraph(
@@ -401,7 +401,7 @@ public class GetBestRatedRouteTests
             []);
 
         var despues = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.DoesNotContain(2, Ids(despues));
     }
 
@@ -413,7 +413,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5)]);
 
         var rutaAntes = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.Equal([0, 1], Ids(rutaAntes));
 
         sistema.UpdateGraph(
@@ -421,7 +421,7 @@ public class GetBestRatedRouteTests
             [T(1, 2, 5)]);
 
         var rutaDespues = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.Contains(2, Ids(rutaDespues));
     }
 
@@ -433,7 +433,7 @@ public class GetBestRatedRouteTests
             [T(0, 1, 5)]);
 
         var rutaAntes = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.DoesNotContain(2, Ids(rutaAntes));
 
         sistema.UpdateGraph(
@@ -441,7 +441,7 @@ public class GetBestRatedRouteTests
             [T(0, 2, 3), T(2, 3, 3)]);
 
         var rutaDespues = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.Contains(2, Ids(rutaDespues));
         Assert.Contains(3, Ids(rutaDespues));
     }
@@ -459,7 +459,7 @@ public class GetBestRatedRouteTests
 
         var ruta = sistema.GetBestRatedRoute(
             Hour(9), Hour(18), origin: 0, maxCost: 100,
-            categories: new Dictionary<int, bool> { [1] = true, [2] = false });
+            categoriesFilter: new Dictionary<int, bool> { [1] = true, [2] = false });
 
         Assert.DoesNotContain(1, Ids(ruta));
         Assert.DoesNotContain(2, Ids(ruta));
@@ -473,12 +473,12 @@ public class GetBestRatedRouteTests
         var sistema = Sistema(visitables, transportes);
 
         var antes = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         sistema.UpdateGraph(visitables, transportes);
 
         var despues = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 0, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 0, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal(Ids(antes), Ids(despues));
     }
@@ -495,7 +495,7 @@ public class GetBestRatedRouteTests
             [T(1, 2, 5), T(2, 3, 5), T(3, 4, 5), T(4, 5, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([1, 2, 3, 4, 5], Ids(ruta));
     }
@@ -508,7 +508,7 @@ public class GetBestRatedRouteTests
             [T(1, 99, 5)]);
 
         var ruta = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
 
         Assert.Equal([1], Ids(ruta));
     }
@@ -521,7 +521,7 @@ public class GetBestRatedRouteTests
             []);
 
         var rutaAntes = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
 
         sistema.UpdateGraph(
             [Lugar(1, rate: 20)],
@@ -530,7 +530,7 @@ public class GetBestRatedRouteTests
         Assert.Equal(5, rutaAntes.visitablesId[0].Rate);
 
         var rutaDespues = sistema.GetBestRatedRoute(
-            Hour(9), Hour(18), origin: 1, maxCost: 100, categories: SinFiltro());
+            Hour(9), Hour(18), origin: 1, maxCost: 100, categoriesFilter: SinFiltro());
         Assert.Equal(20, rutaDespues.visitablesId[0].Rate);
     }
 }

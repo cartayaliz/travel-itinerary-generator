@@ -15,7 +15,19 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
 
     public int NodesCount { get => _adj.Keys.Count; }
 
-    public int EdgesCount { get => _adj.Values.Count; }
+    public int EdgesCount
+    {
+        get
+        {
+            int count = 0;
+            foreach (var item in _adj)
+            {
+                if (item.Value.Count <= 0) continue;
+                count += item.Value.Count;
+            }
+            return count;
+        }
+    }
 
     public IEnumerable<int> Nodes { get => _adj.Keys; }
 
