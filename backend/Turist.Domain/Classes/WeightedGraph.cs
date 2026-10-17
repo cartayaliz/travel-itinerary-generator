@@ -7,14 +7,9 @@ namespace Turist.Domain.Classes;
 /// <summary>
 /// Representa un grafo ponderado dirigido.
 /// </summary>
-public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IComparable,
-                                                                              IEquatable<TWeight>,
-                                                                              IEqualityOperators<TWeight, TWeight, bool>,
-                                                                              IComparable<TWeight>,
-                                                                              IComparisonOperators<TWeight, TWeight, bool>,
+public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IComparable<TWeight>,
                                                                               IAdditiveIdentity<TWeight, TWeight>, 
-                                                                              IAdditionOperators<TWeight, TWeight, TWeight>,
-                                                                              IMinMaxValue<TWeight>
+                                                                              IAdditionOperators<TWeight, TWeight, TWeight>
 {
     private readonly Dictionary<int, List<(int to, TWeight weight)>> _adj = [];
 
@@ -149,11 +144,11 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
             }
         }
 
-        void InitSingleSource(int from, TWeight[] d, int[] pi, IEnumerable<int> V)
+        void InitSingleSource(int from, TWeight?[] d, int[] pi, IEnumerable<int> V)
         {
             foreach (var n in V)
             {
-                d[n] = TWeight.MaxValue;
+                d[n] = default;
                 pi[n] = int.MaxValue;
             }
             d[from] = TWeight.AdditiveIdentity;

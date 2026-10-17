@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Microsoft.VisualBasic;
-using Turist.Domain.Classes;
+﻿using Turist.Domain.Classes;
 using Turist.Domain.Interfaces;
 
 namespace Turist.Infrastructure.Services;
@@ -19,6 +15,21 @@ public class Route : IRoute
         visitablesId = steps;
         StartTime = startTime;
     }
+    public string Print()
+    {
+        string s = "[ ";
+        for (int i = 0; i < visitablesId.Count; i++)
+        {
+            IVisitable? item = visitablesId[i];
+            s = $"{s}{item.Id} ";
+            if (i == visitablesId.Count)
+            {
+                s = $"{s}]";
+            }
+            else { s = $"{s}|"; }
+        }
+        return s;
+    }
 }
 
 /// <summary>
@@ -28,12 +39,20 @@ public class RouteValidationResult(IEnumerable<string> problems)
 {
     public List<string> Problems { get; private set; } = [.. problems];
 }
-
+/// <summary>
+/// Funciones esenciales:
+///     - CalcTimeSpan(origenId, destinoId)
+///     - CalcCost(origenId, destinoId)
+///     - ObtenerLocalesCercanos(atraccionId, radioMinutos)
+///     - ProponerAlternativas(localesCancelados)
+///     - ValidarRuta(ruta)
+///     - ActualizarPesos
+/// </summary>
 public class RouteSystem
 {
     private readonly IWeightedGraph<double> _graph;
     private readonly Dictionary<int, IVisitable> _visitables = [];
-    private readonly Dictionary<(int, int), ITransportation> _transp = [];
+    private readonly Dictionary<(int, int), ITransportation> _transpWeb = [];
 
     public RouteSystem(IEnumerable<IVisitable> visitables,
                        IEnumerable<ITransportation> transpWeb)
@@ -53,16 +72,15 @@ public class RouteSystem
         }
         foreach (var transp in transpWeb)
         {
-            double weight = transp.TravelTimeSpan.Minutes + transp.TotalCost;
             var n1 = transp.StartVisitableId;
             var n2 = transp.StopVisitableId;
-            graph.AddEdge(n1, n2, weight);
-            _transp[(n1, n2)] = transp;
+            graph.AddEdge(n1, n2, transp.TravelTimeSpan.TotalMinutes + transp.Cost);
+            _transpWeb[(n1, n2)] = transp;
         }
         return graph;
     }
 
-    public void Update(IEnumerable<IVisitable> visitables,
+    public void UpdateGraph(IEnumerable<IVisitable> visitables,
                        IEnumerable<ITransportation> transpWeb)
     {
         foreach (var v in visitables)
@@ -73,16 +91,15 @@ public class RouteSystem
         }
         foreach (var transp in transpWeb)
         {
-            double weight = transp.TravelTimeSpan.Minutes + transp.TotalCost;
             var n1 = transp.StartVisitableId;
             var n2 = transp.StopVisitableId;
-            _graph.AddEdge(n1, n2, weight);
-            _transp[(n1, n2)] = transp;
+            _graph.AddEdge(n1, n2, transp.TravelTimeSpan.TotalMinutes + transp.Cost);
+            _transpWeb[(n1, n2)] = transp;
         }
     }
 
     /// <summary>
-    /// Revisa si una ruta dada es válida según los tiempos asignados a cada visita y horarios de cada localización. 
+    /// Valida la factibilidad según los horarios de una ruta dada.
     /// </summary>
     /// <param name="route"></param>
     /// <returns></returns>
@@ -119,6 +136,21 @@ public class RouteSystem
         return new RouteValidationResult(problems);
     }
 
+    /// <summary>
+    /// Propone la mejor valorada ruta desde un origen, en un intervalo de tiempo y con costo máximo.
+    /// </summary>
+    /// <param name="startDt"></param>
+    /// <param name="stopDt"></param>
+    /// <param name="origin"></param>
+    /// <param name="maxCost"></param>
+    /// <returns></returns>
+    public Route? GetBestRatedRoute(DateTime startDt,
+                                    DateTime stopDt,
+                                    int origin,
+                                    int maxCost,
+                                    Dictionary<int, bool> categories) 
+                                    => GetRoute(GetBestRatedPath(startDt, stopDt, maxCost, origin, categories).bestPath, startDt);
+
     private Route? GetRoute(IEnumerable<int> path, DateTime startTime)
     {
         List<IVisitable> visList = [];
@@ -126,63 +158,94 @@ public class RouteSystem
         {
             visList.Add(_visitables[node]);
         }
-        Route route = new(visList, startTime);
-        return ValidateRoute(route).Problems.Count == 0 ? route : null;
+        return new(visList, startTime);
     }
 
-    public Route? GetBestRoute(DateTime startDt,
-                               DateTime stopDt,
-                               int start,
-                               int stop)
+/*
+Backtrack(origen, fechaEntrada, 0)
+Backtrack(nodoActual, momento, costoAcumulado):
+    si costoAcumulado > costoMáximo: retorna (nil, 0)
+
+    horaSalida <- momento
+    si nodoActual cancelado o visitado o categoría no aceptable: 
+        horaSalida <- momento
+    si no:
+        visitTs <- tiempo de visita del nodo actual
+        horaSalida <- momento + visitTs
+
+    si horaSalida >= fechaSalida o nodoActual no está abierto abierto durante momento y horaSalida: retorna (nil, 0)
+
+    añade nodoActual a visitados
+    mejorValor <- nil
+    mejorCamino <- [nodoActual]
+
+    Para cada vecino de nodoActual:
+        tiempoViaje <- tiempo del viaje del transporte del nodoActual hasta su vecino
+        costoViaje <- costo del viaje del transporte del nodoActual hasta su vecino
+        horaEntrada <- horaSalida + tiemporViaje
+        (subCamino, subValor) = Backtrack(vecino, horaEntrada, costoAcumulado + costoViaje)
+        
+        si mejorValor = nil: mejorValor <- subValor
+        si no:
+            si subValor > mejorValor:
+                mejorValor <- subValor
+                mejorCamino <- [nodoActual] + subCamino
+    
+    remover nodoActual de visitados
+
+    si nodoActual no está cancelado y con categoría aceptable: mejorValor += valoración(nodoActual)
+
+    retorna mejorCamino y mejorValor
+*/
+
+    private (double bestRate, IEnumerable<int> bestPath) GetBestRatedPath(DateTime startDt,
+                                                                          DateTime stopDt,
+                                                                          double maxCost,
+                                                                          int startNode,
+                                                                          Dictionary<int, bool> categories)
     {
-        Dictionary<int, bool> blocked = [];
-        foreach (var item in _visitables)
+        Dictionary<int, bool> visited = [];
+        return GbrpBacktrack(startNode, startDt, 0);
+
+        (double rate, IEnumerable<int> path) GbrpBacktrack(int currNode,
+                                                         DateTime now,
+                                                         double accumCost)
         {
-            blocked[item.Key] = item.Value.IsBlocked;
-        }
-        var path = GetBestVisitedPath(_graph, startDt, stopDt, blocked, start, stop);
-        return GetRoute(path, startDt, stopDt);
-    }
+            if (accumCost > maxCost) return (0, []);
 
-    private int GetBestVisitedPath(IWeightedGraph<double> graph,
-                                  DateTime startDt,
-                                  DateTime stopDt,
-                                  Dictionary<int, bool> blocked,
-                                  int s,
-                                  out List<int> bestPath)
-    {
-        var (count, path) = GbvpBacktrack(s, startDt);
-        bestPath = [.. path];
-        return count;
-
-        (int count, IEnumerable<int> path) GbvpBacktrack(int currNode,
-                                                         DateTime now)
-        {
-            if (blocked[currNode]) return (0, []);
-
-            var visitTs = _visitables[currNode].Schedule.VisitTimeSpan;
-            var departureTime = now + visitTs;
-            if (departureTime >= stopDt || !_visitables[currNode].Schedule.IsOpen(now, departureTime))
+            var departureHour = now;
+            if (!_visitables[currNode].IsBlocked
+                && !visited[currNode]
+                && !categories[_visitables[currNode].CategoryId])
+                departureHour += _visitables[currNode].Schedule.VisitTimeSpan;
+            
+            if (departureHour >= stopDt
+                || !_visitables[currNode].Schedule.IsOpen(now, departureHour))
                 return (0, []);
 
-            blocked[currNode] = true;
-            int bestCount = 1;
-            List<int> bestSubPath = [currNode];
+            visited[currNode] = true;
+            double bestRate = double.MinValue;
+            List<int> bestPath = [currNode];
 
-            foreach (var (to, weight) in graph.GetNeighbors(currNode))
+            foreach (var (to, weight) in _graph.GetNeighbors(currNode))
             {
-                var travelTs = _transp[(currNode, to)].TravelTimeSpan;
-                var (childCount, childPath) = GbvpBacktrack(to, departureTime + travelTs);
-                if (childCount++ > bestCount)
+                var travelTime = _transpWeb[(currNode, to)].TravelTimeSpan;
+                var travelCost = _transpWeb[(currNode, to)].Cost;
+                var (childCount, childPath) = GbrpBacktrack(to, departureHour + travelTime, travelCost);
+                if (childCount > bestRate)
                 {
-                    bestCount = childCount;
-                    bestSubPath = [currNode, ..childPath];
+                    bestRate = childCount;
+                    bestPath = [currNode, .. childPath];
                 }
             }
 
-            blocked[currNode] = false;
+            visited[currNode] = false;
 
-            return (bestCount, bestSubPath);
+            if (!_visitables[currNode].IsBlocked
+                && categories[_visitables[currNode].CategoryId]) 
+                bestRate += _visitables[currNode].Rate;
+
+            return (bestRate, bestPath);
         }
     }
 }

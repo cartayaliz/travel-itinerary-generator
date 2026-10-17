@@ -44,6 +44,8 @@ public interface ISchedule
 public interface IVisitable
 {
     int Id { get; }
-    bool IsBlocked { get; set;}
     ISchedule Schedule { get; }
+    int CategoryId { get; }
+    double Rate { get; }
+    bool IsBlocked { get; set; }
 }

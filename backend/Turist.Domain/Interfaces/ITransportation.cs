@@ -5,5 +5,5 @@ public interface ITransportation
     public int StartVisitableId { get; }
     public int StopVisitableId { get; }
     public TimeSpan TravelTimeSpan { get; }
-    public double TotalCost { get; }
+    public double Cost { get; }
 }
