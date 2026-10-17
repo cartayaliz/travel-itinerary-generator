@@ -66,7 +66,7 @@ public class RouteSystem
         var graph = new WeightedGraph<double>();
         foreach (var v in visitables)
         {
-            int node = _graph.NodesCount;
+            int node = graph.NodesCount;
             graph.AddNode(node);
             _visitables[node] = v;
         }
@@ -144,14 +144,14 @@ public class RouteSystem
     /// <param name="origin"></param>
     /// <param name="maxCost"></param>
     /// <returns></returns>
-    public Route? GetBestRatedRoute(DateTime startDt,
+    public Route GetBestRatedRoute(DateTime startDt,
                                     DateTime stopDt,
                                     int origin,
                                     int maxCost,
                                     Dictionary<int, bool> categories) 
                                     => GetRoute(GetBestRatedPath(startDt, stopDt, maxCost, origin, categories).bestPath, startDt);
 
-    private Route? GetRoute(IEnumerable<int> path, DateTime startTime)
+    private Route GetRoute(IEnumerable<int> path, DateTime startTime)
     {
         List<IVisitable> visList = [];
         foreach (int node in path)
