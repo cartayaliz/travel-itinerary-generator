@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Turist.Api.Data;
+using Turist.Data;
 
 #nullable disable
 
-namespace Turist.Api.Migrations
+namespace Turist.Data.Migrations
 {
     [DbContext(typeof(TuristDbContext))]
-    partial class TuristDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261010235449_VersionPreliminarBD")]
+    partial class VersionPreliminarBD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,63 +61,40 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("GuiaID");
 
-                    b.ToTable("Actividad");
+                    b.ToTable("Actividades");
                 });
 
-            modelBuilder.Entity("Turist.Api.Models.Actividad_Atraccion", b =>
+            modelBuilder.Entity("Turist.Api.Models.Asignar", b =>
                 {
-                    b.Property<int>("ActividadID")
+                    b.Property<int>("ItinerarioID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("AtraccionID")
+                    b.Property<int>("TuristaID")
                         .HasColumnType("integer");
 
-                    b.HasKey("ActividadID", "AtraccionID");
+                    b.Property<DateTime>("FechaAsignacion")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasIndex("AtraccionID");
+                    b.HasKey("ItinerarioID", "TuristaID");
 
-                    b.ToTable("Actividad_Atraccion");
+                    b.HasIndex("TuristaID");
+
+                    b.ToTable("Asignaciones");
                 });
 
-            modelBuilder.Entity("Turist.Api.Models.Atraccion", b =>
+            modelBuilder.Entity("Turist.Api.Models.Autorizado", b =>
                 {
-                    b.Property<int>("AtraccionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AtraccionID"));
-
-                    b.Property<int>("CategoriaID")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("GuiaID")
                         .HasColumnType("integer");
 
-                    b.Property<double>("Latitud")
-                        .HasColumnType("double precision");
+                    b.Property<int>("PaqueteID")
+                        .HasColumnType("integer");
 
-                    b.Property<double>("Longitud")
-                        .HasColumnType("double precision");
+                    b.HasKey("GuiaID", "PaqueteID");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.HasIndex("PaqueteID");
 
-                    b.Property<string>("Ubicacion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("AtraccionID");
-
-                    b.HasIndex("CategoriaID");
-
-                    b.HasIndex("GuiaID");
-
-                    b.ToTable("Atraccion");
+                    b.ToTable("Autorizados");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Categoria", b =>
@@ -131,7 +111,40 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("CategoriaID");
 
-                    b.ToTable("Categoria");
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("Turist.Api.Models.Clasifica", b =>
+                {
+                    b.Property<int>("PaqueteID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategoriaID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PaqueteID", "CategoriaID");
+
+                    b.HasIndex("CategoriaID");
+
+                    b.ToTable("Clasificaciones");
+                });
+
+            modelBuilder.Entity("Turist.Api.Models.Contiene", b =>
+                {
+                    b.Property<int>("ItinerarioID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ActividadID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Orden")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ItinerarioID", "ActividadID");
+
+                    b.HasIndex("ActividadID");
+
+                    b.ToTable("Contiene");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Grupo", b =>
@@ -144,7 +157,7 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("GrupoID");
 
-                    b.ToTable("Grupo");
+                    b.ToTable("Grupos");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.GuiaTuristico", b =>
@@ -168,22 +181,22 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("GuiaID");
 
-                    b.ToTable("GuiaTuristico");
+                    b.ToTable("GuiasTuristicos");
                 });
 
-            modelBuilder.Entity("Turist.Api.Models.Guia_Paquete", b =>
+            modelBuilder.Entity("Turist.Api.Models.Inscribir", b =>
                 {
-                    b.Property<int>("GuiaID")
+                    b.Property<int>("TuristaID")
                         .HasColumnType("integer");
 
                     b.Property<int>("PaqueteID")
                         .HasColumnType("integer");
 
-                    b.HasKey("GuiaID", "PaqueteID");
+                    b.HasKey("TuristaID", "PaqueteID");
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("Guia_Paquete");
+                    b.ToTable("Inscripciones");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Itinerario", b =>
@@ -209,43 +222,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("Itinerario");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Itinerario_Actividad", b =>
-                {
-                    b.Property<int>("ItinerarioID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ActividadID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Orden")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ItinerarioID", "ActividadID");
-
-                    b.HasIndex("ActividadID");
-
-                    b.ToTable("Itinerario_Actividad");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Itinerario_Turista", b =>
-                {
-                    b.Property<int>("ItinerarioID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TuristaID")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("FechaAsignacion")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("ItinerarioID", "TuristaID");
-
-                    b.HasIndex("TuristaID");
-
-                    b.ToTable("Itinerario_Turista");
+                    b.ToTable("Itinerarios");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Modificacion", b =>
@@ -279,7 +256,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("TuristaID");
 
-                    b.ToTable("Modificacion");
+                    b.ToTable("Modificaciones");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.PaqueteTuristico", b =>
@@ -300,22 +277,7 @@ namespace Turist.Api.Migrations
 
                     b.HasKey("PaqueteID");
 
-                    b.ToTable("PaqueteTuristico");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Paquete_Categoria", b =>
-                {
-                    b.Property<int>("PaqueteID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CategoriaID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PaqueteID", "CategoriaID");
-
-                    b.HasIndex("CategoriaID");
-
-                    b.ToTable("Paquete_Categoria");
+                    b.ToTable("PaquetesTuristicos");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Turista", b =>
@@ -340,22 +302,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("GrupoID");
 
-                    b.ToTable("Turista");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Turista_Paquete", b =>
-                {
-                    b.Property<int>("TuristaID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PaqueteID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TuristaID", "PaqueteID");
-
-                    b.HasIndex("PaqueteID");
-
-                    b.ToTable("Turista_Paquete");
+                    b.ToTable("Turistas");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Validacion", b =>
@@ -385,7 +332,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("ItinerarioID");
 
-                    b.ToTable("Validacion");
+                    b.ToTable("Validaciones");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Valoracion", b =>
@@ -418,7 +365,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("TuristaID");
 
-                    b.ToTable("Valoracion");
+                    b.ToTable("Valoraciones");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Visita", b =>
@@ -464,7 +411,7 @@ namespace Turist.Api.Migrations
 
                     b.HasIndex("ValoracionID");
 
-                    b.ToTable("Visita");
+                    b.ToTable("Visitas");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Actividad", b =>
@@ -486,54 +433,35 @@ namespace Turist.Api.Migrations
                     b.Navigation("Guia");
                 });
 
-            modelBuilder.Entity("Turist.Api.Models.Actividad_Atraccion", b =>
+            modelBuilder.Entity("Turist.Api.Models.Asignar", b =>
                 {
-                    b.HasOne("Turist.Api.Models.Actividad", "Actividad")
-                        .WithMany("ActividadAtracciones")
-                        .HasForeignKey("ActividadID")
+                    b.HasOne("Turist.Api.Models.Itinerario", "Itinerario")
+                        .WithMany("Asignaciones")
+                        .HasForeignKey("ItinerarioID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Turist.Api.Models.Atraccion", "Atraccion")
-                        .WithMany("ActividadAtracciones")
-                        .HasForeignKey("AtraccionID")
+                    b.HasOne("Turist.Api.Models.Turista", "Turista")
+                        .WithMany("Asignaciones")
+                        .HasForeignKey("TuristaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Actividad");
+                    b.Navigation("Itinerario");
 
-                    b.Navigation("Atraccion");
+                    b.Navigation("Turista");
                 });
 
-            modelBuilder.Entity("Turist.Api.Models.Atraccion", b =>
-                {
-                    b.HasOne("Turist.Api.Models.Categoria", "Categoria")
-                        .WithMany("Atracciones")
-                        .HasForeignKey("CategoriaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Api.Models.GuiaTuristico", "Guia")
-                        .WithMany("Atracciones")
-                        .HasForeignKey("GuiaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-
-                    b.Navigation("Guia");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Guia_Paquete", b =>
+            modelBuilder.Entity("Turist.Api.Models.Autorizado", b =>
                 {
                     b.HasOne("Turist.Api.Models.GuiaTuristico", "Guia")
-                        .WithMany("GuiaPaquetes")
+                        .WithMany("Autorizados")
                         .HasForeignKey("GuiaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Turist.Api.Models.PaqueteTuristico", "Paquete")
-                        .WithMany("GuiaPaquetes")
+                        .WithMany("Autorizados")
                         .HasForeignKey("PaqueteID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -541,6 +469,63 @@ namespace Turist.Api.Migrations
                     b.Navigation("Guia");
 
                     b.Navigation("Paquete");
+                });
+
+            modelBuilder.Entity("Turist.Api.Models.Clasifica", b =>
+                {
+                    b.HasOne("Turist.Api.Models.Categoria", "Categoria")
+                        .WithMany("Clasificaciones")
+                        .HasForeignKey("CategoriaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turist.Api.Models.PaqueteTuristico", "Paquete")
+                        .WithMany("Clasificaciones")
+                        .HasForeignKey("PaqueteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Paquete");
+                });
+
+            modelBuilder.Entity("Turist.Api.Models.Contiene", b =>
+                {
+                    b.HasOne("Turist.Api.Models.Actividad", "Actividad")
+                        .WithMany("Contiene")
+                        .HasForeignKey("ActividadID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turist.Api.Models.Itinerario", "Itinerario")
+                        .WithMany("Contiene")
+                        .HasForeignKey("ItinerarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actividad");
+
+                    b.Navigation("Itinerario");
+                });
+
+            modelBuilder.Entity("Turist.Api.Models.Inscribir", b =>
+                {
+                    b.HasOne("Turist.Api.Models.PaqueteTuristico", "Paquete")
+                        .WithMany("Inscripciones")
+                        .HasForeignKey("PaqueteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turist.Api.Models.Turista", "Turista")
+                        .WithMany("Inscripciones")
+                        .HasForeignKey("TuristaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paquete");
+
+                    b.Navigation("Turista");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Itinerario", b =>
@@ -560,44 +545,6 @@ namespace Turist.Api.Migrations
                     b.Navigation("Guia");
 
                     b.Navigation("Paquete");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Itinerario_Actividad", b =>
-                {
-                    b.HasOne("Turist.Api.Models.Actividad", "Actividad")
-                        .WithMany("ItinerarioActividades")
-                        .HasForeignKey("ActividadID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Api.Models.Itinerario", "Itinerario")
-                        .WithMany("ItinerarioActividades")
-                        .HasForeignKey("ItinerarioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actividad");
-
-                    b.Navigation("Itinerario");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Itinerario_Turista", b =>
-                {
-                    b.HasOne("Turist.Api.Models.Itinerario", "Itinerario")
-                        .WithMany("ItinerarioTuristas")
-                        .HasForeignKey("ItinerarioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Api.Models.Turista", "Turista")
-                        .WithMany("ItinerarioTuristas")
-                        .HasForeignKey("TuristaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Itinerario");
-
-                    b.Navigation("Turista");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Modificacion", b =>
@@ -625,25 +572,6 @@ namespace Turist.Api.Migrations
                     b.Navigation("Turista");
                 });
 
-            modelBuilder.Entity("Turist.Api.Models.Paquete_Categoria", b =>
-                {
-                    b.HasOne("Turist.Api.Models.Categoria", "Categoria")
-                        .WithMany("PaqueteCategorias")
-                        .HasForeignKey("CategoriaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Api.Models.PaqueteTuristico", "Paquete")
-                        .WithMany("PaqueteCategorias")
-                        .HasForeignKey("PaqueteID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-
-                    b.Navigation("Paquete");
-                });
-
             modelBuilder.Entity("Turist.Api.Models.Turista", b =>
                 {
                     b.HasOne("Turist.Api.Models.Grupo", "Grupo")
@@ -653,25 +581,6 @@ namespace Turist.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Grupo");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Turista_Paquete", b =>
-                {
-                    b.HasOne("Turist.Api.Models.PaqueteTuristico", "Paquete")
-                        .WithMany("TuristaPaquetes")
-                        .HasForeignKey("PaqueteID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Api.Models.Turista", "Turista")
-                        .WithMany("TuristaPaquetes")
-                        .HasForeignKey("TuristaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paquete");
-
-                    b.Navigation("Turista");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Validacion", b =>
@@ -759,25 +668,16 @@ namespace Turist.Api.Migrations
 
             modelBuilder.Entity("Turist.Api.Models.Actividad", b =>
                 {
-                    b.Navigation("ActividadAtracciones");
-
-                    b.Navigation("ItinerarioActividades");
+                    b.Navigation("Contiene");
 
                     b.Navigation("Visitas");
-                });
-
-            modelBuilder.Entity("Turist.Api.Models.Atraccion", b =>
-                {
-                    b.Navigation("ActividadAtracciones");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Categoria", b =>
                 {
                     b.Navigation("Actividades");
 
-                    b.Navigation("Atracciones");
-
-                    b.Navigation("PaqueteCategorias");
+                    b.Navigation("Clasificaciones");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Grupo", b =>
@@ -789,9 +689,7 @@ namespace Turist.Api.Migrations
                 {
                     b.Navigation("Actividades");
 
-                    b.Navigation("Atracciones");
-
-                    b.Navigation("GuiaPaquetes");
+                    b.Navigation("Autorizados");
 
                     b.Navigation("Itinerarios");
 
@@ -802,9 +700,9 @@ namespace Turist.Api.Migrations
 
             modelBuilder.Entity("Turist.Api.Models.Itinerario", b =>
                 {
-                    b.Navigation("ItinerarioActividades");
+                    b.Navigation("Asignaciones");
 
-                    b.Navigation("ItinerarioTuristas");
+                    b.Navigation("Contiene");
 
                     b.Navigation("Modificaciones");
 
@@ -822,22 +720,22 @@ namespace Turist.Api.Migrations
 
             modelBuilder.Entity("Turist.Api.Models.PaqueteTuristico", b =>
                 {
-                    b.Navigation("GuiaPaquetes");
+                    b.Navigation("Autorizados");
+
+                    b.Navigation("Clasificaciones");
+
+                    b.Navigation("Inscripciones");
 
                     b.Navigation("Itinerarios");
-
-                    b.Navigation("PaqueteCategorias");
-
-                    b.Navigation("TuristaPaquetes");
                 });
 
             modelBuilder.Entity("Turist.Api.Models.Turista", b =>
                 {
-                    b.Navigation("ItinerarioTuristas");
+                    b.Navigation("Asignaciones");
+
+                    b.Navigation("Inscripciones");
 
                     b.Navigation("Modificaciones");
-
-                    b.Navigation("TuristaPaquetes");
 
                     b.Navigation("Valoraciones");
 

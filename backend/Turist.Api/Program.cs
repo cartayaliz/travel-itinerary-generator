@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Turist.Api.Data;
+using Turist.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

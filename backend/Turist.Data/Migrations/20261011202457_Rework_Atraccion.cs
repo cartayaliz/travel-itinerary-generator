@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Turist.Api.Migrations
+namespace Turist.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Rework_Atraccion : Migration

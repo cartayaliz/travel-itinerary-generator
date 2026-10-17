@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Turist.Api.Migrations
+namespace Turist.Data.Migrations
 {
     /// <inheritdoc />
     public partial class CorregirNombresTablas : Migration

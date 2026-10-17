@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Turist.Domain.Models;
 
-namespace Turist.Api.Data;
+namespace Turist.Data;
 
 public class TuristDbContext : DbContext
 {

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Turist.Api.Data;
+using Turist.Data;
 
 #nullable disable
 
-namespace Turist.Api.Migrations
+namespace Turist.Data.Migrations
 {
     [DbContext(typeof(TuristDbContext))]
     [Migration("20261011202457_Rework_Atraccion")]
