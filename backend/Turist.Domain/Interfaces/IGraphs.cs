@@ -144,12 +144,14 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <returns></returns>
     (int[] pi, TWeight[] d) DijkstraGetMst(int from);
 }
-
-// public interface IWeightlessGraph : INodeSet
-// {
-//     IEnumerable<(int from, int To)> GetEdges();
-//     IEnumerable<int> GetNeighbors(int from);
-//     void AddEdge(int from, int to);
-//     void RemoveEdge(int from, int to);
-//     bool HasEdge(int from, int to);
-// }
+/// <summary>
+/// Representa un grafo no ponderado.
+/// </summary>
+public interface IWeightlessGraph : INodeSet
+{
+    IEnumerable<(int from, int To)> Edges;
+    IEnumerable<int> GetNeighbors(int from);
+    void AddEdge(int from, int to);
+    void RemoveEdge(int from, int to);
+    bool HasEdge(int from, int to);
+}
