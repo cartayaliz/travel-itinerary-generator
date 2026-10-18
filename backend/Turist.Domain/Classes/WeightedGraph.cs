@@ -1,5 +1,4 @@
-﻿using System.Data.SqlTypes;
-using System.Numerics;
+﻿using System.Numerics;
 using Turist.Domain.Interfaces;
 
 namespace Turist.Domain.Classes;
@@ -13,13 +12,13 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
 {
     private readonly Dictionary<int, List<(int to, TWeight weight)>> _adj = [];
 
-    public int NodesCount { get => _adj.Keys.Count; }
+    public int NodesCount => _adj.Keys.Count;
 
     public int EdgesCount
     {
         get
         {
-            int count = 0;
+            var count = 0;
             foreach (var item in _adj)
             {
                 if (item.Value.Count <= 0) continue;
@@ -29,9 +28,9 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
         }
     }
 
-    public IEnumerable<int> Nodes { get => _adj.Keys; }
+    public IEnumerable<int> Nodes => _adj.Keys;
 
-    public IEnumerable<(int from, int to, TWeight weight)> Edges { get => GetEdges(); }
+    public IEnumerable<(int from, int to, TWeight weight)> Edges => GetEdges();
 
     public void AddNode(int node)
     {
@@ -66,21 +65,22 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
                 yield return (kvp.Key, to, weight);
             }
         }
-        yield break;
     }
 
     public void AddEdge(int from, int to, TWeight weight) => _adj[from].Add((to, weight));
 
-    public int RemoveEdge(int from, int to)
+    public bool RemoveEdge(int from, int to)
     {
         if (_adj.TryGetValue(from, out var neighbors))
         {
-            return neighbors.RemoveAll(n => n.to == to);
+            neighbors.RemoveAll(n => n.to == to);
+            return true;
         }
-        return 0;
+        return false;
     }
 
-    public bool HasEdge(int from, int to) => _adj.ContainsKey(from) && _adj[from].Any(n => n.to == to);
+    public bool HasEdge(int from, int to) 
+        => _adj.ContainsKey(from) && _adj[from].Any(n => n.to == to);
 
     public IEnumerable<(int to, TWeight weight)> GetNeighbors(int from)
     {
@@ -129,17 +129,17 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
 
     public (int[] pi, TWeight[] d) DijkstraGetMst(int from)
     {
-        var V = Nodes;
+        var v = Nodes;
         TWeight[] d = new TWeight[NodesCount];
         int[] pi = new int[NodesCount];
 
-        InitSingleSource(from, d, pi, V);
-        var minHeap = BuildMinHeap(V, d);
-        List<int> S = [];
+        InitSingleSource(from, d, pi, v);
+        var minHeap = BuildMinHeap(v, d);
+        List<int> s = [];
         while (minHeap.Count > 0)
         {
             var u = minHeap.Dequeue();
-            S.Add(u);
+            s.Add(u);
             foreach (var (to, weight) in GetNeighbors(u))
             {
                 Relax(u, to, weight);

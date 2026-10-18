@@ -16,11 +16,16 @@
 
   <ItemGroup>
     <ProjectReference Include="../Turist.Domain/Turist.Domain.csproj" />
-    <ProjectReference Include="../Turist.Infrastructure/Turist.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fakes\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="RouteSystemTests\" />
   </ItemGroup>
 
 </Project>

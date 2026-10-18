@@ -6,8 +6,6 @@
         si grafo no contiene nodo de igual id: añadirlo.
     - eliminar-actividad-grafo(id):
         si grafo contiene actividad de igual id: eliminarlo junto a sus aristas incidentes.
-    - cambiar-cancelación(id, estado de cancelación):
-        dado su id cambiar estado de cancelación de actividad.
     - añadir-actividad(atracción):
         si grafo no contiene nodo de igual id: añadirlo.
     - eliminar-atracción(id):
@@ -24,11 +22,8 @@
         calcula el costo total del transporte en el itinerario
     - calcular-tiempo(itinerario):
         calcular el tiempo total de un itinerario (actividades ordenadas y horarios).
-    - validar-horario(itinerario):
-        valida y halla conflictos entre horarios en itinerary.
     - recomendar-actividad(origen, momento, radio, filtro de actividad):
         dado una ubicación geográfica: devolver id de actividad que:
-            - esté abierta en el momento.
             - no esté cancelada.
             - ubicación dentro del radio.
             - que cumpla el filtro.

@@ -81,7 +81,7 @@ public interface IWeightedGraph<TWeight> : INodeSet
     IEnumerable<(int to, TWeight weight)> GetNeighbors(int from);
 
     /// <summary>
-    /// Añade una arista con peso.
+    /// Añade arista con peso.
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
@@ -89,16 +89,16 @@ public interface IWeightedGraph<TWeight> : INodeSet
     void AddEdge(int from, int to, TWeight weight);
 
     /// <summary>
-    /// Elimina una arista.
+    /// Elimina arista.
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
-    int RemoveEdge(int from, int to);
+    bool RemoveEdge(int from, int to);
 
     /// <summary>
     /// Devuelve:
-    ///     - true: si la arista existe.
+    ///     - true: si la arista existe;
     ///     - false: caso contrario.
     /// </summary>
     /// <param name="from"></param>
@@ -147,11 +147,38 @@ public interface IWeightedGraph<TWeight> : INodeSet
 /// <summary>
 /// Representa un grafo no ponderado.
 /// </summary>
-public interface IWeightlessGraph : INodeSet
+public interface IUnweightedGraph : INodeSet
 {
-    IEnumerable<(int from, int To)> Edges;
+    /// <summary>
+    /// Devuelve el conjunto de aristas.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<(int from, int To)> Edges { get; }
+    /// <summary>
+    /// Devuelve los vecinos.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <returns></returns>
     IEnumerable<int> GetNeighbors(int from);
+    /// <summary>
+    /// Añade arista.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
     void AddEdge(int from, int to);
-    void RemoveEdge(int from, int to);
+    /// <summary>
+    /// Elimina arista.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    bool RemoveEdge(int from, int to);
+    /// <summary>
+    /// Devuelve:
+    ///     - true: si la arista existe;
+    ///     - false: caso contario.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
     bool HasEdge(int from, int to);
 }
