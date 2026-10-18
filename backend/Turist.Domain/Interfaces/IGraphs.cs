@@ -20,7 +20,7 @@ public interface INodeSet
     /// Añade un nodo.
     /// </summary>
     /// <param name="node"></param>
-    void AddNode(int node);
+    int AddNode();
 
     /// <summary>
     /// Elimina un nodo y sus aristas incidentes.
@@ -66,20 +66,17 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// </summary>
     /// <returns></returns>
     int EdgesCount { get; }
-
     /// <summary>
     /// Devuelve el conjunto de aristas.
     /// </summary>
     /// <returns></returns>
     IEnumerable<(int from, int to, TWeight weight)> Edges { get; }
-
     /// <summary>
     /// Devuelve los vecinos. 
     /// </summary>
     /// <param name="from"></param>
     /// <returns></returns>
     IEnumerable<(int to, TWeight weight)> GetNeighbors(int from);
-
     /// <summary>
     /// Añade arista con peso.
     /// </summary>
@@ -95,7 +92,6 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <param name="to"></param>
     /// <returns></returns>
     bool RemoveEdge(int from, int to);
-
     /// <summary>
     /// Devuelve:
     ///     - true: si la arista existe;
@@ -105,7 +101,6 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <param name="to"></param>
     /// <returns></returns>
     bool HasEdge(int from, int to);
-
     /// <summary>
     /// Devuelve el peso de una arista dada.
     /// </summary>
@@ -113,7 +108,6 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <param name="to"></param>
     /// <returns></returns>
     TWeight? GetWeight(int from, int to);
-
     /// <summary>
     /// Devuelve:
     ///     - true: si la arista existe. Variable de salida es asignada el peso de la arista hallada.
@@ -124,7 +118,6 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <param name="weight"></param>
     /// <returns></returns>
     bool TryGetWeight(int from, int to, out TWeight? weight);
-
     /// <summary>
     /// Asigna el peso a una arista dada.
     /// Devuelve:
@@ -136,13 +129,12 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <param name="newWeight"></param>
     /// <returns></returns>
     bool SetWeight(int from, int to, TWeight newWeight);
-
     /// <summary>
     /// Árbol abarcador de costo mínimo desde un punto de origen por algoritmo de Dijkstra.
     /// </summary>
     /// <param name="from"></param>
     /// <returns></returns>
-    (int[] parents, TWeight[] distances) DijkstraGetMst(int from);
+    (int[] parents, TWeight[] distances, bool[] hasDistance) DijkstraGetMst(int from);
 }
 /// <summary>
 /// Representa un grafo no ponderado.

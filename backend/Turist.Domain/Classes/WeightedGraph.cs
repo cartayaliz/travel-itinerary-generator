@@ -7,7 +7,7 @@ namespace Turist.Domain.Classes;
 /// Representa un grafo ponderado dirigido.
 /// </summary>
 public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IComparable<TWeight>,
-                                                                              IAdditiveIdentity<TWeight, TWeight>, 
+                                                                              IAdditiveIdentity<TWeight, TWeight>,
                                                                               IAdditionOperators<TWeight, TWeight, TWeight>
 {
     private readonly Dictionary<int, List<(int to, TWeight weight)>> _adj = [];
@@ -32,12 +32,11 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
 
     public IEnumerable<(int from, int to, TWeight weight)> Edges => GetEdges();
 
-    public void AddNode(int node)
+    public int AddNode()
     {
-        if (!_adj.ContainsKey(node))
-        {
-            _adj.Add(node, []);
-        }
+        var n = _adj.Keys.Count;
+        _adj.Add(n, []);
+        return n;
     }
 
     public bool RemoveNode(int node)
@@ -79,7 +78,7 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
         return false;
     }
 
-    public bool HasEdge(int from, int to) 
+    public bool HasEdge(int from, int to)
         => _adj.ContainsKey(from) && _adj[from].Any(n => n.to == to);
 
     public IEnumerable<(int to, TWeight weight)> GetNeighbors(int from)
@@ -127,43 +126,60 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
         return false;
     }
 
-    public (int[] parents, TWeight[] distances) DijkstraGetMst(int from)
+    public (int[] parents, TWeight[] distances, bool[] hasDistance) DijkstraGetMst(int source)
     {
-        var v = Nodes;
-        TWeight[] d = new TWeight[NodesCount];
-        int[] pi = new int[NodesCount];
-
-        InitSingleSource(from, d, pi, v);
-        var minHeap = BuildMinHeap(v, d);
-        List<int> s = [];
-        while (minHeap.Count > 0)
+        var distances = new TWeight[NodesCount];
+        var hasDistance = new bool[NodesCount];
+        int[] parents = new int[NodesCount];
+        
+        for (int i = 0; i < NodesCount; i++)
         {
-            var u = minHeap.Dequeue();
-            s.Add(u);
+            parents[i] = -1;
+        }
+        hasDistance[source] = true;
+        distances[source] = TWeight.AdditiveIdentity;
+
+        var queue = new PriorityQueue<int, TWeight>();
+        queue.Enqueue(source, distances[source]);
+        while (queue.TryDequeue(out var u, out var queuedDistance))
+        {
+            if (!hasDistance[u] || queuedDistance.CompareTo(distances[u]) != 0)
+                continue;
+
             foreach (var (to, weight) in GetNeighbors(u))
             {
-                Relax(u, to, weight);
+                var candidate = distances[u] + weight;
+
+                if (!hasDistance[to] ||
+                    candidate.CompareTo(distances[to]) < 0)
+                {
+                    distances[to] = candidate;
+                    hasDistance[to] = true;
+                    parents[to] = u;
+                    queue.Enqueue(to, candidate);
+                }
             }
         }
-        return (pi, d);
+        return (parents, distances, hasDistance);
 
-        void Relax(int u, int v, TWeight w)
+        void Relax(int u, int v, TWeight weight)
         {
-            if (d[v].CompareTo(d[u] + w) > 0)
+            if (!hasDistance[v] || (distances[u] + weight).CompareTo(distances[v]) < 0)
             {
-                d[v] = d[u] + w;
-                pi[v] = u;
+                distances[v] = distances[u] + weight;
+                hasDistance[v] = true;
             }
         }
 
-        void InitSingleSource(int from, TWeight?[] d, int[] pi, IEnumerable<int> V)
+        void InitSingleSource(int source, TWeight?[] d, int[] pi, IEnumerable<int> V)
         {
             foreach (var n in V)
             {
                 d[n] = default;
-                pi[n] = int.MaxValue;
+                pi[n] = -1;
             }
-            d[from] = TWeight.AdditiveIdentity;
+            distances[source] = TWeight.AdditiveIdentity;
+            hasDistance[source] = true;
         }
 
         PriorityQueue<int, TWeight> BuildMinHeap(IEnumerable<int> v, TWeight[] d)

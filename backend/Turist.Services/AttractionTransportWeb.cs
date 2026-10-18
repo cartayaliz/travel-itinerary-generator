@@ -4,33 +4,6 @@ using Turist.Domain.Interfaces;
 
 namespace Turist.Services;
 
-public class Weight: IComparable<Weight>, IAdditiveIdentity<Weight, Weight>, IAdditionOperators<Weight, Weight, Weight>
-{
-    public TimeSpan Time;
-    public decimal Cost;
-
-    public Weight(TimeSpan time, decimal cost)
-    {
-        Time = time;
-        Cost = cost;
-    }
-
-    public static Weight AdditiveIdentity => new(TimeSpan.Zero, 0);
-
-    public int CompareTo(Weight? other)
-    {
-        if (other is null) return 1;
-        var timeComparison = Time.CompareTo(other.Time);
-        if (timeComparison != 0) return timeComparison;
-        return Cost.CompareTo(other.Cost);
-    }
-
-    public static Weight operator +(Weight left, Weight right)
-    {
-        return new(left.Time + right.Time, left.Cost + right.Cost);
-    }
-}
-
 public class AttractionTransportWeb
 {
     private readonly WeightedGraph<Weight> _fGraph;
@@ -62,12 +35,10 @@ public class AttractionTransportWeb
         return true;
     }
 
-    public void AddActivityGraph(IActivity activity)
+    public int AddActivityGraph(int id)
     {
-        var n = _fGraph.NodesCount;
-        _fGraph.AddNode(n);
-        _bGraph.AddNode(n);
-        _activityNodePairs[activity.Id] = n;
+        _fGraph.AddNode();
+        return _activityNodePairs[id] = _bGraph.AddNode();
     }
 
     public bool RemoveActivityGraph(int id)
@@ -89,13 +60,19 @@ public class AttractionTransportWeb
         return true;
     }
 
+    public int AddAttractionGraph(int id)
+    {
+        _fGraph.AddNode();
+        return _attractionNodePairs[id] = _bGraph.AddNode();
+    }
+
     public bool RemoveAttractionGraph(int id)
     {
         int node = _attractionNodePairs[id];
         return _fGraph.RemoveNode(node) && _bGraph.RemoveNode(node);
     }
 
-    public void AddEdge(int nodeL, int nodeR, TimeSpan time, decimal cost)
+    public void AddTransport(int nodeL, int nodeR, TimeSpan time, decimal cost)
     {
         var weight = new Weight(time, cost);
         _fGraph.AddEdge(nodeL, nodeR, weight);
@@ -115,7 +92,7 @@ public class AttractionTransportWeb
         {
             var act = _activityNodePairs[activities[i]];
             var nextAct = _activityNodePairs[activities[i + 1]];
-            if (!_fGraph.TryGetWeight(act, nextAct, out Weight? w) || w is null)
+            if (!_fGraph.TryGetWeight(act, nextAct, out Weight w))
             {
                 return decimal.MaxValue;
             }
@@ -135,23 +112,35 @@ public class AttractionTransportWeb
                 m-f <- f[n]
         retorno mejor-nodo
     */
-    public int? ProposeAlternative(int origin, int destination, DateTime maxTime, decimal maxCost, Func<IActivity, bool> filterAct)
+    /// <summary>
+    /// Busca actividad tal que:
+    ///     - pertenezca a un camino minimal desde origen hasta destino.
+    ///     - no cumpla el filtro.
+    ///     - distinta al origen y destino.
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <param name="destination"></param>
+    /// <param name="filterAct"></param>
+    public int? ProposeAlternative(int origin, int destination, Func<int, bool> filterAct)
+    /// <returns></returns>
     {
-        Weight[] fD = _fGraph.DijkstraGetMst(origin).distances;
-        Weight[] bD = _bGraph.DijkstraGetMst(origin).distances;
-        (Weight, int)? best = null;
-        for (int i = 0; i < fD.Length; i++)
-        {
-            var temp = fD[i] + bD[i];
-            if (best is null || best.Value.Item1.CompareTo(temp) > 0)
-            {
-                best = new(temp, i);
-            }
-        }
-        if (best == null)
-        {
+        var fDijkstra = _fGraph.DijkstraGetMst(origin);
+        var bDijkstra = _bGraph.DijkstraGetMst(destination);
+        
+        if (!fDijkstra.hasDistance[destination] || fDijkstra.parents[destination] == origin)
             return null;
+
+
+
+        (Weight weight, int node)? best = null;
+        for (int i = 0; i < _fGraph.NodesCount; i++)
+        {
+            if (i == origin || i == destination || !filterAct(i)) continue;
+
+            var temp = fDijkstra.distances[i] + bDijkstra.distances[i];
+            if (best is null || best.Value.weight.CompareTo(temp) > 0)
+                best = new(temp, i);
         }
-        return best.Value.Item2;
+        return best?.node;
     }
 }
