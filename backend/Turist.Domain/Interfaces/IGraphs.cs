@@ -142,7 +142,7 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// </summary>
     /// <param name="from"></param>
     /// <returns></returns>
-    (int[] pi, TWeight[] d) DijkstraGetMst(int from);
+    (int[] parents, TWeight[] distances) DijkstraGetMst(int from);
 }
 /// <summary>
 /// Representa un grafo no ponderado.

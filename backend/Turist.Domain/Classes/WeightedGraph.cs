@@ -127,7 +127,7 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
         return false;
     }
 
-    public (int[] pi, TWeight[] d) DijkstraGetMst(int from)
+    public (int[] parents, TWeight[] distances) DijkstraGetMst(int from)
     {
         var v = Nodes;
         TWeight[] d = new TWeight[NodesCount];
