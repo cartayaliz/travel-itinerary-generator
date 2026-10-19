@@ -1,0 +1,1067 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="PSn-XzEElQVNnwJHilHS">
+    <mxGraphModel dx="1336" dy="569" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#FFFFFF,#4D4D4D)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-2" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Usuarios&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="110" x="19" y="204" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="usuarioID" vertex="1">
+          <mxGeometry height="40" width="90" x="-86" y="154" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="nombre" vertex="1">
+          <mxGeometry height="40" width="90" x="29" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-10" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-2" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-9" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="14" y="244" as="sourcePoint" />
+            <mxPoint x="174" y="244" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-11" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-2" style="endArrow=none;html=1;rounded=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-41" y="216.51" />
+            </Array>
+            <mxPoint x="-31" y="284" as="sourcePoint" />
+            <mxPoint x="-36" y="234" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-14" parent="1" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=mxgraph.basic.polygon;polyCoords=[[0.25,0],[0.75,0],[1,0.5],[0.75,1],[0.25,1],[0,0.5]];polyline=0;labelPosition=center;align=center;polyCurves=[[],[],[],[],[],[]];" value="&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Tipo&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="34" y="304" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-32" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Turistas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="19" y="420.25" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-33" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;dashed=1;" value="usuarioID" vertex="1">
+          <mxGeometry height="40" width="90" x="-73.5" y="379" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-36" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-32" style="endArrow=none;html=1;rounded=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;elbow=vertical;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-33" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-28" y="445" />
+            </Array>
+            <mxPoint x="-11" y="509" as="sourcePoint" />
+            <mxPoint x="-16" y="459" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-37" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Jefe_de&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Operaciones&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="254" y="426.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-42" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="edad" vertex="1">
+          <mxGeometry height="40" width="90" x="31.5" y="489" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-44" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-32" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-42" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="34" y="489" as="sourcePoint" />
+            <mxPoint x="6" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-45" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-2" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="224" y="424" as="sourcePoint" />
+            <mxPoint x="384" y="424" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-46" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-14" style="endArrow=none;html=1;rounded=1;exitX=0.978;exitY=0.505;exitDx=0;exitDy=0;exitPerimeter=0;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-37" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="234" y="434" as="sourcePoint" />
+            <mxPoint x="294" y="324" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-47" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-14" style="endArrow=none;html=1;rounded=1;exitX=0.52;exitY=1.046;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-32" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="76" y="382" />
+              <mxPoint x="77" y="382" />
+            </Array>
+            <mxPoint x="244" y="444" as="sourcePoint" />
+            <mxPoint x="404" y="444" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-48" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-14" style="endArrow=none;html=1;rounded=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-55" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-151" y="324" />
+            </Array>
+            <mxPoint x="254" y="454" as="sourcePoint" />
+            <mxPoint x="-116" y="324" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-55" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Guias_Turisticos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="-208.5" y="416.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-56" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;dashed=1;" value="usuarioID" vertex="1">
+          <mxGeometry height="40" width="90" x="-306" y="376.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-57" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-55" style="endArrow=none;html=1;rounded=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;elbow=vertical;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-56" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-261" y="442" />
+            </Array>
+            <mxPoint x="-243.5" y="506.5" as="sourcePoint" />
+            <mxPoint x="-248.5" y="456.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-58" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="especialidad" vertex="1">
+          <mxGeometry height="40" width="90" x="-196" y="486.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-59" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-55" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-58" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-198.5" y="486.5" as="sourcePoint" />
+            <mxPoint x="-226.5" y="502.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-60" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;dashed=1;" value="usuarioID" vertex="1">
+          <mxGeometry height="40" width="90" x="154" y="386.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-61" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-37" style="endArrow=none;html=1;rounded=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;elbow=vertical;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-60" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="199" y="451.53" />
+            </Array>
+            <mxPoint x="244.5" y="451.5" as="sourcePoint" />
+            <mxPoint x="211.5" y="466.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-63" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Paquetes_Turisticos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="57.5" width="160" x="947.5" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-65" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="paqueteID" vertex="1">
+          <mxGeometry height="40" width="90" x="877.5" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-66" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-65" style="endArrow=none;html=1;rounded=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-63" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="922.5" y="245" />
+            </Array>
+            <mxPoint x="697.5" y="340" as="sourcePoint" />
+            <mxPoint x="962.86" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-67" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="nombre" vertex="1">
+          <mxGeometry height="40" width="90" x="982.5" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-69" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="destino" vertex="1">
+          <mxGeometry height="40" width="90" x="1087.5" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-70" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-69" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.931;entryY=0.012;entryDx=0;entryDy=0;curved=0;entryPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-63" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1132.5" y="246" />
+            </Array>
+            <mxPoint x="947.5" y="320" as="sourcePoint" />
+            <mxPoint x="1197.5" y="251" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-71" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-67" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-63" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="892.5" y="200" as="sourcePoint" />
+            <mxPoint x="957.5" y="281" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-73" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Turistas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="562.5" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-74" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Guias_Turisticos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="567.5" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-75" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Inscribir" vertex="1">
+          <mxGeometry height="45" width="70" x="747.5" y="207.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-76" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Autorizar" vertex="1">
+          <mxGeometry height="50" width="75" x="742.5" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-83" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-75" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-73" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="777.5" y="215" as="sourcePoint" />
+            <mxPoint x="937.5" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-84" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-74" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-76" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="747.5" y="235" as="sourcePoint" />
+            <mxPoint x="682.5" y="205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-85" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-76" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;curved=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-63" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="882.5" y="315" />
+              <mxPoint x="882.5" y="288" />
+            </Array>
+            <mxPoint x="667.5" y="330" as="sourcePoint" />
+            <mxPoint x="737.5" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-86" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-75" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;curved=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-63" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="882.5" y="230" />
+              <mxPoint x="882.5" y="259" />
+            </Array>
+            <mxPoint x="812.5" y="330" as="sourcePoint" />
+            <mxPoint x="1017.5" y="293" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-88" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Categorias&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="1307.5" y="248.75" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-89" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Clasificar&lt;div&gt;Paquetes&lt;/div&gt;" vertex="1">
+          <mxGeometry height="53.75" width="88" x="1158" y="246.88" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-90" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-89" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-63" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1492.5" y="265" as="sourcePoint" />
+            <mxPoint x="1232.5" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-91" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-89" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-88" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1192.5" y="285" as="sourcePoint" />
+            <mxPoint x="1112.5" y="279" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-92" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="categoriaID" vertex="1">
+          <mxGeometry height="40" width="90" x="1262.5" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-93" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-92" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-88" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1308" y="237" />
+              <mxPoint x="1336" y="237" />
+            </Array>
+            <mxPoint x="1142.5" y="195" as="sourcePoint" />
+            <mxPoint x="1101.5" y="251" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-95" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="nombre" vertex="1">
+          <mxGeometry height="40" width="90" x="1397.5" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-96" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-95" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-88" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1443" y="234" />
+              <mxPoint x="1394" y="234" />
+            </Array>
+            <mxPoint x="1452.5" y="200.5" as="sourcePoint" />
+            <mxPoint x="1481.5" y="259.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-97" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Itinerarios&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="970" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-98" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Pertenecer" vertex="1">
+          <mxGeometry height="50" width="75" x="990" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-99" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-98" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-97" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1185" y="448" as="sourcePoint" />
+            <mxPoint x="1345" y="448" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-100" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-63" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-98" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1040.5" y="410" as="sourcePoint" />
+            <mxPoint x="1040.5" y="438" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-101" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Itinerarios&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="967.5" y="682.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-102" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="itinerarioID" vertex="1">
+          <mxGeometry height="40" width="90" x="885" y="597.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-103" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="nombre" vertex="1">
+          <mxGeometry height="40" width="90" x="980" y="597.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-104" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-103" style="endArrow=none;html=1;rounded=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-101" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1030" y="397.5" as="sourcePoint" />
+            <mxPoint x="1030" y="430.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-105" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-102" style="endArrow=none;html=1;rounded=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-101" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="660" />
+              <mxPoint x="996" y="660" />
+            </Array>
+            <mxPoint x="1030" y="627.5" as="sourcePoint" />
+            <mxPoint x="1030" y="687.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-107" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Turistas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="575" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-108" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Guias_Turisticos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="580" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-109" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Asignar" vertex="1">
+          <mxGeometry height="45" width="70" x="760" y="637.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-110" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Crear" vertex="1">
+          <mxGeometry height="50" width="75" x="755" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-111" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-109" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-107" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="790" y="645" as="sourcePoint" />
+            <mxPoint x="950" y="645" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-112" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-108" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-110" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="760" y="665" as="sourcePoint" />
+            <mxPoint x="695" y="635" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-113" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-101" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-109" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="899" y="695" />
+              <mxPoint x="899" y="660" />
+            </Array>
+            <mxPoint x="925" y="695" as="sourcePoint" />
+            <mxPoint x="855" y="695" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-114" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-101" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-110" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="899" y="720" />
+              <mxPoint x="899" y="745" />
+            </Array>
+            <mxPoint x="973" y="700" as="sourcePoint" />
+            <mxPoint x="835" y="665" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-115" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="fecha_asignacion" vertex="1">
+          <mxGeometry height="40" width="105" x="742.5" y="555" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-116" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="fecha_creacion" vertex="1">
+          <mxGeometry height="40" width="90" x="980" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-117" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-115" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-109" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="665" as="sourcePoint" />
+            <mxPoint x="695" y="665" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-118" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-116" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-101" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="970" y="755" as="sourcePoint" />
+            <mxPoint x="832" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-119" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Actividades&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="1586" y="882.25" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-122" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;dashed=1;" value="paradaID" vertex="1">
+          <mxGeometry height="40" width="90" x="1452" y="876" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-123" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-122" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-119" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1564" y="896" />
+              <mxPoint x="1564" y="895" />
+            </Array>
+            <mxPoint x="1421" y="828.5" as="sourcePoint" />
+            <mxPoint x="1380" y="884.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-126" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Atracciones&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="1160.25" y="866" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-129" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;dashed=1;" value="paradaID" vertex="1">
+          <mxGeometry height="40" width="90" x="1052" y="923" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-130" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-129" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-126" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="943" />
+            </Array>
+            <mxPoint x="995.25" y="812.25" as="sourcePoint" />
+            <mxPoint x="954.25" y="868.25" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-137" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="tipo" vertex="1">
+          <mxGeometry height="40" width="90" x="1730" y="874" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-138" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="nivel_esfuerzo" vertex="1">
+          <mxGeometry height="40" width="90" x="1726" y="958" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-140" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-137" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-119" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1715" y="894" />
+              <mxPoint x="1715" y="895" />
+            </Array>
+            <mxPoint x="1721" y="808.5" as="sourcePoint" />
+            <mxPoint x="1676" y="885.8" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-141" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-138" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;exitX=0.001;exitY=0.556;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-119" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1726" y="932" />
+            </Array>
+            <mxPoint x="1741" y="863.5" as="sourcePoint" />
+            <mxPoint x="1706" y="887.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-153" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="hora_inicio" vertex="1">
+          <mxGeometry height="40" width="90" x="1626" y="1006" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-154" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="duracion" vertex="1">
+          <mxGeometry height="40" width="90" x="1480" y="958" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-155" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-153" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-119" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1671" y="969" />
+              <mxPoint x="1672" y="969" />
+            </Array>
+            <mxPoint x="1711.5" y="954" as="sourcePoint" />
+            <mxPoint x="1688.5" y="998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-156" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-154" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.374;entryY=0.982;entryDx=0;entryDy=0;entryPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-119" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1629" y="978" />
+            </Array>
+            <mxPoint x="1742" y="883" as="sourcePoint" />
+            <mxPoint x="1703" y="897" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-157" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="horario_cierre" vertex="1">
+          <mxGeometry height="40" width="90" x="1172.75" y="974" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-158" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="horario_apertura" vertex="1">
+          <mxGeometry height="40" width="96" x="1306" y="914" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-160" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-126" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-157" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1319" y="881" as="sourcePoint" />
+            <mxPoint x="1277" y="881" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-161" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Clasificar&lt;div&gt;Paradas&lt;/div&gt;" vertex="1">
+          <mxGeometry height="53.75" width="88" x="1499" y="246.88" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-163" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Paradas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="1664" y="248.75" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-165" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-161" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-88" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1491" y="258" as="sourcePoint" />
+            <mxPoint x="1442" y="287" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-168" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-163" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-161" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1661" y="152.75" as="sourcePoint" />
+            <mxPoint x="1612" y="181.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-169" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Contiene" vertex="1">
+          <mxGeometry height="45" width="75" x="1140" y="685" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-171" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-101" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-169" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1258.5" y="805" as="sourcePoint" />
+            <mxPoint x="1120.5" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-172" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Paradas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="1362" y="682.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-173" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-172" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-169" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1152" y="765" as="sourcePoint" />
+            <mxPoint x="1209" y="765" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-174" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="paradaID" vertex="1">
+          <mxGeometry height="40" width="90" x="1228" y="608" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-176" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-172" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-174" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1273" y="683" />
+            </Array>
+            <mxPoint x="1364" y="710" as="sourcePoint" />
+            <mxPoint x="1217" y="710" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-177" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="nombre" vertex="1">
+          <mxGeometry height="40" width="90" x="1318" y="573" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-178" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="latitud" vertex="1">
+          <mxGeometry height="40" width="90" x="1426" y="573" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-179" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="longitud" vertex="1">
+          <mxGeometry height="40" width="90" x="1514" y="623.25" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-180" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-172" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-177" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1391" y="648" />
+              <mxPoint x="1363" y="648" />
+            </Array>
+            <mxPoint x="1364" y="685" as="sourcePoint" />
+            <mxPoint x="1275" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-181" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-172" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-178" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1448" y="648" />
+              <mxPoint x="1471" y="648" />
+            </Array>
+            <mxPoint x="1393" y="685" as="sourcePoint" />
+            <mxPoint x="1365" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-182" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-172" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-179" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1559" y="683" />
+            </Array>
+            <mxPoint x="1450" y="685" as="sourcePoint" />
+            <mxPoint x="1473" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-183" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="orden" vertex="1">
+          <mxGeometry height="30" width="57.5" x="1148.75" y="645" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-184" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-183" style="endArrow=none;html=1;rounded=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-169" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1765" y="610" as="sourcePoint" />
+            <mxPoint x="1765" y="623" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-185" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-126" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-158" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1275" y="934" />
+            </Array>
+            <mxPoint x="1162" y="1006" as="sourcePoint" />
+            <mxPoint x="1184" y="917" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-186" parent="1" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=mxgraph.basic.polygon;polyCoords=[[0.25,0],[0.75,0],[1,0.5],[0.75,1],[0.25,1],[0,0.5]];polyline=0;labelPosition=center;align=center;polyCurves=[[],[],[],[],[],[]];" value="&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Tipo&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="1379.5" y="772" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-188" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-186" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;exitX=0.506;exitY=0.078;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-172" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1420" y="752" />
+              <mxPoint x="1420" y="752" />
+            </Array>
+            <mxPoint x="1550.5" y="867" as="sourcePoint" />
+            <mxPoint x="1567.5" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-189" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-186" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.006;exitY=0.4;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;exitPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-126" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1218" y="788" />
+            </Array>
+            <mxPoint x="1319" y="976" as="sourcePoint" />
+            <mxPoint x="1350" y="994" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-190" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-186" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.982;exitY=0.468;exitDx=0;exitDy=0;curved=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-119" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1644" y="791" />
+            </Array>
+            <mxPoint x="1382" y="790" as="sourcePoint" />
+            <mxPoint x="1708" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-191" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="descripcion" vertex="1">
+          <mxGeometry height="40" width="90" x="1374.5" y="508" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-192" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-172" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-191" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1393" y="685" as="sourcePoint" />
+            <mxPoint x="1365" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-194" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Guias_Turisticos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="-150" y="671.88" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-199" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Registrar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="46" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-201" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Paradas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="188" y="671.87" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-203" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-199" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-194" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="44.5" y="681.13" as="sourcePoint" />
+            <mxPoint x="-4.5" y="710.13" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-206" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-201" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-199" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="214.5" y="575.88" as="sourcePoint" />
+            <mxPoint x="165.5" y="604.88" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-207" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Turistas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="-150" y="785.88" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-208" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Matricular" vertex="1">
+          <mxGeometry height="53.75" width="88" x="46" y="784" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-209" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Grupo&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="115" x="188" y="785.87" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-210" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-208" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-207" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="44.5" y="795.13" as="sourcePoint" />
+            <mxPoint x="-4.5" y="824.13" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-211" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-209" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-208" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="214.5" y="689.88" as="sourcePoint" />
+            <mxPoint x="165.5" y="718.88" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-212" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4" value="grupoID" vertex="1">
+          <mxGeometry height="40" width="90" x="200.5" y="876" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-213" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-209" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-212" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="204" y="870" as="sourcePoint" />
+            <mxPoint x="150" y="870" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-215" edge="1" parent="1" style="endArrow=none;html=1;rounded=1;curved=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="64.5" y="388" />
+              <mxPoint x="68.5" y="394" />
+              <mxPoint x="76.5" y="396" />
+              <mxPoint x="84.5" y="394" />
+              <mxPoint x="88.5" y="388" />
+            </Array>
+            <mxPoint x="64.5" y="362" as="sourcePoint" />
+            <mxPoint x="88.5" y="362" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-216" edge="1" parent="1" style="endArrow=none;html=1;rounded=1;curved=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="-163" y="382" />
+              <mxPoint x="-159" y="388" />
+              <mxPoint x="-151" y="390" />
+              <mxPoint x="-143" y="388" />
+              <mxPoint x="-139" y="382" />
+            </Array>
+            <mxPoint x="-163" y="356" as="sourcePoint" />
+            <mxPoint x="-139" y="356" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-217" edge="1" parent="1" style="endArrow=none;html=1;rounded=1;curved=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="299.5" y="388" />
+              <mxPoint x="303.5" y="394" />
+              <mxPoint x="311.5" y="396" />
+              <mxPoint x="319.5" y="394" />
+              <mxPoint x="323.5" y="388" />
+            </Array>
+            <mxPoint x="299.5" y="362" as="sourcePoint" />
+            <mxPoint x="323.5" y="362" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-218" edge="1" parent="1" style="endArrow=none;html=1;rounded=1;curved=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="1205.75" y="828" />
+              <mxPoint x="1209.75" y="834" />
+              <mxPoint x="1217.75" y="836" />
+              <mxPoint x="1225.75" y="834" />
+              <mxPoint x="1229.75" y="828" />
+            </Array>
+            <mxPoint x="1205.75" y="802" as="sourcePoint" />
+            <mxPoint x="1229.75" y="802" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-219" edge="1" parent="1" style="endArrow=none;html=1;rounded=1;curved=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="1631.5" y="838" />
+              <mxPoint x="1635.5" y="844" />
+              <mxPoint x="1643.5" y="846" />
+              <mxPoint x="1651.5" y="844" />
+              <mxPoint x="1655.5" y="838" />
+            </Array>
+            <mxPoint x="1631.5" y="812" as="sourcePoint" />
+            <mxPoint x="1655.5" y="812" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-220" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Visitas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="140" y="1254" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-221" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="visitasID" vertex="1">
+          <mxGeometry height="32" width="68.5" x="84" y="1200" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-222" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-221" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-220" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="118" y="1243" />
+              <mxPoint x="172" y="1243" />
+            </Array>
+            <mxPoint x="191.5" y="1144" as="sourcePoint" />
+            <mxPoint x="191.5" y="1184" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-223" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="fecha" vertex="1">
+          <mxGeometry height="32" width="54.5" x="247.5" y="1200" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-225" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-223" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-220" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="275" y="1243" />
+              <mxPoint x="235" y="1243" />
+            </Array>
+            <mxPoint x="311.5" y="1216" as="sourcePoint" />
+            <mxPoint x="384.5" y="1266" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-226" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Turistas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="140.5" y="1044" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-227" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Itinerario&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="-204" y="1254.01" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-228" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Parada&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="140" y="1456" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-229" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Valoraciones&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="486" y="1249.88" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-230" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Realizar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="159.5" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-231" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Ejecutar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="-2" y="1252.1200000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-232" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Asociar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="159" y="1360" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-233" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Valorar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="336" y="1248" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-234" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-230" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-226" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="355" y="1170" as="sourcePoint" />
+            <mxPoint x="312" y="1192" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-235" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-230" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;" target="Flpm7PDFp_SU_Yxo-rz_-220" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="206" y="1136" as="sourcePoint" />
+            <mxPoint x="206" y="1096" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-236" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-220" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-232" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="283" y="1298" as="sourcePoint" />
+            <mxPoint x="282" y="1364" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-237" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-231" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-227" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-56" y="1300" as="sourcePoint" />
+            <mxPoint x="-30" y="1376" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-238" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-232" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-228" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="304" y="1370" as="sourcePoint" />
+            <mxPoint x="202" y="1456" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-239" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-220" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.979;exitY=0.424;exitDx=0;exitDy=0;curved=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-233" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="301" y="1275" />
+              <mxPoint x="301" y="1275" />
+            </Array>
+            <mxPoint x="345" y="1324" as="sourcePoint" />
+            <mxPoint x="344" y="1390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-240" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-233" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-229" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="1320" as="sourcePoint" />
+            <mxPoint x="444" y="1386" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-241" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-231" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-220" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="103" y="1312" as="sourcePoint" />
+            <mxPoint x="102" y="1378" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-242" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="valoracionID" vertex="1">
+          <mxGeometry height="35" width="77" x="426" y="1205" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-243" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="fecha" vertex="1">
+          <mxGeometry height="32" width="54.5" x="469" y="1168" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-244" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="puntuacion" vertex="1">
+          <mxGeometry height="32" width="73" x="602" y="1168" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-245" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;" value="comentario" vertex="1">
+          <mxGeometry height="32" width="77" x="602" y="1208" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-247" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-229" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.221;exitY=0.042;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-242" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="514" y="1223" />
+            </Array>
+            <mxPoint x="425" y="1276" as="sourcePoint" />
+            <mxPoint x="487" y="1276" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-248" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-229" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.437;exitY=0.002;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-243" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="541" y="1184" />
+            </Array>
+            <mxPoint x="515" y="1253" as="sourcePoint" />
+            <mxPoint x="496" y="1216" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-249" edge="1" parent="1" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;curved=0;entryX=0.008;entryY=0.619;entryDx=0;entryDy=0;entryPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-244" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="572" y="1188" />
+            </Array>
+            <mxPoint x="572" y="1248" as="sourcePoint" />
+            <mxPoint x="544" y="1178" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-251" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-229" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.873;exitY=0.002;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" target="Flpm7PDFp_SU_Yxo-rz_-245" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="596" y="1224" />
+            </Array>
+            <mxPoint x="550" y="1251" as="sourcePoint" />
+            <mxPoint x="552" y="1186" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-252" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Valorar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="505" y="1352" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-254" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-252" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-229" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="456" y="1431" as="sourcePoint" />
+            <mxPoint x="438" y="1365" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-256" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Itinerarios&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="831" y="1353.87" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-257" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-252" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-256" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="454" y="1416" as="sourcePoint" />
+            <mxPoint x="454" y="1458" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-258" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Opinar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="686" y="1248" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-259" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Turistas&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="831" y="1250.0000000000002" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-260" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-258" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-229" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="1353" as="sourcePoint" />
+            <mxPoint x="550" y="1301" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-261" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-258" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-259" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="803" y="1275" />
+              <mxPoint x="803" y="1275" />
+            </Array>
+            <mxPoint x="679" y="1280" as="sourcePoint" />
+            <mxPoint x="613" y="1276" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-262" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Solicitar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="1023" y="1247.13" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-263" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Modificaciones&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="1184.25" y="1249.0000000000002" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-264" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="modificacionID" vertex="1">
+          <mxGeometry height="40" width="90" x="1105.25" y="1186" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-265" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="fecha_solicitud" vertex="1">
+          <mxGeometry height="40" width="90" x="1202.25" y="1138" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-266" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="fecha_respuesta" vertex="1">
+          <mxGeometry height="40" width="98" x="1310.25" y="1188" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-267" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-265" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-263" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195.25" y="1347" as="sourcePoint" />
+            <mxPoint x="1252.25" y="1347" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-268" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-266" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-263" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1279.25" y="1208" />
+            </Array>
+            <mxPoint x="1250.25" y="1179" as="sourcePoint" />
+            <mxPoint x="1250.25" y="1249" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-269" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-264" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-263" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1216.25" y="1206" />
+            </Array>
+            <mxPoint x="1311.25" y="1199" as="sourcePoint" />
+            <mxPoint x="1282.25" y="1249" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-270" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-263" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-262" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1109.25" y="1323" as="sourcePoint" />
+            <mxPoint x="1132.25" y="1365" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-271" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-259" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-262" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="990" y="1275" />
+              <mxPoint x="990" y="1274" />
+            </Array>
+            <mxPoint x="1207" y="1274" as="sourcePoint" />
+            <mxPoint x="1133" y="1274" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-272" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Afectar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="1203.25" y="1351.99" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-274" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-272" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-256" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1157" y="1414" as="sourcePoint" />
+            <mxPoint x="1247.25" y="1446.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-275" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-263" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-272" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1178.5" y="1295.0000000000002" as="sourcePoint" />
+            <mxPoint x="1184.25" y="1448" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-276" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Apoyar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="1365" y="1247.13" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-277" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-263" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-276" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1248" y="1300" as="sourcePoint" />
+            <mxPoint x="1248" y="1342" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-278" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Guias_Turisticos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="131" x="1503" y="1249.8700000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-279" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-276" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-278" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1478" y="1274" />
+              <mxPoint x="1478" y="1275" />
+            </Array>
+            <mxPoint x="1311" y="1275" as="sourcePoint" />
+            <mxPoint x="1376" y="1275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-280" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Validaciones&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="831" y="1545" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-281" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Incidir" vertex="1">
+          <mxGeometry height="53.75" width="88" x="850" y="1446" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-282" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-256" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-281" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1069" y="1491" as="sourcePoint" />
+            <mxPoint x="1069" y="1544" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-283" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-281" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-280" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="895" y="1405" as="sourcePoint" />
+            <mxPoint x="895" y="1447" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-284" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" value="validacionID" vertex="1">
+          <mxGeometry height="40" width="90" x="739" y="1613" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-285" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="fecha" vertex="1">
+          <mxGeometry height="40" width="90" x="849" y="1668" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-286" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=0;" value="estado" vertex="1">
+          <mxGeometry height="40" width="98" x="954" y="1613" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-287" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-280" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;curved=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-284" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="863" y="1633" />
+            </Array>
+            <mxPoint x="747" y="1539" as="sourcePoint" />
+            <mxPoint x="747" y="1584" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-288" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-285" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;curved=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-280" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="864" y="1596" as="sourcePoint" />
+            <mxPoint x="795" y="1628" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-289" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-286" style="endArrow=none;html=1;rounded=1;libavoidRouting=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;curved=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="Flpm7PDFp_SU_Yxo-rz_-280" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="926" y="1633" />
+            </Array>
+            <mxPoint x="895" y="1669" as="sourcePoint" />
+            <mxPoint x="895" y="1596" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-290" parent="1" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" value="Aprobar" vertex="1">
+          <mxGeometry height="53.75" width="88" x="1072" y="1543.1299999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-291" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-290" style="endArrow=none;html=1;rounded=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-280" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1036" y="1568" as="sourcePoint" />
+            <mxPoint x="1008" y="1530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-292" edge="1" parent="1" source="Flpm7PDFp_SU_Yxo-rz_-293" style="endArrow=none;html=1;rounded=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;libavoidRouting=1;" target="Flpm7PDFp_SU_Yxo-rz_-290" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1248" y="1543.12" as="sourcePoint" />
+            <mxPoint x="1220" y="1505.12" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Flpm7PDFp_SU_Yxo-rz_-293" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Jefe_de&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Operaciones&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="126" x="1227" y="1545" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
