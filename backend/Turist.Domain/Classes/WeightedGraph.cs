@@ -6,8 +6,7 @@ namespace Turist.Domain.Classes;
 /// <summary>
 /// Representa un grafo ponderado dirigido.
 /// </summary>
-public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IComparable<TWeight>,
-                                                                              IAdditiveIdentity<TWeight, TWeight>,
+public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IAdditiveIdentity<TWeight, TWeight>,
                                                                               IAdditionOperators<TWeight, TWeight, TWeight>
 {
     private readonly Dictionary<int, List<(int to, TWeight weight)>> _adj = [];
@@ -34,21 +33,19 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
 
     public int AddNode()
     {
-        var n = _adj.Keys.Count;
+        var n = _adj.Count == 0 ? 0 : _adj.Keys.Max() + 1;
         _adj.Add(n, []);
         return n;
     }
 
     public bool RemoveNode(int node)
     {
-        if (!_adj.TryGetValue(node, out var neighbors))
+        if (!_adj.ContainsKey(node))
             return false;
 
-        foreach (var (neighbor, _) in neighbors)
-        {
-            if (neighbor == node) continue;
-            _adj[neighbor].RemoveAll(n => n.to == node);
-        }
+        foreach (var neighbors in _adj.Values)
+            neighbors.RemoveAll(edge => edge.to == node);
+
         _adj.Remove(node);
         return true;
     }
@@ -84,13 +81,9 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
     public IEnumerable<(int to, TWeight weight)> GetNeighbors(int from)
     {
         if (_adj.TryGetValue(from, out var neighbors))
-        {
             return neighbors;
-        }
         else
-        {
             throw new KeyNotFoundException();
-        }
     }
 
     public TWeight? GetWeight(int from, int to)
@@ -126,70 +119,51 @@ public class WeightedGraph<TWeight> : IWeightedGraph<TWeight> where TWeight : IC
         return false;
     }
 
-    public (int[] parents, TWeight[] distances, bool[] hasDistance) DijkstraGetMst(int source)
+    public (int[] parents, TWeight[] distances, bool[] hasDistance) DijkstraGetMst(int source, Func<TWeight, TWeight, int> comparer)
     {
-        var distances = new TWeight[NodesCount];
-        var hasDistance = new bool[NodesCount];
-        int[] parents = new int[NodesCount];
-        
-        for (int i = 0; i < NodesCount; i++)
-        {
-            parents[i] = -1;
-        }
-        hasDistance[source] = true;
-        distances[source] = TWeight.AdditiveIdentity;
+        ArgumentNullException.ThrowIfNull(comparer);
+        if (!_adj.ContainsKey(source))
+            throw new ArgumentOutOfRangeException(nameof(source), "The source node does not exist in the graph.");
 
-        var queue = new PriorityQueue<int, TWeight>();
+        InitSingleSource(out bool[] hasDistance, out TWeight[] distances, out int[] parents);
+
+        var queueComparer = Comparer<TWeight>.Create((left, right) => comparer(left, right));
+        var queue = new PriorityQueue<int, TWeight>(queueComparer);
         queue.Enqueue(source, distances[source]);
         while (queue.TryDequeue(out var u, out var queuedDistance))
         {
-            if (!hasDistance[u] || queuedDistance.CompareTo(distances[u]) != 0)
+            if (!hasDistance[u] || comparer(queuedDistance, distances[u]) != 0)
                 continue;
 
             foreach (var (to, weight) in GetNeighbors(u))
             {
-                var candidate = distances[u] + weight;
-
-                if (!hasDistance[to] ||
-                    candidate.CompareTo(distances[to]) < 0)
-                {
-                    distances[to] = candidate;
-                    hasDistance[to] = true;
-                    parents[to] = u;
-                    queue.Enqueue(to, candidate);
-                }
+                Relax(u, to, weight);
             }
         }
         return (parents, distances, hasDistance);
 
-        void Relax(int u, int v, TWeight weight)
+        void Relax(int u, int to, TWeight weight)
         {
-            if (!hasDistance[v] || (distances[u] + weight).CompareTo(distances[v]) < 0)
+            var candidate = distances[u] + weight;
+
+            if (!hasDistance[to] || comparer(candidate, distances[to]) < 0)
             {
-                distances[v] = distances[u] + weight;
-                hasDistance[v] = true;
+                distances[to] = candidate;
+                hasDistance[to] = true;
+                parents[to] = u;
+                queue.Enqueue(to, candidate);
             }
         }
 
-        void InitSingleSource(int source, TWeight?[] d, int[] pi, IEnumerable<int> V)
+        void InitSingleSource(out bool[] hasDistance, out TWeight[] distances, out int[] parents)
         {
-            foreach (var n in V)
-            {
-                d[n] = default;
-                pi[n] = -1;
-            }
-            distances[source] = TWeight.AdditiveIdentity;
+            var arrayLength = _adj.Keys.Max() + 1;
+            distances = new TWeight[arrayLength];
+            hasDistance = new bool[arrayLength];
+            parents = new int[arrayLength];
+            Array.Fill(parents, -1);
             hasDistance[source] = true;
-        }
-
-        PriorityQueue<int, TWeight> BuildMinHeap(IEnumerable<int> v, TWeight[] d)
-        {
-            List<(int, TWeight)> items = [];
-            foreach (var item in v)
-            {
-                items.Add((item, d[item]));
-            }
-            return new PriorityQueue<int, TWeight>(items);
+            distances[source] = TWeight.AdditiveIdentity;
         }
     }
 }

@@ -130,11 +130,12 @@ public interface IWeightedGraph<TWeight> : INodeSet
     /// <returns></returns>
     bool SetWeight(int from, int to, TWeight newWeight);
     /// <summary>
-    /// Árbol abarcador de costo mínimo desde un punto de origen por algoritmo de Dijkstra.
+    /// Árbol de rutas mínimas desde un nodo de origen usando el algoritmo de Dijkstra.
+    /// El comparador debe definir un orden compatible con la suma de pesos y los pesos deben ser no negativos.
     /// </summary>
     /// <param name="from"></param>
     /// <returns></returns>
-    (int[] parents, TWeight[] distances, bool[] hasDistance) DijkstraGetMst(int from);
+    (int[] parents, TWeight[] distances, bool[] hasDistance) DijkstraGetMst(int from, Func<TWeight, TWeight, int> compareFunc);
 }
 /// <summary>
 /// Representa un grafo no ponderado.
