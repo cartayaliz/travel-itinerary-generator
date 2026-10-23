@@ -51,5 +51,6 @@ public class TuristDbContext : DbContext
         modelBuilder.Entity<Itinerario_Actividad>().HasKey(ia => new { ia.ItinerarioID, ia.ActividadID });
         modelBuilder.Entity<Actividad_Atraccion>().HasKey(aa => new { aa.ActividadID, aa.AtraccionID });
         modelBuilder.Entity<Itinerario_Paquete>().HasKey(ip => new { ip.ItinerarioID, ip.PaqueteID });
+        modelBuilder.Entity<Itinerario_Parada>().HasKey(ip => new { ip.ItinerarioID, ip.ParadaID });
     }
 }
