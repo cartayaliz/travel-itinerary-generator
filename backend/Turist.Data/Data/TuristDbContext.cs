@@ -27,6 +27,7 @@ public class TuristDbContext : DbContext
     public DbSet<Valoracion> Valoraciones { get; set; }
     public DbSet<Visita> Visitas { get; set; }
     public DbSet<Parada> Paradas { get; set; }
+    public DbSet<Itinerario_Paquete> ItinerarioPaquetes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,12 +37,11 @@ public class TuristDbContext : DbContext
         modelBuilder.Entity<Categoria>().HasKey(c => c.CategoriaID);
         modelBuilder.Entity<Grupo>().HasKey(g => g.GrupoID);
         modelBuilder.Entity<Itinerario>().HasKey(i => i.ItinerarioID);
-        modelBuilder.Entity<Actividad>().HasKey(a => a.ActividadID);
         modelBuilder.Entity<Validacion>().HasKey(v => v.ValidacionID);
         modelBuilder.Entity<Modificacion>().HasKey(m => m.ModificacionID);
         modelBuilder.Entity<Valoracion>().HasKey(v => v.ValoracionID);
         modelBuilder.Entity<Visita>().HasKey(v => v.VisitaID);
-        modelBuilder.Entity<Atraccion>().HasKey(a => a.AtraccionID);
+        modelBuilder.Entity<Parada>().HasKey(p => p.ParadaID);
 
         // Claves primarias compuestas de las tablas intermedias
         modelBuilder.Entity<Guia_Paquete>().HasKey(gp => new { gp.GuiaID, gp.PaqueteID });
@@ -50,5 +50,6 @@ public class TuristDbContext : DbContext
         modelBuilder.Entity<Itinerario_Turista>().HasKey(it => new { it.ItinerarioID, it.TuristaID });
         modelBuilder.Entity<Itinerario_Actividad>().HasKey(ia => new { ia.ItinerarioID, ia.ActividadID });
         modelBuilder.Entity<Actividad_Atraccion>().HasKey(aa => new { aa.ActividadID, aa.AtraccionID });
+        modelBuilder.Entity<Itinerario_Paquete>().HasKey(ip => new { ip.ItinerarioID, ip.PaqueteID });
     }
 }
