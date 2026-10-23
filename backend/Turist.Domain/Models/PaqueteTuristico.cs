@@ -10,6 +10,5 @@ public class PaqueteTuristico
     public List<Guia_Paquete> GuiaPaquetes { get; set; } = new();
     public List<Paquete_Categoria> PaqueteCategorias { get; set; } = new();
     public List<Turista_Paquete> TuristaPaquetes { get; set; } = new();
-    public List<Itinerario> Itinerarios { get; set; } = new();
     public List<Itinerario_Paquete> ItinerarioPaquetes { get; set; } = new(); 
 }

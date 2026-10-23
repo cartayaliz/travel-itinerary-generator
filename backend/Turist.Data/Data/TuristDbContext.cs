@@ -27,7 +27,7 @@ public class TuristDbContext : DbContext
     public DbSet<Valoracion> Valoraciones { get; set; }
     public DbSet<Visita> Visitas { get; set; }
     public DbSet<Parada> Paradas { get; set; }
-    public DbSet<Itinerario_Paquete> ItinerarioPaquetes { get; set; }
+    public DbSet<Itinerario_Paquete> Itinerario_Paquetes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

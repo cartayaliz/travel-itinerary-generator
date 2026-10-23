@@ -8,6 +8,5 @@ public class GuiaTuristico : Usuario
     public List<Guia_Paquete> GuiaPaquetes { get; set; } = new();
     public List<Itinerario> Itinerarios { get; set; } = new();
     public List<Parada> Paradas { get; set; } = new(); 
-    public List<Validacion> Validaciones { get; set; } = new();
     public List<Modificacion> Modificaciones { get; set; } = new();
 }
