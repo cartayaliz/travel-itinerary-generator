@@ -1,11 +1,9 @@
 namespace Turist.Domain.Models;
 
-public class Turista
+public class Turista : Usuario
 {
-    public int TuristaID { get; set; }
-    public int GrupoID { get; set; }
-    public string Nombre { get; set; } = string.Empty;
     public int Edad { get; set; }
+    public int GrupoID { get; set; }
 
     // Navegación
     public Grupo Grupo { get; set; } = null!;
