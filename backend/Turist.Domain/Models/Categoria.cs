@@ -7,6 +7,5 @@ public class Categoria
 
     // Navegación
     public List<Paquete_Categoria> PaqueteCategorias { get; set; } = new();
-    public List<Actividad> Actividades { get; set; } = new();
-    public List<Atraccion> Atracciones { get; set; } = new();
+    public List<Parada> Paradas { get; set; } = new();
 }
