@@ -1,6 +1,6 @@
 namespace Turist.Domain.DTOs;
 public record ItineraryValidationDto(
-    Guid ItineraryId,
+    int ItineraryId,
     string PackageName,
     string ReviewerName, // Jefe de operaciones
     DateTime ValidationDate,

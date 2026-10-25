@@ -1,6 +1,6 @@
 namespace Turist.Domain.DTOs;
 public record ActivityUsageDto(
-    Guid ActivityId,
+    int ActivityId,
     string ActivityName,
     string Category,
     string EffortLevel, // Bajo, Medio, Alto

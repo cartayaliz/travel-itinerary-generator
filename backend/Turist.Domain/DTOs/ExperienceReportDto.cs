@@ -1,6 +1,6 @@
 namespace Turist.Domain.DTOs;
 public record ExperienceReportDto(
-    Guid ItineraryId,
+    int ItineraryId,
     string PackageName,
     IEnumerable<ActivityExperienceDetailDto> ActivityDetails
 );

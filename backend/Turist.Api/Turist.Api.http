@@ -1,6 +1,19 @@
-@Turist.Api_HostAddress = http://localhost:5064
+@HostAddress = http://localhost:5064
 
-GET {{Turist.Api_HostAddress}}/weatherforecast/
+### 1. Obtener todos los turistas
+GET {{HostAddress}}/api/tourists
 Accept: application/json
 
-###
+### 2. Crear un nuevo turista
+POST {{HostAddress}}/api/tourists
+Content-Type: application/json
+
+{
+  "name": "María Pérez",
+  "age": 25,
+  "TravelGroupId": "2"
+}
+
+### 3. Obtener un turista por ID (Reemplaza el GUID por uno real que te devuelva el POST)
+GET {{HostAddress}}/api/tourists/AQUÍ_PEGA_EL_GUID_DEL_TURISTA
+Accept: application/json

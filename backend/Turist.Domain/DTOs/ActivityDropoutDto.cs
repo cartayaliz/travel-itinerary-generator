@@ -1,8 +1,8 @@
 namespace Turist.Domain.DTOs;
 public record ActivityDropoutDto(
-    Guid ActivityId,
+    int ActivityId,
     string ActivityName,
     string CreatorGuideName,
     string TourPackageName,
-    double DropoutRate // Porcentaje o tasa de abandono
+    double DropoutRate // tasa de abandono
 );

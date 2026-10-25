@@ -1,8 +1,8 @@
 using Turist.Domain.Models;
 
-namespace Turist.Api.Turist.Domain.Repository;
+namespace Turist.Domain.Repository;
 public interface ITouristRepository : IRepository<Turista>
 {
-    Task<IEnumerable<Turista>> GetTouristsByTravelGroupAsync(string travelGroupId);
-    Task<bool> HasDoubleItineraryAssignmentAsync(Guid touristId, DateTime date);
+    Task<IEnumerable<Turista>> GetTouristsByTravelGroupAsync(int travelGroupId);
+    Task<bool> HasDoubleItineraryAssignmentAsync(int touristId, DateTime date);
 }

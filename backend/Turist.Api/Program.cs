@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Turist.Data;
+using Turist.Domain.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<TuristDbContext>(options =>
 // 2. Configurar Servicios de la API (Controladores y OpenAPI)
 builder.Services.AddControllers();
 builder.Services.AddOpenApi(); // El nuevo estándar de .NET 9/10
-
+builder.Services.AddScoped<ITouristRepository, TouristRepository>();
 var app = builder.Build();
 
 // 3. Configurar el pipeline de peticiones HTTP

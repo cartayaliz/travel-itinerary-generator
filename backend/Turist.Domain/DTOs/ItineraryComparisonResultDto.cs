@@ -4,7 +4,7 @@ public record ItineraryComparisonResultDto(
 );
 
 public record PackageComparisonDetailDto(
-    Guid PackageId,
+    int PackageId,
     string PackageName,
     Dictionary<string, int> CategoryDistribution, // Ej: {"Cultura": 5, "Naturaleza": 3}
     Dictionary<string, int> EffortLevelDistribution, // Ej: {"Bajo": 2, "Medio": 4, "Alto": 2}

@@ -1,5 +1,5 @@
 public record PathAlternativeResultDto(
-    Guid TargetAttractionId,
+    int TargetAttractionId,
     string TargetAttractionName,
     TimeSpan EstimatedTravelTime,
     decimal TransportCost,

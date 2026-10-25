@@ -1,7 +1,7 @@
 namespace Turist.Domain.DTOs;
 // Correlación entre nivel de esfuerzo físico y valoración promedio
 public record TouristItineraryCorrelationDto(
-    Guid PackageId,
+    int PackageId,
     string PackageName,
     double CorrelationCoefficient,
     IEnumerable<EffortRatingPointDto> EffortRatingPoints
@@ -14,9 +14,9 @@ public record EffortRatingPointDto(
 
 // Comparación del turista con modificación vs promedio general del grupo
 public record TouristModificationComparisonDto(
-    Guid TouristId,
+    int TouristId,
     string TouristName,
-    Guid PackageId,
+    int PackageId,
     double TouristRatingAfterModification,
     double TravelGroupAverageRating,
     string? AdditionalGuideAssigned // Guía adicional que atendió la solicitud, si aplica
@@ -24,7 +24,7 @@ public record TouristModificationComparisonDto(
 
 // Registro histórico de solicitudes de modificación virtual
 public record TouristModificationLogDto(
-    Guid RequestId,
+    int RequestId,
     DateTime RequestDate,
     string RequestDetails,
     string AdditionalGuideName,

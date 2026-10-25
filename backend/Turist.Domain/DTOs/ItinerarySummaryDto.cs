@@ -1,6 +1,6 @@
 namespace Turist.Domain.DTOs;
 public record ItinerarySummaryDto(
-    Guid ItineraryId,
+    int ItineraryId,
     string PackageName,
     string CreatorName,
     DateTime CreationDate,
