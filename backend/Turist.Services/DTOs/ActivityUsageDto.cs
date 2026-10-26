@@ -1,8 +1,10 @@
-namespace Turist.Domain.DTOs;
+using Turist.Domain.Models;
+
+namespace Turist.Services.DTOs;
 public record ActivityUsageDto(
     int ActivityId,
     string ActivityName,
-    string Category,
+    Categoria Category,
     string EffortLevel, // Bajo, Medio, Alto
     int UsageCount
 );

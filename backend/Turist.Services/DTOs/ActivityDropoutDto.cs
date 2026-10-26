@@ -1,4 +1,4 @@
-namespace Turist.Domain.DTOs;
+namespace Turist.Services.DTOs;
 public record ActivityDropoutDto(
     int ActivityId,
     string ActivityName,

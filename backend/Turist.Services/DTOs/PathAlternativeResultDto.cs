@@ -1,3 +1,4 @@
+namespace Turist.Services.DTOs;
 public record PathAlternativeResultDto(
     int TargetAttractionId,
     string TargetAttractionName,

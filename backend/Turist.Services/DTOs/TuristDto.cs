@@ -1,4 +1,4 @@
-namespace Turist.Domain.DTOs;
+namespace Turist.Services.DTOs;
 
 // DTO para la respuesta 
 public record TouristResponseDto(

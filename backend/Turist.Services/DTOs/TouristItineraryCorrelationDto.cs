@@ -1,4 +1,4 @@
-namespace Turist.Domain.DTOs;
+namespace Turist.Services.DTOs;
 // Correlación entre nivel de esfuerzo físico y valoración promedio
 public record TouristItineraryCorrelationDto(
     int PackageId,

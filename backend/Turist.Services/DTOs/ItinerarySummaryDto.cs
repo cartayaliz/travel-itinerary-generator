@@ -1,4 +1,4 @@
-namespace Turist.Domain.DTOs;
+namespace Turist.Services.DTOs;
 public record ItinerarySummaryDto(
     int ItineraryId,
     string PackageName,

@@ -1,19 +1,91 @@
-@HostAddress = http://localhost:5064
+@HostAddress = http://localhost:5005
 
-### 1. Obtener todos los turistas
-GET {{HostAddress}}/api/tourists
-Accept: application/json
 
-### 2. Crear un nuevo turista
-POST {{HostAddress}}/api/tourists
+### ==========================================================
+### PREREQUISITO: Asegurar que el Grupo de Viaje existe
+### (Necesario para el Turista por la llave foránea)
+### ==========================================================
+POST {{HostAddress}}/api/groups
 Content-Type: application/json
 
 {
-  "name": "María Pérez",
-  "age": 25,
-  "TravelGroupId": "2"
+  "id": 1,
+  "name": "Grupo Habana 2026"
 }
 
-### 3. Obtener un turista por ID (Reemplaza el GUID por uno real que te devuelva el POST)
-GET {{HostAddress}}/api/tourists/AQUÍ_PEGA_EL_GUID_DEL_TURISTA
+
+### ==========================================================
+### 1. CASOS DE CREACIÓN (POST)
+### ==========================================================
+
+### 1.1. Crear un Turista (Debe incluir datos específicos como GrupoID y Edad)
+POST {{HostAddress}}/api/usuarios/turista
+Content-Type: application/json
+
+{
+  "name": "René Díaz",
+  "age": 22,
+  "edad": 22,
+  "grupoID": 1
+}
+
+### 1.2. Crear un Guía Turístico (Debe incluir idiomas)
+POST {{HostAddress}}/api/usuarios/guia
+Content-Type: application/json
+
+{
+  "name": "Carlos Mendoza",
+  "age": 32,
+  "especialidad": "historia"
+}
+
+### 1.3. Crear un Jefe de Operaciones (Debe incluir departamento)
+POST {{HostAddress}}/api/usuarios/jefe-operaciones
+Content-Type: application/json
+
+{
+  "name": "Sofía Valdés"
+}
+
+
+### ==========================================================
+### 2. CASOS DE LECTURA (GET)
+### ==========================================================
+
+### 2.1. Obtener TODOS los usuarios (Prueba el polimorfismo TPH: debe devolver turístas, guías y jefes juntos)
+GET {{HostAddress}}/api/usuarios
 Accept: application/json
+
+### 2.2. Obtener un usuario específico por ID (Reemplaza '1' por un ID real devuelto en los POST anteriores)
+GET {{HostAddress}}/api/usuarios/1
+Accept: application/json
+
+### 2.3. CASO NEGATIVO: Buscar un usuario que no existe (Debe retornar 404 Not Found)
+GET {{HostAddress}}/api/usuarios/9999
+Accept: application/json
+
+
+### ==========================================================
+### 3. CASOS DE ACTUALIZACIÓN (PUT)
+### ==========================================================
+
+### 3.1. Actualizar los datos de un usuario existente (Reemplaza '1' por un ID real)
+PUT {{HostAddress}}/api/usuarios/1
+Content-Type: application/json
+
+{
+  "usuarioID": 1,
+  "name": "René Díaz González",
+  "age": 23
+}
+
+
+### ==========================================================
+### 4. CASOS DE ELIMINACIÓN (DELETE)
+### ==========================================================
+
+### 4.1. CASO NEGATIVO: Intentar borrar un usuario que no existe (Debe retornar 404 Not Found)
+DELETE {{HostAddress}}/api/usuarios/9999
+
+### 4.2. Borrar un usuario existente (Reemplaza '2' por un ID real, debe retornar 204 No Content)
+DELETE {{HostAddress}}/api/usuarios/2

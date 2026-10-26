@@ -1,4 +1,4 @@
-namespace Turist.Domain.DTOs;
+namespace Turist.Services.DTOs;
 public record ItineraryComparisonResultDto(
     IEnumerable<PackageComparisonDetailDto> PackagesCompared
 );
