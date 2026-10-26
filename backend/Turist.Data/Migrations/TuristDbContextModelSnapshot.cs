@@ -287,7 +287,7 @@ namespace Turist.Data.Migrations
 
                     b.ToTable("Paradas");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Parada");
+                    b.HasDiscriminator().HasValue("Parada");
 
                     b.UseTphMappingStrategy();
                 });
@@ -324,11 +324,15 @@ namespace Turist.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("UsuarioID");
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Usuarios");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
+                    b.HasDiscriminator().HasValue("Usuario");
 
                     b.UseTphMappingStrategy();
                 });

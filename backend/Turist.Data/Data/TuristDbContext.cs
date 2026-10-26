@@ -7,6 +7,7 @@ public class TuristDbContext : DbContext
 {
     public TuristDbContext(DbContextOptions<TuristDbContext> options) : base(options) { }
 
+    public DbSet<Usuario> Usuarios { get; set; } = null!;
     public DbSet<JefeOperaciones> JefesOperaciones { get; set; }
     public DbSet<GuiaTuristico> GuiasTuristicos { get; set; }
     public DbSet<PaqueteTuristico> PaquetesTuristicos { get; set; }
