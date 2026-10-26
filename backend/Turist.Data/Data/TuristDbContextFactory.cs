@@ -8,12 +8,16 @@ public class TuristDbContextFactory : IDesignTimeDbContextFactory<TuristDbContex
 {
     public TuristDbContext CreateDbContext(string[] args)
     {
-        // 1. Cargar el archivo .env para que las herramientas de EF Core lo detecten
-        DotNetEnv.Env.TraversePath().Load();
+        // 1. Buscamos el archivo .env en la carpeta de la API.
+        // La ruta sube un nivel desde Turist.Data y entra a Turist.Api.
+        Env.Load("../Turist.Api/.env"); 
 
-        // 2. Construir la cadena de conexión usando las variables de tu .env
-        var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION") 
-                               ?? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};Port={Environment.GetEnvironmentVariable("DB_PORT")};Database={Environment.GetEnvironmentVariable("DB_NAME")};Username={Environment.GetEnvironmentVariable("DB_USER")};Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
+        // 2. Construimos la cadena de conexión con las variables cargadas
+        var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
+                               $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
+                               $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+                               $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+                               $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 
         var optionsBuilder = new DbContextOptionsBuilder<TuristDbContext>();
         optionsBuilder.UseNpgsql(connectionString);
