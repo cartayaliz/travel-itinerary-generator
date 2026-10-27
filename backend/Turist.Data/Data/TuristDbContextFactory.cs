@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using DotNetEnv;
+
 namespace Turist.Data;
 
 public class TuristDbContextFactory : IDesignTimeDbContextFactory<TuristDbContext>
