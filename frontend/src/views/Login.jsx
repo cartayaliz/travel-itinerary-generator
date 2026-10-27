@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import {Button} from "../components/Button";
+import {Input} from "../components/Input";
 import "./Login.css";
 
 
@@ -35,32 +36,28 @@ function Login() {
                 <form className="login-form" onSubmit={handleSubmit}>
                     <h2>Iniciar sesión</h2>
                     
-                    <div className="form-group">
-                    <label>Usuario:</label>
-                    <input type="text" 
+                    <Input 
+                    label="Usuario"
                     placeholder="Escribe tu usuario" 
                     value={usuario} 
                     onChange={(e) => setUsuario(e.target.value)} 
-                    // No permitir campo vacío
-                    required />  
-                    </div>
-
-                    <div className="form-group">
-                    <label>Contraseña:</label>
-                    <input type="password" 
-                    placeholder="Ingresa tu contraseña" 
-                    value={password} 
+                    required /> 
+                    
+                    <Input 
+                    label="Contraseña"
+                    type="password"
+                    placeholder="Ingresa tu contraseña"
+                     value={password}                 
                     // Garantizar que la contraseña tenga 8 o más caracteres
                     minLength={8} 
                     onChange={(e) => setPassword(e.target.value)} 
                     // No permitir campo vacío
                     required />
-                    </div>
-
-                    <button type="submit" className="btn-primary">Entrar</button>
-                </form>
-                </div>
-                    
+               
+                   <Button type="submit" texto="Entrar" />
+              
+              </form>
+            </div>   
       </main>
 
       <footer>
