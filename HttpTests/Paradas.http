@@ -1,0 +1,20 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Crear una Atracción
+POST {{HostAddress}}/api/paradas
+Content-Type: application/json
+
+{
+  "nombre": "Catedral de La Habana",
+  "latitud": 23.1367,
+  "longitud": -82.3589,
+  "categoriaID": 1,
+  "guiaID": 1,
+  "tipoParada": 1,
+  "horarioApertura": "09:00:00",
+  "horarioCierre": "18:00:00"
+}
+
+### 2. Obtener todas las paradas
+GET {{HostAddress}}/api/paradas
+Accept: application/json
