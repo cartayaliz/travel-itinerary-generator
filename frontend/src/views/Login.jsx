@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {Button} from "../components/Button";
-import {Input} from "../components/Input";
+import Button from "../components/Button";
+import Input from "../components/Input";
 import "./Login.css";
 
 
 function Login() {
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
+    const [rol, setRol] = useState("guia");
     const navigate = useNavigate();  
 
     const handleSubmit = (e) => { e.preventDefault(); 
@@ -18,10 +19,24 @@ function Login() {
     if (!tieneLetraYNumero.test(password)) {
     alert("La contraseña debe contener al menos una letra y un número");
     return;
+
     }
 
   console.log("Iniciando sesión...");
-  navigate("/guia/dashboard");
+
+  if (rol === "guia") {
+    navigate("/guia/dashboard");
+  }
+  else if (rol === "turista") {
+    navigate("/turista/dashboard");
+  }
+  else if (rol === "jefe") {
+    navigate("/jefe/dashboard");
+  }
+  else if (rol === "admin") {
+    navigate("/admin/dashboard");
+  }
+  
 };
   return (
     <div className="app">
@@ -53,7 +68,17 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)} 
                     // No permitir campo vacío
                     required />
-               
+
+                    <div className="form-group">
+                        <label > Seleccionar rol (Prueba):</label>
+                        <select value={rol} onChange={(e) => setRol(e.target.value)} className="select-rol" >
+                            <option value="guia">Guía Turístico</option>
+                            <option value="admin">Administrador</option>
+                            <option value="jefe">Jefe de Operaciones</option>
+                            <option value="turista">Turista</option>
+                        </select>
+                    </div>
+
                    <Button type="submit" texto="Entrar" />
               
               </form>
