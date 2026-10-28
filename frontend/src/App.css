@@ -20,7 +20,21 @@ main {
 footer {
   padding: 1rem;
   text-align: center;
-  background-color: #e95959;
-  color: rgb(7, 6, 6);
+  background-color:rgb(107, 209, 175);
+  color: rgb(12, 12, 12);
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  gap: 15px;
 }
 
+.logo-footer {
+  width: 40px; 
+  height: auto; 
+  margin-bottom: 5px; 
+  object-fit: contain;    
+  background-color: white; 
+  border-radius: 50%;     
+  padding: 4px;           
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}

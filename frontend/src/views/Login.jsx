@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
+import Layout from "../components/Layout";
 import "./Login.css";
 
 
@@ -46,57 +47,42 @@ function Login() {
   
 };
   return (
-    <div className="app">
-      <header>
-        <h1>Travel Itinerary Generator</h1>
-        <p>Sistema de gestión de itinerarios turísticos</p>
-        
-      </header>
-
-      <main className="login-main">
-                <div className="login-container">
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <h2>Iniciar sesión</h2>
-                    
-                    <Input 
-                    label="Usuario"
-                    placeholder="Escribe tu usuario" 
-                    value={usuario} 
-                    onChange={(e) => setUsuario(e.target.value)} 
-                    required /> 
-                    
-                    <Input 
-                    label="Contraseña"
-                    type="password"
-                    placeholder="Ingresa tu contraseña"
-                     value={password}                 
-                    // Garantizar que la contraseña tenga 8 o más caracteres
-                    minLength={8} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    // No permitir campo vacío
-                    required />
-
-                   <Select
-                    label="Seleccionar rol (Prueba)"
-                    value={rol}
-                    onChange={(e) => setRol(e.target.value)}
-                    options={opcionesRoles}
-                    required
-                    />
-
-                   <Button type="submit" texto="Entrar" />
+    <Layout>
+      <div className="login-container">
+          <form className="login-form" onSubmit={handleSubmit}>
+              <h2>Iniciar sesión</h2>
               
-              </form>
-            </div>   
-      </main>
+              <Input 
+              label="Usuario"
+              placeholder="Escribe tu usuario" 
+              value={usuario} 
+              onChange={(e) => setUsuario(e.target.value)} 
+              required /> 
+              
+              <Input 
+              label="Contraseña"
+              type="password"
+              placeholder="Ingresa tu contraseña"
+              value={password}                 
+              /* Garantizar que la contraseña tenga 8 o más caracteres */
+              minLength={8} 
+              onChange={(e) => setPassword(e.target.value)} 
+              /* No permitir campo vacío*/
+              required />
 
-      <footer>
+              <Select
+              label="Seleccionar rol (Prueba)"
+              value={rol}
+              onChange={(e) => setRol(e.target.value)}
+              options={opcionesRoles}
+              required
+              />
+
+              <Button type="submit" texto="Entrar" />
         
-        <p> by BugSlayer team</p>
-      </footer>
-      
-    </div>
-    
+        </form>
+      </div>  
+   </Layout> 
   );
 }
 
