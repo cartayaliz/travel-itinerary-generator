@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import Select from "../components/Select";
 import "./Login.css";
 
 
@@ -9,6 +10,12 @@ function Login() {
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const [rol, setRol] = useState("guia");
+    const opcionesRoles = [
+  { value: "guia", label: "Guía Turístico" },
+  { value: "admin", label: "Administrador" },
+  { value: "jefe", label: "Jefe de Operaciones" },
+  { value: "turista", label: "Turista" }
+];
     const navigate = useNavigate();  
 
     const handleSubmit = (e) => { e.preventDefault(); 
@@ -69,15 +76,13 @@ function Login() {
                     // No permitir campo vacío
                     required />
 
-                    <div className="form-group">
-                        <label > Seleccionar rol (Prueba):</label>
-                        <select value={rol} onChange={(e) => setRol(e.target.value)} className="select-rol" >
-                            <option value="guia">Guía Turístico</option>
-                            <option value="admin">Administrador</option>
-                            <option value="jefe">Jefe de Operaciones</option>
-                            <option value="turista">Turista</option>
-                        </select>
-                    </div>
+                   <Select
+                    label="Seleccionar rol (Prueba)"
+                    value={rol}
+                    onChange={(e) => setRol(e.target.value)}
+                    options={opcionesRoles}
+                    required
+                    />
 
                    <Button type="submit" texto="Entrar" />
               
