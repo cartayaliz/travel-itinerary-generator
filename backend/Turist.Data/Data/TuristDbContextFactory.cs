@@ -8,12 +8,12 @@ public class TuristDbContextFactory : IDesignTimeDbContextFactory<TuristDbContex
 {
     public TuristDbContext CreateDbContext(string[] args)
     {
+        // 1. Cargar el archivo .env (Ajusta la ruta si es necesario)
+        // Como estamos en Turist.Data, el .env está en la carpeta de la API
+        Env.Load("../Turist.Api/.env"); 
 
-        // 1. Cargar el archivo .env para que las herramientas de EF Core lo detecten
-        DotNetEnv.Env.TraversePath().Load();
-
-        // 2. Construir la cadena de conexión usando las variables de tu .env
-        var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION") 
+        // 2. Construir la cadena de conexión
+        var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")
                                ?? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};Port={Environment.GetEnvironmentVariable("DB_PORT")};Database={Environment.GetEnvironmentVariable("DB_NAME")};Username={Environment.GetEnvironmentVariable("DB_USER")};Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 
         var optionsBuilder = new DbContextOptionsBuilder<TuristDbContext>();

@@ -75,6 +75,12 @@ namespace Turist.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ItinerarioID"));
 
+                    b.Property<int?>("CantidadActividades")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CoberturaCategorias")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("timestamp with time zone");
 
@@ -84,6 +90,19 @@ namespace Turist.Data.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Origen")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ProporcionExcursiones")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProporcionTalleres")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProporcionVisitas")
+                        .HasColumnType("integer");
 
                     b.HasKey("ItinerarioID");
 
@@ -254,7 +273,7 @@ namespace Turist.Data.Migrations
 
                     b.ToTable("Paradas");
 
-                    b.HasDiscriminator().HasValue("Parada");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Parada");
 
                     b.UseTphMappingStrategy();
                 });
@@ -299,7 +318,7 @@ namespace Turist.Data.Migrations
 
                     b.ToTable("Usuarios");
 
-                    b.HasDiscriminator().HasValue("Usuario");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
 
                     b.UseTphMappingStrategy();
                 });
@@ -384,6 +403,10 @@ namespace Turist.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VisitaID"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
