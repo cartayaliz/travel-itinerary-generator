@@ -12,8 +12,8 @@ using Turist.Data;
 namespace Turist.Data.Migrations
 {
     [DbContext(typeof(TuristDbContext))]
-    [Migration("20261026185901_AddPasswordHashToUsuario")]
-    partial class AddPasswordHashToUsuario
+    [Migration("20261028045640_AddUniqueIndexes")]
+    partial class AddUniqueIndexes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace Turist.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Turist.Domain.Models.Actividad_Atraccion", b =>
-                {
-                    b.Property<int>("ActividadID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("AtraccionID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ActividadID", "AtraccionID");
-
-                    b.HasIndex("AtraccionID");
-
-                    b.ToTable("Actividad_Atraccion");
-                });
 
             modelBuilder.Entity("Turist.Domain.Models.Categoria", b =>
                 {
@@ -54,6 +39,9 @@ namespace Turist.Data.Migrations
 
                     b.HasKey("CategoriaID");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Categorias");
                 });
 
@@ -65,7 +53,14 @@ namespace Turist.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GrupoID"));
 
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("GrupoID");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });
@@ -82,7 +77,7 @@ namespace Turist.Data.Migrations
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("Guia_Paquete");
+                    b.ToTable("Guia_Paquetes");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Itinerario", b =>
@@ -92,6 +87,12 @@ namespace Turist.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ItinerarioID"));
+
+                    b.Property<int?>("CantidadActividades")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CoberturaCategorias")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("timestamp with time zone");
@@ -103,29 +104,27 @@ namespace Turist.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Origen")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ProporcionExcursiones")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProporcionTalleres")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProporcionVisitas")
+                        .HasColumnType("integer");
+
                     b.HasKey("ItinerarioID");
 
                     b.HasIndex("GuiaID");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Itinerarios");
-                });
-
-            modelBuilder.Entity("Turist.Domain.Models.Itinerario_Actividad", b =>
-                {
-                    b.Property<int>("ItinerarioID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ActividadID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Orden")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ItinerarioID", "ActividadID");
-
-                    b.HasIndex("ActividadID");
-
-                    b.ToTable("Itinerario_Actividad");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Itinerario_Paquete", b =>
@@ -158,7 +157,7 @@ namespace Turist.Data.Migrations
 
                     b.HasIndex("ParadaID");
 
-                    b.ToTable("Itinerario_Parada");
+                    b.ToTable("Itinerario_Paradas");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Itinerario_Turista", b =>
@@ -176,7 +175,7 @@ namespace Turist.Data.Migrations
 
                     b.HasIndex("TuristaID");
 
-                    b.ToTable("Itinerario_Turista");
+                    b.ToTable("Itinerario_Turistas");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Modificacion", b =>
@@ -235,6 +234,9 @@ namespace Turist.Data.Migrations
 
                     b.HasKey("PaqueteID");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("PaquetesTuristicos");
                 });
 
@@ -250,7 +252,7 @@ namespace Turist.Data.Migrations
 
                     b.HasIndex("CategoriaID");
 
-                    b.ToTable("Paquete_Categoria");
+                    b.ToTable("Paquete_Categorias");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Parada", b =>
@@ -288,9 +290,12 @@ namespace Turist.Data.Migrations
 
                     b.HasIndex("GuiaID");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Paradas");
 
-                    b.HasDiscriminator().HasValue("Parada");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Parada");
 
                     b.UseTphMappingStrategy();
                 });
@@ -307,7 +312,7 @@ namespace Turist.Data.Migrations
 
                     b.HasIndex("PaqueteID");
 
-                    b.ToTable("Turista_Paquete");
+                    b.ToTable("Turista_Paquetes");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Usuario", b =>
@@ -335,7 +340,7 @@ namespace Turist.Data.Migrations
 
                     b.ToTable("Usuarios");
 
-                    b.HasDiscriminator().HasValue("Usuario");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
 
                     b.UseTphMappingStrategy();
                 });
@@ -420,6 +425,10 @@ namespace Turist.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VisitaID"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
@@ -511,25 +520,6 @@ namespace Turist.Data.Migrations
                     b.HasDiscriminator().HasValue("Turista");
                 });
 
-            modelBuilder.Entity("Turist.Domain.Models.Actividad_Atraccion", b =>
-                {
-                    b.HasOne("Turist.Domain.Models.Actividad", "Actividad")
-                        .WithMany()
-                        .HasForeignKey("ActividadID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Domain.Models.Atraccion", "Atraccion")
-                        .WithMany()
-                        .HasForeignKey("AtraccionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actividad");
-
-                    b.Navigation("Atraccion");
-                });
-
             modelBuilder.Entity("Turist.Domain.Models.Guia_Paquete", b =>
                 {
                     b.HasOne("Turist.Domain.Models.GuiaTuristico", "Guia")
@@ -558,25 +548,6 @@ namespace Turist.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Guia");
-                });
-
-            modelBuilder.Entity("Turist.Domain.Models.Itinerario_Actividad", b =>
-                {
-                    b.HasOne("Turist.Domain.Models.Actividad", "Actividad")
-                        .WithMany()
-                        .HasForeignKey("ActividadID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turist.Domain.Models.Itinerario", "Itinerario")
-                        .WithMany()
-                        .HasForeignKey("ItinerarioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actividad");
-
-                    b.Navigation("Itinerario");
                 });
 
             modelBuilder.Entity("Turist.Domain.Models.Itinerario_Paquete", b =>

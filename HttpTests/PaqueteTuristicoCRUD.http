@@ -1,0 +1,30 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Crear un Paquete
+POST {{HostAddress}}/api/paquetes
+Content-Type: application/json
+
+{
+  "nombre": "Plan Santiago Plus",
+  "destino": "Santiago de Cuba"
+}
+
+### 2. Obtener todos los Paquetes
+GET {{HostAddress}}/api/paquetes
+Accept: application/json
+
+### 3. Obtener un Paquete por ID (Cambia el 1 si es necesario)
+GET {{HostAddress}}/api/paquetes/1
+Accept: application/json
+
+### 4. Actualizar un Paquete
+PUT {{HostAddress}}/api/paquetes/1
+Content-Type: application/json
+
+{
+  "nombre": "Plan Santiago Premium",
+  "destino": "Santiago de Cuba"
+}
+
+### 5. Eliminar un Paquete
+DELETE {{HostAddress}}/api/paquetes/1
