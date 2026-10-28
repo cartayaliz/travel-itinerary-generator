@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Turist.Domain.Models;
 using Turist.Domain.Interfaces.Repositories;
+using Turist.Domain.Models;
+using Turist.Services.DTOs.Usuario;
+using Turist.Services.Mappers;
 
 namespace Turist.Api.Controllers;
 
@@ -16,43 +18,36 @@ public class UsuariosController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
+    public async Task<ActionResult<IEnumerable<UsuarioResponseDto>>> GetAll()
     {
         var usuarios = await _usuarioRepository.GetAllAsync();
-        return Ok(usuarios);
+        var response = usuarios.Select(u => u.ToDto());
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Usuario>> GetById(int id)
+    public async Task<ActionResult<UsuarioResponseDto>> GetById(int id)
     {
         var usuario = await _usuarioRepository.GetByIdAsync(id);
         if (usuario == null) return NotFound();
-        return Ok(usuario);
+
+        return Ok(usuario.ToDto());
     }
 
-   //Crear un Turista
-    [HttpPost("turista")]
-    public async Task<ActionResult> CreateTurista([FromBody] Turista turista)
+    [HttpPost]
+    public async Task<ActionResult> Create([FromBody] UsuarioCreateDto dto)
     {
-        await _usuarioRepository.AddAsync(turista);
-        // Retornamos 201 Created enviando el objeto creado directamente
-        return StatusCode(201, turista);
-    }
-
-    //Crear un Guía Turístico
-    [HttpPost("guia")]
-    public async Task<ActionResult> CreateGuia([FromBody] GuiaTuristico guia)
-    {
-        await _usuarioRepository.AddAsync(guia);
-        return StatusCode(201, guia);
-    }
-
-    //Crear un Jefe de Operaciones
-    [HttpPost("jefe-operaciones")]
-    public async Task<ActionResult> CreateJefeDeOperaciones([FromBody] JefeOperaciones jefe)
-    {
-        await _usuarioRepository.AddAsync(jefe);
-        return StatusCode(201, jefe);
+        try
+        {
+            var nuevoUsuario = dto.ToEntity();
+            await _usuarioRepository.AddAsync(nuevoUsuario);
+            
+            return Ok(new { mensaje = "Usuario creado exitosamente", id = nuevoUsuario.UsuarioID });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensaje = "Error al crear el usuario", detalle = ex.Message });
+        }
     }
 
     [HttpDelete("{id:int}")]

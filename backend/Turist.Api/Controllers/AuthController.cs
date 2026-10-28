@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Turist.Data;
 using Turist.Domain.Models;
 using Turist.Services;
-
+using Turist.Services.DTOs.Auth;
 namespace Turist.Api.Controllers
 {
     [ApiController]
@@ -41,7 +41,4 @@ namespace Turist.Api.Controllers
             });
         }
     }
-
-    // DTO (Data Transfer Object) para recibir los datos del login
-    public record LoginDto(int UsuarioID, string Password);
 }
