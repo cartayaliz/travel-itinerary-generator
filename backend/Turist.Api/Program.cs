@@ -43,6 +43,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
 builder.Services.AddScoped<IRepository<Usuario>, UsuarioRepository>();
+builder.Services.AddScoped<IPaqueteTuristicoRepository, PaqueteTuristicoRepository>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
