@@ -51,4 +51,26 @@ public static class UsuarioMapper
             _ => throw new ArgumentException("Tipo de usuario no soportado.")
         };
     }
+    public static void UpdateEntity(this UsuarioCreateDto dto, Usuario usuarioExistente)
+    {
+        // Actualizamos los campos base
+        usuarioExistente.Nombre = dto.Nombre;
+
+        // Si la contraseña no viene vacía, la actualizamos (Buena práctica)
+        if (!string.IsNullOrWhiteSpace(dto.Password))
+        {
+            usuarioExistente.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+        }
+
+        // Actualizamos los campos específicos según el tipo
+        if (usuarioExistente is GuiaTuristico guia)
+        {
+            guia.Especialidad = dto.Especialidad ?? guia.Especialidad;
+        }
+        else if (usuarioExistente is Turista turista)
+        {
+            turista.Edad = dto.Edad ?? turista.Edad;
+            turista.GrupoID = dto.GrupoID ?? turista.GrupoID;
+        }
+    }
 }

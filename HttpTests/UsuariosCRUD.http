@@ -1,0 +1,47 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Crear un Guía (TipoUsuario: 1)
+POST {{HostAddress}}/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Manuel Guía",
+  "password": "miPasswordSeguro123",
+  "tipoUsuario": 1,
+  "especialidad": "Historia y Cultura",
+  "edad": null,
+  "grupoID": null
+}
+
+### 2. Crear un Turista (TipoUsuario: 2)
+POST {{HostAddress}}/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Ana Turista",
+  "password": "turistaPass123",
+  "tipoUsuario": 2,
+  "especialidad": null,
+  "edad": 25,
+  "grupoID": 1
+}
+
+### 3. Obtener todos los Usuarios
+GET {{HostAddress}}/api/usuarios
+Accept: application/json
+
+### 4. Actualizar un Usuario (Asume ID 1)
+PUT {{HostAddress}}/api/usuarios/1
+Content-Type: application/json
+
+{
+  "nombre": "Manuel Guía (Actualizado)",
+  "password": "", 
+  "tipoUsuario": 1,
+  "especialidad": "Historia Universal",
+  "edad": null,
+  "grupoID": null
+}
+
+### 5. Eliminar un Usuario
+DELETE {{HostAddress}}/api/usuarios/2

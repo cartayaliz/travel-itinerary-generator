@@ -41,7 +41,7 @@ public class UsuariosController : ControllerBase
         {
             var nuevoUsuario = dto.ToEntity();
             await _usuarioRepository.AddAsync(nuevoUsuario);
-            
+
             return Ok(new { mensaje = "Usuario creado exitosamente", id = nuevoUsuario.UsuarioID });
         }
         catch (Exception ex)
@@ -50,6 +50,19 @@ public class UsuariosController : ControllerBase
         }
     }
 
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult> Update(int id, [FromBody] UsuarioCreateDto dto)
+    {
+        var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
+        if (usuarioExistente == null) return NotFound($"No se encontró el usuario con ID {id}.");
+
+        // Delegamos la lógica al Mapper
+        dto.UpdateEntity(usuarioExistente);
+
+        await _usuarioRepository.UpdateAsync(usuarioExistente);
+        return NoContent(); // 204: Éxito
+    }
+    
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {

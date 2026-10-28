@@ -11,13 +11,11 @@ public class PaquetesController : ControllerBase
 {
     private readonly IPaqueteTuristicoRepository _repository;
 
-    // 1. Inyección de Dependencias
     public PaquetesController(IPaqueteTuristicoRepository repository)
     {
         _repository = repository;
     }
 
-    // 2. GET ALL
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PaqueteResponseDto>>> GetAll()
     {
@@ -31,7 +29,6 @@ public class PaquetesController : ControllerBase
         return Ok(response);
     }
 
-    // 3. GET BY ID
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PaqueteResponseDto>> GetById(int id)
     {
@@ -42,7 +39,6 @@ public class PaquetesController : ControllerBase
         return Ok(new PaqueteResponseDto(paquete.PaqueteID, paquete.Nombre, paquete.Destino));
     }
 
-    // 4. CREATE
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] PaqueteCreateDto dto)
     {
@@ -58,14 +54,12 @@ public class PaquetesController : ControllerBase
         return Ok(new { mensaje = "Paquete creado exitosamente", id = paquete.PaqueteID });
     }
 
-    // 5. UPDATE
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] PaqueteCreateDto dto)
     {
         var paqueteExistente = await _repository.GetByIdAsync(id);
         if (paqueteExistente == null) return NotFound($"No se encontró el paquete con ID {id}.");
 
-        // Actualizamos los campos
         paqueteExistente.Nombre = dto.Nombre;
         paqueteExistente.Destino = dto.Destino;
 
@@ -73,7 +67,6 @@ public class PaquetesController : ControllerBase
         return NoContent(); // 204: Éxito, sin contenido que devolver
     }
 
-    // 6. DELETE
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {

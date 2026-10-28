@@ -10,7 +10,7 @@ public class TuristDbContextFactory : IDesignTimeDbContextFactory<TuristDbContex
     {
         // 1. Cargar el archivo .env (Ajusta la ruta si es necesario)
         // Como estamos en Turist.Data, el .env está en la carpeta de la API
-        Env.Load("../Turist.Api/.env"); 
+        Env.Load("../../.env");
 
         // 2. Construir la cadena de conexión
         var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")

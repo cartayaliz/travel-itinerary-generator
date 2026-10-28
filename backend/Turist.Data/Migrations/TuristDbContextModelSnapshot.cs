@@ -36,6 +36,9 @@ namespace Turist.Data.Migrations
 
                     b.HasKey("CategoriaID");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Categorias");
                 });
 
@@ -47,7 +50,14 @@ namespace Turist.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GrupoID"));
 
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("GrupoID");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });
@@ -107,6 +117,9 @@ namespace Turist.Data.Migrations
                     b.HasKey("ItinerarioID");
 
                     b.HasIndex("GuiaID");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Itinerarios");
                 });
@@ -218,6 +231,9 @@ namespace Turist.Data.Migrations
 
                     b.HasKey("PaqueteID");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("PaquetesTuristicos");
                 });
 
@@ -270,6 +286,9 @@ namespace Turist.Data.Migrations
                     b.HasIndex("CategoriaID");
 
                     b.HasIndex("GuiaID");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Paradas");
 

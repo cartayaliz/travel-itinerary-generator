@@ -12,9 +12,10 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Cargar el archivo .env
-DotNetEnv.Env.TraversePath().Load();
+DotNetEnv.Env.Load("../../.env");
 
 // 2. Configurar la Base de Datos
+
 var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")
                        ?? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};Port={Environment.GetEnvironmentVariable("DB_PORT")};Database={Environment.GetEnvironmentVariable("DB_NAME")};Username={Environment.GetEnvironmentVariable("DB_USER")};Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 
