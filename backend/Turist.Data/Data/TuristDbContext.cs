@@ -53,5 +53,14 @@ public class TuristDbContext : DbContext
         modelBuilder.Entity<Itinerario_Turista>().HasKey(it => new { it.ItinerarioID, it.TuristaID });
         modelBuilder.Entity<Itinerario_Paquete>().HasKey(ip => new { ip.ItinerarioID, ip.PaqueteID });
         modelBuilder.Entity<Itinerario_Parada>().HasKey(ip => new { ip.ItinerarioID, ip.ParadaID });
+
+
+        // Convertir Enums a String en la Base de Datos
+        modelBuilder.Entity<Actividad>().Property(a => a.Tipo).HasConversion<string>();
+        modelBuilder.Entity<Actividad>().Property(a => a.NivelEsfuerzo).HasConversion<string>();
+        modelBuilder.Entity<Itinerario>().Property(i => i.Origen).HasConversion<string>();
+        modelBuilder.Entity<Visita>().Property(v => v.Estado).HasConversion<string>();
+        modelBuilder.Entity<Validacion>().Property(v => v.Estado).HasConversion<string>();
+        modelBuilder.Entity<Modificacion>().Property(m => m.Estado).HasConversion<string>();
     }
 }

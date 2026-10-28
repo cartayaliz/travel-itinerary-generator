@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Turist.Domain.Models;
-using Turist.Domain.Repository;
+using Turist.Domain.Interfaces.Repositories;
 
 namespace Turist.Api.Controllers;
 

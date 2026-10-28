@@ -1,23 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using Turist.Domain.Models;
-using Turist.Domain.Repository;
+using Turist.Domain.Interfaces.Repositories;
 using Turist.Data;
 
-namespace Turist.Api.Infrastructure;
+namespace Turist.Data.Repositories;
 
-public class Repository : IRepository<Usuario>
+public class UsuarioRepository : IRepository<Usuario>
 {
     private readonly TuristDbContext _context;
 
-    public Repository(TuristDbContext context)
+    public UsuarioRepository(TuristDbContext context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<Usuario>> GetAllAsync() => 
+    public async Task<IEnumerable<Usuario>> GetAllAsync() =>
         await _context.Set<Usuario>().ToListAsync();
 
-    public async Task<Usuario?> GetByIdAsync(int id) => 
+    public async Task<Usuario?> GetByIdAsync(int id) =>
         await _context.Set<Usuario>().FindAsync(id);
 
     public async Task AddAsync(Usuario usuario)

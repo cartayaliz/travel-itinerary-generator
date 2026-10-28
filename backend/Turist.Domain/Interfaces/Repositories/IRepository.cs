@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-namespace Turist.Domain.Repository;
+namespace Turist.Domain.Interfaces.Repositories;
 
 public interface IRepository<T> where T : class
 {

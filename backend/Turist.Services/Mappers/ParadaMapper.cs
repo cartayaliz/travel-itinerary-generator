@@ -22,7 +22,7 @@ public static class ParadaMapper
                 act.ParadaID, act.Nombre, act.Latitud, act.Longitud, act.CategoriaID, act.GuiaID,
                 TipoParada.Actividad,
                 null, null,
-                act.Tipo, act.NivelEsfuerzo, act.HoraInicio, act.DuracionMinutos
+                act.Tipo.ToString(), act.NivelEsfuerzo.ToString(), act.HoraInicio, act.DuracionMinutos
             ),
 
             _ => throw new ArgumentException("Tipo de parada no reconocido.")
@@ -52,8 +52,8 @@ public static class ParadaMapper
                 Longitud = dto.Longitud,
                 CategoriaID = dto.CategoriaID,
                 GuiaID = dto.GuiaID,
-                Tipo = dto.TipoActividad ?? "Visita",
-                NivelEsfuerzo = dto.NivelEsfuerzo ?? "Bajo",
+                Tipo = Enum.Parse<TipoActividad>(dto.TipoActividad ?? "Visita"),
+                NivelEsfuerzo = Enum.Parse<NivelEsfuerzo>(dto.NivelEsfuerzo ?? "Bajo"),
                 HoraInicio = dto.HoraInicio ?? TimeOnly.MinValue,
                 DuracionMinutos = dto.DuracionMinutos ?? 60
             },
