@@ -119,4 +119,23 @@ public class ItinerariosController : ControllerBase
 
         return Ok(new { mensaje = "Paradas asignadas exitosamente" });
     }
+    // Endpoint para asignar itinerarios a paquetes
+    [HttpPost("{id:int}/paquetes")]
+    public async Task<ActionResult> AsignarPaquetes(int id, [FromBody] List<AsignarPaqueteDto> paquetesDto)
+    {
+        var itinerario = await _repository.GetByIdAsync(id);
+        if (itinerario == null) return NotFound($"No se encontró el itinerario con ID {id}.");
+
+        await _repository.LimpiarPaquetesAsync(id);
+
+        var paquetes = paquetesDto.Select(dto => new Itinerario_Paquete
+        {
+            ItinerarioID = id,
+            PaqueteID = dto.PaqueteID
+        }).ToList();
+
+        await _repository.AsignarPaquetesAsync(paquetes);
+
+        return Ok(new { mensaje = "Paquetes asignados exitosamente" });
+    }
 }

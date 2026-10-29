@@ -68,3 +68,19 @@ Content-Type: application/json
   { "paradaID": 1, "orden": 1 },
   { "paradaID": 2, "orden": 2 }
 ]
+
+### Asignar Paquetes al Itinerario 1
+POST {{HostAddress}}/api/itinerarios/1/paquetes
+Content-Type: application/json
+
+[
+  { "paqueteID": 1 }
+]
+
+### Asignar Turistas al Itinerario 1
+POST {{HostAddress}}/api/itinerarios/1/turistas
+Content-Type: application/json
+
+[
+  { "turistaID": 1, "fechaAsignacion": "2026-10-29T10:00:00Z" }
+]
