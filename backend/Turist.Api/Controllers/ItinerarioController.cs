@@ -93,7 +93,9 @@ public class ItinerariosController : ControllerBase
         await _repository.DeleteAsync(itinerario);
         return NoContent();
     }
+    //==============
     // Endpoint para asignar (o actualizar) las paradas de un itinerario
+    //==============
     [HttpPost("{id:int}/paradas")]
     public async Task<ActionResult> AsignarParadas(int id, [FromBody] List<AsignarParadaDto> paradasDto)
     {
@@ -119,7 +121,9 @@ public class ItinerariosController : ControllerBase
 
         return Ok(new { mensaje = "Paradas asignadas exitosamente" });
     }
+    //==============
     // Endpoint para asignar itinerarios a paquetes
+    //==============
     [HttpPost("{id:int}/paquetes")]
     public async Task<ActionResult> AsignarPaquetes(int id, [FromBody] List<AsignarPaqueteDto> paquetesDto)
     {
@@ -137,5 +141,30 @@ public class ItinerariosController : ControllerBase
         await _repository.AsignarPaquetesAsync(paquetes);
 
         return Ok(new { mensaje = "Paquetes asignados exitosamente" });
+    }
+    //==============
+    // Endpoint para asignar turistas a itinerarios
+    //==============
+    [HttpPost("{id:int}/turistas")]
+    public async Task<ActionResult> AsignarTuristas(int id, [FromBody] List<AsignarTuristaDto> turistasDto)
+    {
+        var itinerario = await _repository.GetByIdAsync(id);
+        if (itinerario == null) return NotFound($"No se encontró el itinerario con ID {id}.");
+
+        
+        await _repository.LimpiarTuristasAsync(id);
+
+        
+        var turistas = turistasDto.Select(dto => new Itinerario_Turista
+        {
+            ItinerarioID = id,
+            TuristaID = dto.TuristaID,
+            FechaAsignacion = dto.FechaAsignacion
+        }).ToList();
+
+        
+        await _repository.AsignarTuristasAsync(turistas);
+
+        return Ok(new { mensaje = "Turistas asignados exitosamente" });
     }
 }

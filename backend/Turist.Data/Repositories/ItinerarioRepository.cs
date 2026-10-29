@@ -12,7 +12,9 @@ public class ItinerarioRepository : IItinerarioRepository
     {
         _context = context;
     }
+    //================
     //CRUD
+    //================
     public async Task<IEnumerable<Itinerario>> GetAllAsync()
     {
         return await _context.Itinerarios.ToListAsync();
@@ -40,8 +42,9 @@ public class ItinerarioRepository : IItinerarioRepository
         _context.Itinerarios.Remove(itinerario);
         await _context.SaveChangesAsync();
     }
-
+    //================
     //Asignar paradas
+    //================
     public async Task LimpiarParadasAsync(int itinerarioId)
     {
         var paradasExistentes = await _context.Itinerario_Paradas
@@ -60,8 +63,9 @@ public class ItinerarioRepository : IItinerarioRepository
         await _context.Itinerario_Paradas.AddRangeAsync(paradas);
         await _context.SaveChangesAsync();
     }
-
+    //================
     //Asignar paquetes
+    //================
     public async Task LimpiarPaquetesAsync(int itinerarioId)
     {
         var paquetesExistentes = await _context.Itinerario_Paquetes
@@ -80,4 +84,26 @@ public class ItinerarioRepository : IItinerarioRepository
         await _context.Itinerario_Paquetes.AddRangeAsync(paquetes);
         await _context.SaveChangesAsync();
     }
+    //================
+    //Asignar Turistas
+    //================
+    public async Task LimpiarTuristasAsync(int itinerarioId)
+    {
+        var turistasExistentes = await _context.Itinerario_Turistas
+            .Where(it => it.ItinerarioID == itinerarioId)
+            .ToListAsync();
+
+        if (turistasExistentes.Any())
+        {
+            _context.Itinerario_Turistas.RemoveRange(turistasExistentes);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task AsignarTuristasAsync(List<Itinerario_Turista> turistas)
+    {
+        await _context.Itinerario_Turistas.AddRangeAsync(turistas);
+        await _context.SaveChangesAsync();
+    }
+    //================
 }

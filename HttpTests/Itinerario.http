@@ -82,5 +82,6 @@ POST {{HostAddress}}/api/itinerarios/1/turistas
 Content-Type: application/json
 
 [
-  { "turistaID": 1, "fechaAsignacion": "2026-10-29T10:00:00Z" }
+  { "turistaID": 1, "fechaAsignacion": "2026-10-29T10:00:00Z" },
+  { "turistaID": 2, "fechaAsignacion": "2026-10-29T10:00:00Z" }
 ]
