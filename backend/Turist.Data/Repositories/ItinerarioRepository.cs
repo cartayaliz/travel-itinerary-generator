@@ -40,4 +40,25 @@ public class ItinerarioRepository : IItinerarioRepository
         _context.Itinerarios.Remove(itinerario);
         await _context.SaveChangesAsync();
     }
+
+    
+    public async Task LimpiarParadasAsync(int itinerarioId)
+    {
+        var paradasExistentes = await _context.Itinerario_Paradas
+            .Where(ip => ip.ItinerarioID == itinerarioId)
+            .ToListAsync();
+
+        if (paradasExistentes.Any())
+        {
+            _context.Itinerario_Paradas.RemoveRange(paradasExistentes);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    
+    public async Task AsignarParadasAsync(List<Itinerario_Parada> paradas)
+    {
+        await _context.Itinerario_Paradas.AddRangeAsync(paradas);
+        await _context.SaveChangesAsync();
+    }
 }

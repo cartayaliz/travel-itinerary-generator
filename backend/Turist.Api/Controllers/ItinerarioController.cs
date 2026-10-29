@@ -16,7 +16,6 @@ public class ItinerariosController : ControllerBase
         _repository = repository;
     }
 
-    // 1. Crear un itinerario básico (sin paradas ni paquetes aún)
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] ItinerarioCreateDto dto)
     {
@@ -34,24 +33,22 @@ public class ItinerariosController : ControllerBase
         };
 
         await _repository.AddAsync(itinerario);
-        
+
         return Ok(new { mensaje = "Itinerario creado", id = itinerario.ItinerarioID });
     }
 
-    // 2. Obtener todos
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ItinerarioResponseDto>>> GetAll()
     {
         var itinerarios = await _repository.GetAllAsync();
         var response = itinerarios.Select(i => new ItinerarioResponseDto(
             i.ItinerarioID, i.Nombre, i.Origen, i.FechaCreacion, i.GuiaID,
-            i.CantidadActividades, i.ProporcionVisitas, i.ProporcionExcursiones, 
+            i.CantidadActividades, i.ProporcionVisitas, i.ProporcionExcursiones,
             i.ProporcionTalleres, i.CoberturaCategorias
         ));
         return Ok(response);
     }
 
-    // 3. Obtener por ID
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ItinerarioResponseDto>> GetById(int id)
     {
@@ -59,15 +56,14 @@ public class ItinerariosController : ControllerBase
         if (itinerario == null) return NotFound($"No se encontró el itinerario con ID {id}.");
 
         return Ok(new ItinerarioResponseDto(
-            itinerario.ItinerarioID, itinerario.Nombre, itinerario.Origen, 
+            itinerario.ItinerarioID, itinerario.Nombre, itinerario.Origen,
             itinerario.FechaCreacion, itinerario.GuiaID,
-            itinerario.CantidadActividades, itinerario.ProporcionVisitas, 
-            itinerario.ProporcionExcursiones, itinerario.ProporcionTalleres, 
+            itinerario.CantidadActividades, itinerario.ProporcionVisitas,
+            itinerario.ProporcionExcursiones, itinerario.ProporcionTalleres,
             itinerario.CoberturaCategorias
         ));
     }
 
-    // 4. Actualizar
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] ItinerarioCreateDto dto)
     {
@@ -87,7 +83,7 @@ public class ItinerariosController : ControllerBase
         return NoContent();
     }
 
-    // 5. Eliminar
+
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
@@ -96,5 +92,31 @@ public class ItinerariosController : ControllerBase
 
         await _repository.DeleteAsync(itinerario);
         return NoContent();
+    }
+    // Endpoint para asignar (o actualizar) las paradas de un itinerario
+    [HttpPost("{id:int}/paradas")]
+    public async Task<ActionResult> AsignarParadas(int id, [FromBody] List<AsignarParadaDto> paradasDto)
+    {
+        var itinerario = await _repository.GetByIdAsync(id);
+        if (itinerario == null) return NotFound($"No se encontró el itinerario con ID {id}.");
+
+        if (paradasDto.GroupBy(p => p.Orden).Any(g => g.Count() > 1))
+        {
+            return BadRequest("No se puede asignar el mismo número de orden a dos paradas.");
+        }
+
+        await _repository.LimpiarParadasAsync(id);
+
+
+        var paradas = paradasDto.Select(dto => new Itinerario_Parada
+        {
+            ItinerarioID = id,
+            ParadaID = dto.ParadaID,
+            Orden = dto.Orden
+        }).ToList();
+
+        await _repository.AsignarParadasAsync(paradas);
+
+        return Ok(new { mensaje = "Paradas asignadas exitosamente" });
     }
 }

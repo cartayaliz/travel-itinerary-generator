@@ -9,4 +9,6 @@ public interface IItinerarioRepository
     Task AddAsync(Itinerario itinerario);
     Task UpdateAsync(Itinerario itinerario);
     Task DeleteAsync(Itinerario itinerario);
+    Task LimpiarParadasAsync(int itinerarioId);
+    Task AsignarParadasAsync(List<Itinerario_Parada> paradas);
 }
