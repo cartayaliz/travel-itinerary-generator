@@ -20,7 +20,7 @@ public readonly record struct Weight(double Cost) :
 public class WeightedGraph<TWeight> where TWeight :
     IAdditiveIdentity<TWeight, TWeight>,
     IAdditionOperators<TWeight, TWeight, TWeight>,
-    IComparable
+    IComparable<TWeight>
 {
     private readonly Dictionary<int, List<(int to, TWeight weight)>> _adj = [];
 
@@ -56,10 +56,7 @@ public class WeightedGraph<TWeight> where TWeight :
         }
     }
 
-    public void AddNode(int id)
-    {
-        _adj[id] = [];
-    }
+    public void AddNode(int id) => _adj[id] = [];
 
     public bool RemoveNode(int node)
     {
@@ -141,7 +138,7 @@ public class WeightedGraph<TWeight> where TWeight :
     {
         InitSingleSource(out var hasDistance, out var distances, out var parents);
         if (!hasDistance[source]) return (parents, distances, hasDistance);
-        
+
         var queue = new PriorityQueue<int, TWeight>(Comparer<TWeight>.Create((left, right) => left.CompareTo(right)));
         queue.Enqueue(source, distances[source]);
         while (queue.TryDequeue(out var u, out var queuedDistance))
