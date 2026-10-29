@@ -2,6 +2,7 @@ using Turist.Domain.Distances;
 using Turist.Domain.Graph;
 using Turist.Domain.Interfaces.Graph;
 using Turist.Domain.Interfaces.Repositories;
+using Turist.Domain.Interfaces.Services;
 using Turist.Domain.Models;
 
 namespace Turist.Services.TransportWeb;
@@ -16,8 +17,8 @@ public class TransportWebService : ITransportWebService
     private readonly double _closeRadius;
 
     public TransportWebService(
-        IItinerarioRepository itinerarioRepository, 
-        IParadaRepository paradaRepository, 
+        IItinerarioRepository itinerarioRepository,
+        IParadaRepository paradaRepository,
         double closeRadius)
     {
         _itinerarioRepository = itinerarioRepository;
@@ -29,9 +30,9 @@ public class TransportWebService : ITransportWebService
     {
         weight = Weight.AdditiveIdentity;
         weight = new(GeodesicCalculator.HaversineKm(
-            _paradasById[from].Latitud, 
-            _paradasById[from].Longitud, 
-            _paradasById[to].Latitud, 
+            _paradasById[from].Latitud,
+            _paradasById[from].Longitud,
+            _paradasById[to].Latitud,
             _paradasById[to].Longitud));
         return weight.Cost <= _closeRadius;
     }
@@ -64,8 +65,68 @@ public class TransportWebService : ITransportWebService
         }
     }
 
-    public List<int> ProposeAlternatives()
+    public int[] ProposeAlternatives(
+        int num,
+        int originId,
+        int destinationId,
+        Weight maxWeight,
+        Func<Parada, bool> filterAct)
     {
-        throw new NotImplementedException();
+        //Chequeos
+        if (!IsValidInput(
+            num,
+            originId,
+            destinationId,
+            maxWeight,
+            filterAct))
+            return [];
+
+        //Dijkstra bidireccional
+        var fDijkstra = _graph.DijkstraGetMst(originId);
+        var bDijkstra = _graph.DijkstraGetMst(destinationId);
+
+        //Crear cola de prioridad ascendente
+        var queueComparer = Comparer<Weight>.Create((left, right) => left.Cost.CompareTo(right));
+        var alternativesQueue = new PriorityQueue<int, Weight>(queueComparer);
+
+        foreach (var id in _graph.Nodes)
+        {
+            if (id == originId
+                || id == destinationId
+                || !_graph.HasNode(id)
+                || !filterAct(_paradasById[id])
+                || !fDijkstra.hasDistance[id]
+                || !bDijkstra.hasDistance[id])
+                continue;
+
+            Weight totalWeight = fDijkstra.distances[id] + bDijkstra.distances[id];
+            if (totalWeight.CompareTo(maxWeight) > 0)
+                continue;
+
+            alternativesQueue.Enqueue(id, totalWeight);
+            if (alternativesQueue.Count > num)
+                alternativesQueue.Dequeue();
+        }
+
+        int[] alterArr = new int[alternativesQueue.Count];
+        for (int i = alternativesQueue.Count - 1; i >= 0 ; i--)
+        {
+            alterArr[i] = alternativesQueue.Dequeue();
+        }
+        return alterArr;
+
+        bool IsValidInput(
+            int num,
+            int originId,
+            int destinationId,
+            Weight maxWeight,
+            Func<Parada, bool> filterAct)
+        {
+            return num > 0
+                && filterAct is not null
+                && maxWeight.CompareTo(Weight.AdditiveIdentity) > 0
+                && _paradasById.ContainsKey(originId)
+                && _paradasById.ContainsKey(destinationId);
+        }
     }
 }

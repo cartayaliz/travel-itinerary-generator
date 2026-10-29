@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Turist.Data.Repositories;
 using Turist.Domain.Interfaces.Repositories;
+using Turist.Domain.Interfaces.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // 1. Cargar el archivo .env para que las herramientas de EF Core lo detecten
@@ -47,7 +48,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 // 2. REGISTRO DE REPOSITORIOS (Inyección de Dependencias)
 builder.Services.AddScoped<IParadaRepository, ParadaRepository>(); // <-- AQUÍ ESTÁ TU LÍNEA
 builder.Services.AddScoped<IItinerarioRepository, ItinerarioRepository>();
-builder.Services.AddScoped<Turist.Domain.Interfaces.Graph.ITransportWebService, Turist.Services.TransportWeb.TransportWebService>();
+builder.Services.AddScoped<ITransportWebService, Turist.Services.TransportWeb.TransportWebService>();
 
 // 3. Configurar Servicios de la API (Controladores y OpenAPI)
 builder.Services.AddControllers();
