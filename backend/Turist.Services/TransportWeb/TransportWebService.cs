@@ -14,16 +14,16 @@ public class TransportWebService : ITransportWebService
     private IEnumerable<Itinerario> _orderedItinerarios = [];
     private readonly Dictionary<int, Parada> _paradasById = [];
     private readonly WeightedGraph<Weight> _graph = new();
-    private readonly double _closeRadius;
+    private readonly double _closeRadiusKm;
 
     public TransportWebService(
         IItinerarioRepository itinerarioRepository,
         IParadaRepository paradaRepository,
-        double closeRadius)
+        double closeRadiusKm)
     {
         _itinerarioRepository = itinerarioRepository;
         _paradaRepository = paradaRepository;
-        _closeRadius = closeRadius;
+        _closeRadiusKm = closeRadiusKm;
     }
 
     private bool TryWeightFunc(int from, int to, out Weight weight)
@@ -34,7 +34,7 @@ public class TransportWebService : ITransportWebService
             _paradasById[from].Longitud,
             _paradasById[to].Latitud,
             _paradasById[to].Longitud));
-        return weight.Cost <= _closeRadius;
+        return weight.Cost <= _closeRadiusKm;
     }
 
     public async Task LoadAsync()
@@ -61,6 +61,7 @@ public class TransportWebService : ITransportWebService
                 int to = itinerario.ItinerarioParadas[i + 1].ParadaID;
                 if (!TryWeightFunc(from, to, out Weight weight)) continue;
                 _graph.AddEdge(from, to, weight);
+                _graph.AddEdge(to, from, weight);
             }
         }
     }
