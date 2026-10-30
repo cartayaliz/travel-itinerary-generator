@@ -3,6 +3,8 @@ import Login from "../views/Login";
 import Dashboard from "../views/Dashboard";
 import TuristDashboard from '../views/TuristDashboard';
 import Reports from "../views/Reports";
+import GuideDashboard from "../views/GuideDashboard";
+
 function AppRouter() {
   return (
     <Routes>
@@ -11,7 +13,7 @@ function AppRouter() {
       
       {/* Si la ruta es /, redirige automáticamente al login */}
       <Route path="/" element={<Navigate to="/login" />} />
-     <Route path="/guia/dashboard" element={<Dashboard />} />
+     <Route path="/guia/dashboard" element={<GuideDashboard />} />
      <Route path="/turista/dashboard" element={<TuristDashboard />} />
      <Route path="/admin/dashboard" element={<h1>Bienvenido al Panel de Administrador (En construcción)</h1> }/>
      <Route path="/jefe/dashboard" element={<h1>Bienvenido al Panel de Jefe (En construcción)</h1> }/>

@@ -12,6 +12,12 @@ function GuideDashboard() {
   return (
     <div className="app-layout">
       <aside className="sidebar">
+      <h2>Guide Menu</h2>
+        <ul>
+          <li className="active">My Itineraries</li>
+          <li>Create Activity</li>
+          <li>Profile</li>
+        </ul>
       </aside>
 
       <main className="main-content">
