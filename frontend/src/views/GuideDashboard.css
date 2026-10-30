@@ -119,3 +119,19 @@
     background-color: #fef3c7;
     color: #92400e;
   }
+
+  /* Todavia no funciona es para el formulario de crear itinerario*/
+.form-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  border-left: 4px solid #764ba2;
+}
+
+.form-container h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #374151;
+}

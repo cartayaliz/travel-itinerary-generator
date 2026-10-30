@@ -1,5 +1,5 @@
 import "./GuideDashboard.css";
-
+import Input from "../components/Input";
 import Button from "../components/Button"; 
 
 function GuideDashboard() {
@@ -8,6 +8,11 @@ function GuideDashboard() {
     { id: 1, name: "Havana Colonial", status: "Approved", activities: 5 },
     { id: 2, name: "Varadero Beach", status: "In Review", activities: 4 },
   ];
+  const [showForm, setShowForm] = useState(false);
+
+  const [name, setName] = useState("");
+  const [activities, setActivities] = useState("");
+/* idea para luego implementar la ventana de crear el nuevo itinerario */
 
   return (
     <div className="app-layout">
