@@ -47,7 +47,7 @@ public class TransportWebService : ITransportWebService
         }
     }
 
-    public void LoadGraph()
+    public void BuildGraph()
     {
         foreach (var item in _paradasById)
         {
@@ -61,7 +61,6 @@ public class TransportWebService : ITransportWebService
                 int to = itinerario.ItinerarioParadas[i + 1].ParadaID;
                 if (!TryWeightFunc(from, to, out Weight weight)) continue;
                 _graph.AddEdge(from, to, weight);
-                _graph.AddEdge(to, from, weight);
             }
         }
     }
@@ -93,14 +92,17 @@ public class TransportWebService : ITransportWebService
         foreach (var id in _graph.Nodes)
         {
             if (id == originId
-                || id == destinationId
-                || !_graph.HasNode(id)
-                || !filterAct(_paradasById[id])
-                || !fDijkstra.hasDistance[id]
-                || !bDijkstra.hasDistance[id])
+                || id == destinationId)
                 continue;
+            if (!_graph.HasNode(id)) continue;
+            if (!_paradasById.TryGetValue(id, out var paradaAlt)) continue;
+            if (!filterAct(paradaAlt)) continue;
+            if (!fDijkstra.hasDistance.TryGetValue(id, out var fd) || !fd) continue;
+            if (!bDijkstra.hasDistance.TryGetValue(id, out var bd) || !bd) continue;
+            if (!fDijkstra.distances.TryGetValue(id, out var fdw)) continue;
+            if (!bDijkstra.distances.TryGetValue(id, out var bdw)) continue;
 
-            Weight totalWeight = fDijkstra.distances[id] + bDijkstra.distances[id];
+            Weight totalWeight = fdw + bdw;
             if (totalWeight.CompareTo(maxWeight) > 0)
                 continue;
 

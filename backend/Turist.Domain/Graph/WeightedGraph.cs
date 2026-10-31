@@ -137,13 +137,14 @@ public class WeightedGraph<TWeight> where TWeight :
     public (Dictionary<int, int> parents, Dictionary<int, TWeight> distances, Dictionary<int, bool> hasDistance) DijkstraGetMst(int source)
     {
         InitSingleSource(out var hasDistance, out var distances, out var parents);
-        if (!hasDistance[source]) return (parents, distances, hasDistance);
+        if (!hasDistance.TryGetValue(source, out var sourceHas) || !sourceHas) 
+            return (parents, distances, hasDistance);
 
         var queue = new PriorityQueue<int, TWeight>(Comparer<TWeight>.Create((left, right) => left.CompareTo(right)));
         queue.Enqueue(source, distances[source]);
         while (queue.TryDequeue(out var u, out var queuedDistance))
         {
-            if (!hasDistance[u] || queuedDistance.CompareTo(distances[u]) != 0)
+            if (!hasDistance.TryGetValue(u, out var uHas) || !uHas || queuedDistance.CompareTo(distances[u]) != 0)
                 continue;
 
             foreach (var (to, weight) in GetNeighbors(u))
@@ -157,7 +158,7 @@ public class WeightedGraph<TWeight> where TWeight :
         {
             var candidate = distances[u] + weight;
 
-            if (!hasDistance[to] || candidate.CompareTo(distances[to]) < 0)
+            if (!hasDistance.TryGetValue(to, out var toHas) || !toHas || candidate.CompareTo(distances[to]) < 0)
             {
                 distances[to] = candidate;
                 hasDistance[to] = true;

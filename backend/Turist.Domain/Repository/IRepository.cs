@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 namespace Turist.Domain.Repository;
 
 public interface IRepository<T> where T : class
