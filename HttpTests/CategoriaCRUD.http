@@ -9,7 +9,7 @@ POST {{HostAddress}}/api/categorias
 Content-Type: application/json
 
 {
-  "nombre": "Cultural"
+  "nombre": "Deporte"
 }
 
 ### 2. Obtener todas las Categorías
