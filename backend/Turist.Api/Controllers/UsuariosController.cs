@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
-using Turist.Services.DTOs.Usuario;
+using Turist.Services.DTOs.Usuario.Turista;
+using Turist.Services.DTOs.Usuario.Guia;
 using Turist.Services.Mappers;
+using Turist.Services.DTOs.Usuario; // Para UsuarioCreateDto y UsuarioResponseDto
 
 namespace Turist.Api.Controllers;
 
@@ -11,10 +13,17 @@ namespace Turist.Api.Controllers;
 public class UsuariosController : ControllerBase
 {
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly ITuristaRepository _turistaRepository;
+    private readonly IGuiaRepository _guiaRepository;
 
-    public UsuariosController(IUsuarioRepository usuarioRepository)
+    public UsuariosController(
+        IUsuarioRepository usuarioRepository,
+        ITuristaRepository turistaRepository,
+        IGuiaRepository guiaRepository)
     {
         _usuarioRepository = usuarioRepository;
+        _turistaRepository = turistaRepository;
+        _guiaRepository = guiaRepository;
     }
 
     [HttpGet]
@@ -64,4 +73,48 @@ public class UsuariosController : ControllerBase
         await _usuarioRepository.DeleteAsync(usuario);
         return NoContent();
     }
+    //===============
+    //Asignar paquetes a turistas
+    //================
+    [HttpPost("{id:int}/paquetes")]
+    public async Task<ActionResult> AsignarPaquetes(int id, [FromBody] List<AsignarPaqueteATuristaDto> paquetesDto)
+    {
+        var usuario = await _usuarioRepository.GetByIdAsync(id);
+        if (usuario is not Turista) return BadRequest("El usuario especificado no es un Turista.");
+
+        await _turistaRepository.LimpiarPaquetesAsync(id);
+
+        var paquetes = paquetesDto.Select(dto => new Turista_Paquete
+        {
+            TuristaID = id,
+            PaqueteID = dto.PaqueteID
+        }).ToList();
+
+        await _turistaRepository.AsignarPaquetesAsync(paquetes);
+
+        return Ok(new { mensaje = "Paquetes asignados al turista exitosamente" });
+    }
+    //================
+    //Asignar paquetes a guias
+    //================
+    [HttpPost("{id:int}/paquetes-autorizados")]
+    public async Task<ActionResult> AsignarPaquetesAutorizados(int id, [FromBody] List<AsignarPaqueteAGuiaDto> paquetesDto)
+    {
+        var usuario = await _usuarioRepository.GetByIdAsync(id);
+        if (usuario is not GuiaTuristico) return BadRequest("El usuario especificado no es un Guía Turístico.");
+
+        await _guiaRepository.LimpiarPaquetesAutorizadosAsync(id);
+
+        var paquetes = paquetesDto.Select(dto => new Guia_Paquete
+        {
+            GuiaID = id,
+            PaqueteID = dto.PaqueteID
+        }).ToList();
+
+        await _guiaRepository.AsignarPaquetesAutorizadosAsync(paquetes);
+
+        return Ok(new { mensaje = "Paquetes autorizados asignados al guía exitosamente" });
+    }
 }
+
+
