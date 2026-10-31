@@ -1,0 +1,32 @@
+@HostAddress = http://0.0.0.0:5064
+
+### ==========================================
+### CATEGORIAS
+### ==========================================
+
+### 1. Crear una Categoría
+POST {{HostAddress}}/api/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Cultural"
+}
+
+### 2. Obtener todas las Categorías
+GET {{HostAddress}}/api/categorias
+Accept: application/json
+
+### 3. Obtener Categoría por ID (Cambia el 1 si es necesario)
+GET {{HostAddress}}/api/categorias/1
+Accept: application/json
+
+### 4. Actualizar Categoría
+PUT {{HostAddress}}/api/categorias/1
+Content-Type: application/json
+
+{
+  "nombre": "Cultural y Patrimonial"
+}
+
+### 5. Eliminar Categoría
+DELETE {{HostAddress}}/api/categorias/1

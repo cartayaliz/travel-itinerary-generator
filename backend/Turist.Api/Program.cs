@@ -46,6 +46,8 @@ builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
 builder.Services.AddScoped<IRepository<Usuario>, UsuarioRepository>();
 builder.Services.AddScoped<IPaqueteTuristicoRepository, PaqueteTuristicoRepository>();
 builder.Services.AddScoped<IItinerarioRepository, ItinerarioRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IGrupoRepository, GrupoRepository>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
