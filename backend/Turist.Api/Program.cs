@@ -51,6 +51,7 @@ builder.Services.AddScoped<IGrupoRepository, GrupoRepository>();
 builder.Services.AddScoped<IVisitaRepository, VisitaRepository>();
 builder.Services.AddScoped<IModificacionRepository, ModificacionRepository>();
 builder.Services.AddScoped<IValidacionRepository, ValidacionRepository>();
+builder.Services.AddScoped<IValoracionRepository, ValoracionRepository>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
