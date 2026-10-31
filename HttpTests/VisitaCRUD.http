@@ -8,7 +8,7 @@ Content-Type: application/json
   "fecha": "2026-10-30T10:00:00Z",
   "estado": 1,
   "itinerarioID": 1,
-  "turistaID": 1,
+  "turistaID": 2,
   "paradaID": 1
 }
 

@@ -23,7 +23,7 @@ Content-Type: application/json
   "tipoUsuario": 2,
   "especialidad": null,
   "edad": 25,
-  "grupoID": 2
+  "grupoID": 1
 }
 
 ### 3. Obtener todos los Usuarios
