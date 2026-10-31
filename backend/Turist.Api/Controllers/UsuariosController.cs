@@ -10,9 +10,9 @@ namespace Turist.Api.Controllers;
 [Route("api/[controller]")]
 public class UsuariosController : ControllerBase
 {
-    private readonly IRepository<Usuario> _usuarioRepository;
+    private readonly IUsuarioRepository _usuarioRepository;
 
-    public UsuariosController(IRepository<Usuario> usuarioRepository)
+    public UsuariosController(IUsuarioRepository usuarioRepository)
     {
         _usuarioRepository = usuarioRepository;
     }
@@ -29,7 +29,7 @@ public class UsuariosController : ControllerBase
     public async Task<ActionResult<UsuarioResponseDto>> GetById(int id)
     {
         var usuario = await _usuarioRepository.GetByIdAsync(id);
-        if (usuario == null) return NotFound();
+        if (usuario == null) return NotFound($"No se encontró el usuario con ID {id}.");
 
         return Ok(usuario.ToDto());
     }
@@ -37,17 +37,10 @@ public class UsuariosController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] UsuarioCreateDto dto)
     {
-        try
-        {
-            var nuevoUsuario = dto.ToEntity();
-            await _usuarioRepository.AddAsync(nuevoUsuario);
+        var nuevoUsuario = dto.ToEntity();
+        await _usuarioRepository.AddAsync(nuevoUsuario);
 
-            return Ok(new { mensaje = "Usuario creado exitosamente", id = nuevoUsuario.UsuarioID });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { mensaje = "Error al crear el usuario", detalle = ex.Message });
-        }
+        return Ok(new { mensaje = "Usuario creado exitosamente", id = nuevoUsuario.UsuarioID });
     }
 
     [HttpPut("{id:int}")]
@@ -56,18 +49,17 @@ public class UsuariosController : ControllerBase
         var usuarioExistente = await _usuarioRepository.GetByIdAsync(id);
         if (usuarioExistente == null) return NotFound($"No se encontró el usuario con ID {id}.");
 
-        // Delegamos la lógica al Mapper
         dto.UpdateEntity(usuarioExistente);
-
         await _usuarioRepository.UpdateAsync(usuarioExistente);
-        return NoContent(); // 204: Éxito
+
+        return NoContent();
     }
-    
+
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
         var usuario = await _usuarioRepository.GetByIdAsync(id);
-        if (usuario == null) return NotFound();
+        if (usuario == null) return NotFound($"No se encontró el usuario con ID {id}.");
 
         await _usuarioRepository.DeleteAsync(usuario);
         return NoContent();
