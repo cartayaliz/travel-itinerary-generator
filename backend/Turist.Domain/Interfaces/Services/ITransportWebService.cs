@@ -6,11 +6,11 @@ namespace Turist.Domain.Interfaces.Services;
 public interface ITransportWebService
 {
     Task LoadAsync();
-
-    int[] ProposeAlternatives(
-        int num,
+    List<int> ProposeAlternatives(
+        int maxStopsCnt,
         int originId,
         int destinationId,
         Weight maxWeight,
-        Func<Parada, bool> filterAct);
+        Func<Parada, bool> filterStop);
+
 }

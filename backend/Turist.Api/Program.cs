@@ -48,7 +48,6 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 // 2. REGISTRO DE REPOSITORIOS (Inyección de Dependencias)
 builder.Services.AddScoped<IParadaRepository, ParadaRepository>(); // <-- AQUÍ ESTÁ TU LÍNEA
 builder.Services.AddScoped<IItinerarioRepository, ItinerarioRepository>();
-builder.Services.AddScoped<ITransportWebService, Turist.Services.TransportWeb.TransportWebService>();
 
 // 3. Configurar Servicios de la API (Controladores y OpenAPI)
 builder.Services.AddControllers();

@@ -108,7 +108,6 @@ public class TransportWebServiceTests
 
         // Act
         service.LoadAsync().GetAwaiter().GetResult();
-        service.BuildGraph();
 
         // Assert - graph should have nodes and edges
         // We can't access private _graph directly, but we can test via ProposeAlternatives behavior
@@ -146,7 +145,6 @@ public class TransportWebServiceTests
 
         // Act
         service.LoadAsync().GetAwaiter().GetResult();
-        service.BuildGraph();
 
         // Assert - should not create edge, so propose alternatives from 1 to 2 with no direct path?
         // Dijkstra from 1 won't reach 2 if no edge
@@ -201,14 +199,13 @@ public class TransportWebServiceTests
 
         // Act
         service.LoadAsync().GetAwaiter().GetResult();
-        service.BuildGraph();
 
         // Act
         var alternatives = service.ProposeAlternatives(2, 1, 4, new Weight(100), _ => true);
 
         // Assert
         Assert.NotNull(alternatives);
-        Assert.True(alternatives.Length <= 2);
+        Assert.True(alternatives.Count <= 2);
         // No debe incluir origen ni destino
         Assert.DoesNotContain(1, alternatives);
         Assert.DoesNotContain(4, alternatives);
@@ -244,7 +241,6 @@ public class TransportWebServiceTests
         );
 
         service.LoadAsync().GetAwaiter().GetResult();
-        service.BuildGraph();
 
         // Act - filtrar para que solo acepte paradas con ID != 2
         var alternatives = service.ProposeAlternatives(5, 1, 4, new Weight(100), p => p.ParadaID != 2);

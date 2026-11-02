@@ -1,9 +1,8 @@
 using Turist.Domain.Distances;
 using Turist.Domain.Graph;
-using Turist.Domain.Interfaces.Graph;
+using Turist.Domain.Models;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Interfaces.Services;
-using Turist.Domain.Models;
 
 namespace Turist.Services.TransportWeb;
 
@@ -41,14 +40,17 @@ public class TransportWebService : ITransportWebService
     {
         _orderedItinerarios = await _itinerarioRepository.GetAllWithParadasOrderedAsync();
         var paradas = await _paradaRepository.GetAllAsync();
+        _paradasById.Clear();
         foreach (var item in paradas)
         {
             _paradasById[item.ParadaID] = item;
         }
+        BuildGraph();
     }
 
-    public void BuildGraph()
+    private void BuildGraph()
     {
+        _graph.Clear();
         foreach (var item in _paradasById)
         {
             _graph.AddNode(item.Key);
@@ -61,72 +63,73 @@ public class TransportWebService : ITransportWebService
                 int to = itinerario.ItinerarioParadas[i + 1].ParadaID;
                 if (!TryWeightFunc(from, to, out Weight weight)) continue;
                 _graph.AddEdge(from, to, weight);
+                _graph.AddEdge(to, from, weight);
             }
         }
     }
 
-    public int[] ProposeAlternatives(
-        int num,
+    public List<int> ProposeAlternatives(
+        int maxStopsCnt,
         int originId,
         int destinationId,
         Weight maxWeight,
-        Func<Parada, bool> filterAct)
+        Func<Parada, bool> filterStop)
     {
-        //Chequeos
         if (!IsValidInput(
-            num,
+            maxStopsCnt,
             originId,
             destinationId,
             maxWeight,
-            filterAct))
+            filterStop))
             return [];
 
-        //Dijkstra bidireccional
-        var fDijkstra = _graph.DijkstraGetMst(originId);
-        var bDijkstra = _graph.DijkstraGetMst(destinationId);
+        var fDijkstra = _graph.Dijkstra(originId);
+        var bDijkstra = _graph.Dijkstra(destinationId);
 
-        //Crear cola de prioridad ascendente
-        var queueComparer = Comparer<Weight>.Create((left, right) => left.Cost.CompareTo(right));
-        var alternativesQueue = new PriorityQueue<int, Weight>(queueComparer);
+        var queueComparer = Comparer<Weight>
+            .Create((left, right) => left.Cost.CompareTo(right));
+        var altersQueue = new PriorityQueue<int, Weight>(queueComparer);
 
         foreach (var id in _graph.Nodes)
         {
             if (id == originId
-                || id == destinationId)
+                || id == destinationId
+                || !_graph.ContainsNode(id)
+                || !_paradasById.TryGetValue(id, out var paradaAlt)
+                || !filterStop(paradaAlt)
+                || !fDijkstra.hasDistance.TryGetValue(id, out var fd)
+                || !fd
+                || bDijkstra.hasDistance.TryGetValue(id, out var bd)
+                || !bd
+                || !fDijkstra.distances.TryGetValue(id, out var fWeight)
+                || !bDijkstra.distances.TryGetValue(id, out var bWeight))
                 continue;
-            if (!_graph.HasNode(id)) continue;
-            if (!_paradasById.TryGetValue(id, out var paradaAlt)) continue;
-            if (!filterAct(paradaAlt)) continue;
-            if (!fDijkstra.hasDistance.TryGetValue(id, out var fd) || !fd) continue;
-            if (!bDijkstra.hasDistance.TryGetValue(id, out var bd) || !bd) continue;
-            if (!fDijkstra.distances.TryGetValue(id, out var fdw)) continue;
-            if (!bDijkstra.distances.TryGetValue(id, out var bdw)) continue;
 
-            Weight totalWeight = fdw + bdw;
+            var totalWeight = fWeight + bWeight;
             if (totalWeight.CompareTo(maxWeight) > 0)
                 continue;
 
-            alternativesQueue.Enqueue(id, totalWeight);
-            if (alternativesQueue.Count > num)
-                alternativesQueue.Dequeue();
+            altersQueue.Enqueue(id, totalWeight);
+            if (altersQueue.Count > maxStopsCnt)
+                altersQueue.Dequeue();
         }
 
-        int[] alterArr = new int[alternativesQueue.Count];
-        for (int i = alternativesQueue.Count - 1; i >= 0 ; i--)
+        List<int> altersArr = new List<int>();
+        for (int i = altersQueue.Count - 1; i >= 0; i--)
         {
-            alterArr[i] = alternativesQueue.Dequeue();
+            altersArr.Add(altersQueue.Dequeue());
         }
-        return alterArr;
+        return altersArr;
 
         bool IsValidInput(
-            int num,
+            int maxStopsCnt,
             int originId,
             int destinationId,
             Weight maxWeight,
-            Func<Parada, bool> filterAct)
+            Func<Parada, bool> filterStop)
         {
-            return num > 0
-                && filterAct is not null
+            return maxStopsCnt > 0
+                && filterStop is not null
                 && maxWeight.CompareTo(Weight.AdditiveIdentity) > 0
                 && _paradasById.ContainsKey(originId)
                 && _paradasById.ContainsKey(destinationId);
