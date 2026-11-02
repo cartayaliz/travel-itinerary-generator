@@ -3,14 +3,35 @@ using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 using Turist.Data;
 using Turist.Domain.Enums;
-public class ActividadRepository : Repository<Actividad>, IActividadRepository
+public class ActividadRepository : IActividadRepository
 {
+    protected readonly TuristDbContext _context;
 
-    public ActividadRepository(TuristDbContext context) : base(context)
+    public ActividadRepository(TuristDbContext context)
     {
-        
+        _context = context;
+    }
+    public async Task<IEnumerable<Actividad>> GetAllAsync() => await _context.Set<Actividad>().ToListAsync();
+
+    public async Task<Actividad?> GetByIdAsync(int id) => await _context.Set<Actividad>().FindAsync(id);
+
+    public async Task AddAsync(Actividad actividad)
+    {
+        await _context.Set<Actividad>().AddAsync(actividad);
+        await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateAsync(Actividad actividad)
+    {
+        _context.Set<Actividad>().Update(actividad);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Actividad actividad)
+    {
+        _context.Set<Actividad>().Remove(actividad);
+        await _context.SaveChangesAsync();
+    }
     public async Task<IEnumerable<Actividad>> GetParaGeneracionAsync(
         NivelEsfuerzo? esfuerzoMaximo, 
         List<TipoActividad> tiposPermitidos)

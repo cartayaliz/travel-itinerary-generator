@@ -2,10 +2,13 @@ using Turist.Domain.Models;
 using Turist.Domain.Enums;
 namespace Turist.Domain.Interfaces.Repositories;
 
-public interface IActividadRepository : IRepository<Actividad>
+public interface IActividadRepository
 {
-    // Método específico para que el algoritmo de generación filtre 
-    // directamente en la base de datos (mucho más eficiente que traer todo con GetAllAsync)
+    Task<Actividad?> GetByIdAsync(int id);
+    Task<IEnumerable<Actividad>> GetAllAsync();
+    Task AddAsync(Actividad entity);
+    Task UpdateAsync(Actividad entity);
+    Task DeleteAsync(Actividad entity);
     Task<IEnumerable<Actividad>> GetParaGeneracionAsync(
         NivelEsfuerzo? esfuerzoMaximo, 
         List<TipoActividad> tiposPermitidos);
