@@ -15,9 +15,10 @@ public class ItineraryGenerationParameters
     // Nivel de esfuerzo físico deseado
     public NivelEsfuerzo? NivelEsfuerzoMaximo { get; set; }
 
-    // Tipos de actividad permitidos o preferidos
+    // Tipos de actividad permitidos
     public List<TipoActividad> TiposActividadPermitidos { get; set; } = new();
 
     // Cobertura mínima de categorías distintas
     public int CoberturaCategoriasMinima { get; set; }
+    public int GuiaID { get; set; }
 }

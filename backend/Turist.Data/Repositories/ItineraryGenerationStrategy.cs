@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
+using Turist.Domain.Enums;
 
 namespace Turist.Data.Repositories;
 
@@ -15,52 +16,40 @@ public class CriteriosItineraryGenerationStrategy : IItineraryGenerationStrategy
 
     public async Task<Itinerario> GenerateAsync(ItineraryGenerationParameters parameters)
     {
-        // 1. Obtener todas las actividades disponibles (que heredan de Parada)
-        var poolActividades = await _actividadRepository.GetAllAsync();
+        //Obtener actividades filtradas
+        var actividadesFiltradas = await _actividadRepository.GetParaGeneracionAsync(
+            parameters.NivelEsfuerzoMaximo, 
+            parameters.TiposActividadPermitidos
+        );
 
-        var query = poolActividades.AsQueryable();
-
-        // 2. Aplicar Criterio: Nivel de Esfuerzo Físico
-        if (parameters.NivelEsfuerzoMaximo.HasValue)
-        {
-            query = query.Where(a => a.NivelEsfuerzo <= parameters.NivelEsfuerzoMaximo.Value);
-        }
-
-        // 3. Aplicar Criterio: Tipo de Actividad (si se especificaron filtros)
-        if (parameters.TiposActividadPermitidos != null && parameters.TiposActividadPermitidos.Any())
-        {
-            query = query.Where(a => parameters.TiposActividadPermitidos.Contains(a.Tipo));
-        }
-
-        // 4. Aplicar Criterio: Distribución de Categorías (asegurar variedad agrupando por CategoriaID)
-        var actividadesFiltradas = query.ToList();
-        
-        var seleccionadasPorCategoria = actividadesFiltradas
+        //Selección final según criterios y cantidad total
+        var seleccionFinal = actividadesFiltradas
             .GroupBy(a => a.CategoriaID)
             .SelectMany(g => g.Take(Math.Max(1, parameters.CoberturaCategoriasMinima / Math.Max(1, actividadesFiltradas.Select(x => x.CategoriaID).Distinct().Count()))))
-            .ToList();
-
-        // Si la selección por categorías se queda corta, rellenamos con el resto filtrado
-        var seleccionFinal = seleccionadasPorCategoria
             .Union(actividadesFiltradas)
             .Distinct()
-            .OrderBy(a => a.HoraInicio) // Respeta estrictamente el orden cronológico del día
-            .Take(parameters.CantidadTotal) // Respeta la cantidad total solicitada
+            .OrderBy(a => a.HoraInicio) // Orden cronológico
+            .Take(parameters.CantidadTotal)
             .ToList();
 
-        // 5. Construir el Itinerario y asociar sus parámetros junto a él
+        //Crear el Itinerario
         var itinerario = new Itinerario
         {
-            Nombre = $"Itinerario Adaptado - {DateTime.UtcNow:yyyyMMdd}",
-            // Aquí enlazaras los parámetros si los tienes mapeados en tu entidad Itinerario
+            Nombre = $"Itinerario Adaptado - {DateTime.UtcNow:yyyyMMdd-HHmmssfff}",
+            FechaCreacion = DateTime.UtcNow,
+            Origen = OrigenItinerario.Automatico,
+            GuiaID = parameters.GuiaID,
+            CantidadActividades = seleccionFinal.Count,
+            CoberturaCategorias = seleccionFinal.Select(a => a.CategoriaID).Distinct().Count(),
+ 
         };
 
-        // 6. Poblar la tabla intermedia (Itinerario_Parada)
+        //Enlazar las actividades a la tabla intermedia
         foreach (var actividad in seleccionFinal)
         {
             itinerario.ItinerarioParadas.Add(new Itinerario_Parada
             {
-                ParadaID = actividad.ParadaID, // Heredado de Parada
+                ParadaID = actividad.ParadaID,
                 Itinerario = itinerario
             });
         }
