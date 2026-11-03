@@ -42,7 +42,7 @@
 .btn-primary {
   width: 100%;
   padding: 0.8rem;
-  background-color: #764ba2; /* Un morado bonito */
+  background-color: #764ba2; 
   color: white;
   border: none;
   border-radius: 6px;
@@ -52,7 +52,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #5a3d7a; /* Morado más oscuro al pasar el ratón */
+  background-color: #5a3d7a; 
 }
 
 .select-rol {
@@ -62,4 +62,16 @@
   font-size: 1rem;
   width: 100%;
   background-color: #dfd3ec;
+}
+
+.error-mensaje {
+  background-color: #fee2e2; /* Fondo rojo suave */
+  color: #b91c1c;            /* Texto rojo oscuro */
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #f87171;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: bold;
 }
