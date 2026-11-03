@@ -50,8 +50,7 @@ function Login() {
     <Layout>
       <div className="login-container">
           <form className="login-form" onSubmit={handleSubmit}>
-              <h2>Iniciar sesión</h2>
-              
+              <h2>Iniciar sesión</h2>             
               <Input 
               label="Usuario"
               placeholder="Escribe tu usuario" 
