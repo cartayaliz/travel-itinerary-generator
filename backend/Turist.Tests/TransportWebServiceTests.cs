@@ -14,7 +14,63 @@ public class TransportWebServiceTests
         {
             _itinerarios = itinerarios;
         }
+
+        public Task AddAsync(Itinerario itinerario)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AsignarPaquetesAsync(List<Itinerario_Paquete> paquetes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AsignarParadasAsync(List<Itinerario_Parada> paradas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AsignarTuristasAsync(List<Itinerario_Turista> turistas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(Itinerario itinerario)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Itinerario>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Itinerario>> GetAllWithParadasOrderedAsync() => Task.FromResult(_itinerarios);
+
+        public Task<Itinerario?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task LimpiarPaquetesAsync(int itinerarioId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task LimpiarParadasAsync(int itinerarioId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task LimpiarTuristasAsync(int itinerarioId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Itinerario itinerario)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     private class FakeParadaRepository : IParadaRepository

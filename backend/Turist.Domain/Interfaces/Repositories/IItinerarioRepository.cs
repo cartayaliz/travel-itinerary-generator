@@ -18,6 +18,6 @@ public interface IItinerarioRepository
 
     Task LimpiarTuristasAsync(int itinerarioId);
     Task AsignarTuristasAsync(List<Itinerario_Turista> turistas);
-}
+
     Task<IEnumerable<Itinerario>> GetAllWithParadasOrderedAsync();
 }

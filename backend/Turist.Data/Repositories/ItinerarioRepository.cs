@@ -105,8 +105,6 @@ public class ItinerarioRepository : IItinerarioRepository
         await _context.Itinerario_Turistas.AddRangeAsync(turistas);
         await _context.SaveChangesAsync();
     }
-    //================
-}
 
     public async Task<IEnumerable<Itinerario>> GetAllWithParadasOrderedAsync()
     {
