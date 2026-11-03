@@ -10,10 +10,12 @@ namespace Turist.Api.Controllers;
 public class ItinerariosController : ControllerBase
 {
     private readonly IItinerarioRepository _repository;
+    private readonly IItineraryGenerationStrategy _generation;
 
-    public ItinerariosController(IItinerarioRepository repository)
+    public ItinerariosController(IItinerarioRepository repository, IItineraryGenerationStrategy generation)
     {
         _repository = repository;
+        _generation = generation;
     }
 
     [HttpPost]
@@ -166,5 +168,32 @@ public class ItinerariosController : ControllerBase
         await _repository.AsignarTuristasAsync(turistas);
 
         return Ok(new { mensaje = "Turistas asignados exitosamente" });
+    }
+    //==============
+    // Endpoint para generar itinerarios de forma automática 
+    //==============
+    [HttpPost("generar")]
+    public async Task<ActionResult<ItinerarioResponseDto>> GenerarItinerario([FromBody] ItineraryGenerationParameters parameters)
+    {
+        //Ejecutamos la estrategia para construir el itinerario
+        var itinerarioGenerado = await _generation.GenerateAsync(parameters);
+
+        //Guardamos el itinerario
+        await _repository.AddAsync(itinerarioGenerado);
+
+        // Mapeamos la respuesta al DTO de salida
+        var responseDto = new ItinerarioResponseDto(
+            itinerarioGenerado.ItinerarioID, 
+            itinerarioGenerado.Nombre, 
+            itinerarioGenerado.Origen, 
+            itinerarioGenerado.FechaCreacion, 
+            itinerarioGenerado.GuiaID,
+            itinerarioGenerado.CantidadActividades, 
+            itinerarioGenerado.ProporcionVisitas, 
+            itinerarioGenerado.ProporcionExcursiones,
+            itinerarioGenerado.ProporcionTalleres, 
+            itinerarioGenerado.CoberturaCategorias
+        );
+        return StatusCode(201, responseDto);
     }
 }
