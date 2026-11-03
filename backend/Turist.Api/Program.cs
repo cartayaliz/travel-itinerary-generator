@@ -43,10 +43,17 @@ builder.Services.AddAuthorization();
 // 4. Registrar Servicios y Repositorios (Inyección de Dependencias)
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPaqueteTuristicoRepository, PaqueteTuristicoRepository>();
 builder.Services.AddScoped<IItinerarioRepository, ItinerarioRepository>();
-builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
-builder.Services.AddScoped<IActividadRepository, ActividadRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IGrupoRepository, GrupoRepository>();
+builder.Services.AddScoped<IVisitaRepository, VisitaRepository>();
+builder.Services.AddScoped<IModificacionRepository, ModificacionRepository>();
+builder.Services.AddScoped<IValidacionRepository, ValidacionRepository>();
+builder.Services.AddScoped<IValoracionRepository, ValoracionRepository>();
+builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
+builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();

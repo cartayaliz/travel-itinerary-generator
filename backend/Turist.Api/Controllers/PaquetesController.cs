@@ -20,7 +20,7 @@ public class PaquetesController : ControllerBase
     public async Task<ActionResult<IEnumerable<PaqueteResponseDto>>> GetAll()
     {
         var paquetes = await _repository.GetAllAsync();
-        
+
         // Mapeo directo: Convertimos las Entidades en DTOs con .Select
         var response = paquetes.Select(p => new PaqueteResponseDto(
             p.PaqueteID, p.Nombre, p.Destino
@@ -50,7 +50,7 @@ public class PaquetesController : ControllerBase
         };
 
         await _repository.AddAsync(paquete);
-        
+
         return Ok(new { mensaje = "Paquete creado exitosamente", id = paquete.PaqueteID });
     }
 
@@ -75,5 +75,27 @@ public class PaquetesController : ControllerBase
 
         await _repository.DeleteAsync(paquete);
         return NoContent(); // 204: Éxito
+    }
+
+    //==========
+    //Asignar Categorias
+    //===========
+    [HttpPost("{id:int}/categorias")]
+    public async Task<ActionResult> AsignarCategorias(int id, [FromBody] List<AsignarCategoriaDto> categoriasDto)
+    {
+        var paquete = await _repository.GetByIdAsync(id);
+        if (paquete == null) return NotFound($"No se encontró el paquete con ID {id}.");
+
+        await _repository.LimpiarCategoriasAsync(id);
+
+        var categorias = categoriasDto.Select(dto => new Paquete_Categoria
+        {
+            PaqueteID = id,
+            CategoriaID = dto.CategoriaID
+        }).ToList();
+
+        await _repository.AsignarCategoriasAsync(categorias);
+
+        return Ok(new { mensaje = "Categorías asignadas exitosamente" });
     }
 }
