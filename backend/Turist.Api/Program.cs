@@ -43,7 +43,6 @@ builder.Services.AddAuthorization();
 // 4. Registrar Servicios y Repositorios (Inyección de Dependencias)
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
-builder.Services.AddScoped<IRepository<Usuario>, UsuarioRepository>();
 builder.Services.AddScoped<IPaqueteTuristicoRepository, PaqueteTuristicoRepository>();
 builder.Services.AddScoped<IItinerarioRepository, ItinerarioRepository>();
 builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
