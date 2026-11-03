@@ -4,6 +4,7 @@ import Dashboard from "../views/Dashboard";
 import TuristDashboard from '../views/TuristDashboard';
 import Reports from "../views/Reports";
 import GuideDashboard from "../views/GuideDashboard";
+import ItineraryDetail from "../views/ItineraryDetail";
 
 function AppRouter() {
   return (
@@ -18,6 +19,7 @@ function AppRouter() {
      <Route path="/admin/dashboard" element={<h1>Bienvenido al Panel de Administrador (En construcción)</h1> }/>
      <Route path="/jefe/dashboard" element={<h1>Bienvenido al Panel de Jefe (En construcción)</h1> }/>
      <Route path="/reports" element={<Reports />} />
+     <Route path="/guia/itinerary/:id" element={<ItineraryDetail />} />
     </Routes>
   );
 }

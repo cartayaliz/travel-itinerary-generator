@@ -2,13 +2,33 @@ import { useState } from "react"; // 1. IMPORTAMOS USESTATE
 import "./GuideDashboard.css";
 import Input from "../components/Input";
 import Button from "../components/Button"; 
+
+import { useNavigate } from "react-router-dom";
+
 //importante todavia no funcionan profile y crear activity eso deberia llevarte a otro dashboard
 function GuideDashboard() {
 
+  const navigate = useNavigate(); 
   const [myItineraries, setMyItineraries] = useState([
-    { id: 1, name: "Havana Colonial", status: "Approved", activities: 5 },
-    { id: 2, name: "Varadero Beach", status: "In Review", activities: 4 },
-  ]);
+    { 
+      id: 1, 
+      name: "Havana Colonial", 
+      status: "Approved", 
+      activities: [
+        { id: 101, name: "Malecón Walk", hour: "09:00" },
+        { id: 102, name: "Museum Visit", hour: "11:00" }
+      ] 
+    },
+    { 
+      id: 2, 
+      name: "Varadero Beach", 
+      status: "In Review", 
+      activities: [
+        { id: 201, name: "Beach Relax", hour: "10:00" }
+      ] 
+    },
+   ]);
+   //en prueba agregar actividdes
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [activities, setActivities] = useState("");
@@ -22,13 +42,14 @@ function GuideDashboard() {
       id: Date.now(), // ID único
       name: name,
       status: "In Review", // los nuevos entran en revisión
-      activities: Number(activities),
+      activities: [],
     };
 
     setMyItineraries([...myItineraries, newItinerary]);
     setName("");
     setActivities("");
     setShowForm(false);
+    navigate(`/guia/itinerary/${newItinerary.id}`, { state: { newItinerary } });//para que se muestren dos dashboard en el navegador
   };
 
   return (
@@ -88,7 +109,7 @@ function GuideDashboard() {
               <div key={itinerary.id} className="itinerary-card">
                 <div className="itinerary-info">
                   <h3>{itinerary.name}</h3>
-                  <p>Activities: {itinerary.activities}</p>
+                  <p>Activities: {itinerary.activities.length}</p>
                 </div>
                 <div className="itinerary-status">
                   <span className={`status ${itinerary.status === 'Approved' ? 'approved' : 'pending'}`}>
