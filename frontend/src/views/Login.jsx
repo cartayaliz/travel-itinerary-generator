@@ -8,6 +8,7 @@ import "./Login.css";
 
 
 function Login() {
+    const [error, setError] = useState("");
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const [rol, setRol] = useState("guia");
@@ -21,11 +22,17 @@ function Login() {
 
     const handleSubmit = (e) => { e.preventDefault(); 
 
+    setError("");
+    
     // 1. Validar que tenga al menos una letra y un número
     const tieneLetraYNumero = /^(?=.*[A-Za-z])(?=.*\d).+$/;
 
+    if (!usuario || !password) {
+      setError("Por favor, llena todos los campos");
+      return;
+    }
     if (!tieneLetraYNumero.test(password)) {
-    alert("La contraseña debe contener al menos una letra y un número");
+    setError("La contraseña debe contener al menos una letra y un número");
     return;
 
     }
@@ -44,19 +51,23 @@ function Login() {
   else if (rol === "admin") {
     navigate("/admin/dashboard");
   }
+
+
   
 };
   return (
     <Layout>
       <div className="login-container">
           <form className="login-form" onSubmit={handleSubmit}>
-              <h2>Iniciar sesión</h2>             
+              <h2>Iniciar sesión</h2>    
+              {/* Si 'error' tiene texto, muestra este div rojo */}
+              {error && <div className="error-mensaje">{error}</div>}         
               <Input 
               label="Usuario"
               placeholder="Escribe tu usuario" 
               value={usuario} 
               onChange={(e) => setUsuario(e.target.value)} 
-              required /> 
+               /> 
               
               <Input 
               label="Contraseña"
@@ -67,7 +78,7 @@ function Login() {
               minLength={8} 
               onChange={(e) => setPassword(e.target.value)} 
               /* No permitir campo vacío*/
-              required />
+               />
 
               <Select
               label="Seleccionar rol (Prueba)"

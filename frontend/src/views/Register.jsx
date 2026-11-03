@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import "./Register.css";
 
 function Register() {
+    const [error, setError] = useState("");
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const [rol, setRol] = useState("guia");
@@ -19,12 +20,16 @@ function Register() {
     const navigate = useNavigate();  
 
     const handleSubmit = (e) => { e.preventDefault(); 
-
+    setError("");
     // 1. Validar que tenga al menos una letra y un número
     const tieneLetraYNumero = /^(?=.*[A-Za-z])(?=.*\d).+$/;
 
+    if (!usuario || !password) {
+      setError("Por favor, llena todos los campos");
+      return;
+    }
     if (!tieneLetraYNumero.test(password)) {
-    alert("La contraseña debe contener al menos una letra y un número");
+    setError("La contraseña debe contener al menos una letra y un número");
     return;
 
     }
@@ -49,13 +54,15 @@ function Register() {
     <Layout>
       <div className="register-container">
           <form className="register-form" onSubmit={handleSubmit}>
-              <h2> </h2>             
+              <h2> </h2>  
+              {/* Si 'error' tiene texto, muestra este div rojo */}
+              {error && <div className="error-mensaje">{error}</div>}            
               <Input 
               label="Usuario"
               placeholder="Escribe tu usuario" 
               value={usuario} 
               onChange={(e) => setUsuario(e.target.value)} 
-              required /> 
+               /> 
               
               <Input 
               label="Password"
@@ -66,7 +73,7 @@ function Register() {
               minLength={8} 
               onChange={(e) => setPassword(e.target.value)} 
               /* No permitir campo vacío*/
-              required />
+               />
 
               <Select
               label="Seleccionar rol (Prueba)"
