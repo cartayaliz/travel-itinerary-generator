@@ -105,5 +105,20 @@ public class ItinerarioRepository : IItinerarioRepository
         await _context.Itinerario_Turistas.AddRangeAsync(turistas);
         await _context.SaveChangesAsync();
     }
-    //================
+
+    public async Task<IEnumerable<Itinerario>> GetAllWithParadasOrderedAsync()
+    {
+        var itinerarios = await _context.Itinerarios
+            .Include(i => i.ItinerarioParadas)
+            .ThenInclude(ip => ip.Parada)
+            .ToListAsync();
+
+        // Ordenamos las paradas por su orden dentro de cada itinerario
+        foreach (var itinerario in itinerarios)
+        {
+            itinerario.ItinerarioParadas = [.. itinerario.ItinerarioParadas.OrderBy(ip => ip.Orden)];
+        }
+
+        return itinerarios;
+    }
 }
