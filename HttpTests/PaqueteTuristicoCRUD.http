@@ -28,3 +28,12 @@ Content-Type: application/json
 
 ### 5. Eliminar un Paquete
 DELETE {{HostAddress}}/api/paquetes/1
+
+### Asignar Categorías al Paquete 1
+POST {{HostAddress}}/api/paquetes/1/categorias
+Content-Type: application/json
+
+[
+  { "categoriaID": 1 },
+  { "categoriaID": 2 }
+]

@@ -25,7 +25,6 @@ public static class UsuarioMapper
 
     public static Usuario ToEntity(this UsuarioCreateDto dto)
     {
-        // Hash de la contraseña
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
         return dto.TipoUsuario switch
@@ -41,7 +40,7 @@ public static class UsuarioMapper
                 Nombre = dto.Nombre,
                 PasswordHash = passwordHash,
                 Edad = dto.Edad ?? 0,
-                GrupoID = dto.GrupoID ?? 1 // Asumimos que existe el grupo 1
+                GrupoID = dto.GrupoID ?? 1
             },
             TipoUsuario.JefeOperaciones => new JefeOperaciones
             {
@@ -51,18 +50,16 @@ public static class UsuarioMapper
             _ => throw new ArgumentException("Tipo de usuario no soportado.")
         };
     }
+
     public static void UpdateEntity(this UsuarioCreateDto dto, Usuario usuarioExistente)
     {
-        // Actualizamos los campos base
         usuarioExistente.Nombre = dto.Nombre;
 
-        // Si la contraseña no viene vacía, la actualizamos (Buena práctica)
         if (!string.IsNullOrWhiteSpace(dto.Password))
         {
             usuarioExistente.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
         }
 
-        // Actualizamos los campos específicos según el tipo
         if (usuarioExistente is GuiaTuristico guia)
         {
             guia.Especialidad = dto.Especialidad ?? guia.Especialidad;
