@@ -1,0 +1,19 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Login (Usa el ID del Guía creado en Usuarios.http)
+POST {{HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuarioID": 1,
+  "password": "miPasswordSeguro123"
+}
+
+### 2. Login fallido (Contraseña incorrecta)
+POST {{HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuarioID": 1,
+  "password": "passwordEquivocado"
+}

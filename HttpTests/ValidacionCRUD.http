@@ -1,0 +1,36 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Crear una Validación (Aprobada - Estado 1)
+POST {{HostAddress}}/api/validaciones
+Content-Type: application/json
+
+{
+  "estado": 1,
+  "fechaValidacion": "2026-10-31T10:00:00Z",
+  "observaciones": "Itinerario aprobado sin cambios.",
+  "itinerarioID": 1,
+  "jefeID": 1
+}
+
+### 2. Obtener todas las Validaciones
+GET {{HostAddress}}/api/validaciones
+Accept: application/json
+
+### 3. Obtener Validación por ID
+GET {{HostAddress}}/api/validaciones/1
+Accept: application/json
+
+### 4. Actualizar Validación (Rechazada - Estado 2)
+PUT {{HostAddress}}/api/validaciones/1
+Content-Type: application/json
+
+{
+  "estado": 2,
+  "fechaValidacion": "2026-10-31T10:00:00Z",
+  "observaciones": "Rechazado. Falta la parada de almuerzo.",
+  "itinerarioID": 1,
+  "jefeID": 1
+}
+
+### 5. Eliminar Validación
+DELETE {{HostAddress}}/api/validaciones/1

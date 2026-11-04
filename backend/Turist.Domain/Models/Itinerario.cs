@@ -1,3 +1,4 @@
+using Turist.Domain.Enums;
 namespace Turist.Domain.Models;
 
 public class Itinerario
@@ -6,7 +7,15 @@ public class Itinerario
     public DateTime FechaCreacion { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public int GuiaID { get; set; }
-    
+
+    //Campos para guardar estadisticas de la generacion automatica 
+    public OrigenItinerario Origen { get; set; }
+    public int? CantidadActividades { get; set; }
+    public int? ProporcionVisitas { get; set; }
+    public int? ProporcionExcursiones { get; set; }
+    public int? ProporcionTalleres { get; set; }
+    public int? CoberturaCategorias { get; set; }
+
 
     // Navegación
     public GuiaTuristico Guia { get; set; } = null!;

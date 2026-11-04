@@ -53,5 +53,43 @@ public class TuristDbContext : DbContext
         modelBuilder.Entity<Itinerario_Turista>().HasKey(it => new { it.ItinerarioID, it.TuristaID });
         modelBuilder.Entity<Itinerario_Paquete>().HasKey(ip => new { ip.ItinerarioID, ip.PaqueteID });
         modelBuilder.Entity<Itinerario_Parada>().HasKey(ip => new { ip.ItinerarioID, ip.ParadaID });
+
+
+        // Convertir Enums a String en la Base de Datos
+        modelBuilder.Entity<Actividad>().Property(a => a.Tipo).HasConversion<string>();
+        modelBuilder.Entity<Actividad>().Property(a => a.NivelEsfuerzo).HasConversion<string>();
+        modelBuilder.Entity<Itinerario>().Property(i => i.Origen).HasConversion<string>();
+        modelBuilder.Entity<Visita>().Property(v => v.Estado).HasConversion<string>();
+        modelBuilder.Entity<Validacion>().Property(v => v.Estado).HasConversion<string>();
+        modelBuilder.Entity<Modificacion>().Property(m => m.Estado).HasConversion<string>();
+
+        // ==========================================
+        // RESTRICCIONES DE UNICIDAD (Evitar duplicados)
+        // ==========================================
+
+        // 1. El nombre del Grupo no puede repetirse (ej. no puede haber dos "Familia García")
+        modelBuilder.Entity<Grupo>()
+            .HasIndex(g => g.Nombre)
+            .IsUnique();
+
+        // 2. El nombre de la Categoría no puede repetirse (ej. no puede haber dos "Cultural")
+        modelBuilder.Entity<Categoria>()
+            .HasIndex(c => c.Nombre)
+            .IsUnique();
+
+        // 3. El nombre de la Parada (Atracción/Actividad) no puede repetirse
+        modelBuilder.Entity<Parada>()
+            .HasIndex(p => p.Nombre)
+            .IsUnique();
+
+        // 4. El nombre del Paquete Turístico no puede repetirse
+        modelBuilder.Entity<PaqueteTuristico>()
+            .HasIndex(p => p.Nombre)
+            .IsUnique();
+
+        // 5. El nombre del Itinerario no puede repetirse
+        modelBuilder.Entity<Itinerario>()
+            .HasIndex(i => i.Nombre)
+            .IsUnique();
     }
 }

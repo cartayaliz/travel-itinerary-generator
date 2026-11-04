@@ -1,9 +1,24 @@
+using Turist.Domain.Enums;
 namespace Turist.Domain.Models;
 
 public class Actividad : Parada
 {
-    public string Tipo { get; set; } = string.Empty; // Visita, Excursión, Taller
-    public string NivelEsfuerzo { get; set; } = string.Empty; // Bajo, Medio, Alto
+    public TipoActividad Tipo { get; set; }
+    public NivelEsfuerzo NivelEsfuerzo { get; set; }
     public TimeOnly HoraInicio { get; set; }
     public int DuracionMinutos { get; set; }
+}
+public class ItineraryGenerationParameters
+{
+    public int CantidadTotal { get; set; }
+    
+    // Nivel de esfuerzo físico deseado
+    public NivelEsfuerzo? NivelEsfuerzoMaximo { get; set; }
+
+    // Tipos de actividad permitidos
+    public List<TipoActividad> TiposActividadPermitidos { get; set; } = new();
+
+    // Cobertura mínima de categorías distintas
+    public int CoberturaCategoriasMinima { get; set; }
+    public int GuiaID { get; set; }
 }

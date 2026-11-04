@@ -1,0 +1,55 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Crear una Atracción (TipoParada: 1)
+POST {{HostAddress}}/api/paradas
+Content-Type: application/json
+
+{
+  "nombre": "Catedral de La Habana",
+  "latitud": 23.1367,
+  "longitud": -82.3589,
+  "categoriaID": 1,
+  "guiaID": 1,
+  "tipoParada": 1,
+  "horarioApertura": "09:00:00",
+  "horarioCierre": "18:00:00"
+}
+
+### 2. Crear una Actividad (TipoParada: 2)
+POST {{HostAddress}}/api/paradas
+Content-Type: application/json
+
+{
+  "nombre": "Tour a pie por el centro",
+  "latitud": 23.1400,
+  "longitud": -82.3500,
+  "categoriaID": 1,
+  "guiaID": 1,
+  "tipoParada": 2,
+  "tipoActividad": "Excursion",
+  "nivelEsfuerzo": "Medio",
+  "horaInicio": "10:00:00",
+  "duracionMinutos": 120
+}
+
+### 3. Obtener todas las Paradas
+GET {{HostAddress}}/api/paradas
+Accept: application/json
+
+### 4. Actualizar una Atracción (Asume ID 1)
+PUT {{HostAddress}}/api/paradas/1
+Content-Type: application/json
+
+{
+  "nombre": "Catedral de La Habana (Restaurada)",
+  "latitud": 23.1367,
+  "longitud": -82.3589,
+  "categoriaID": 1,
+  "guiaID": 1,
+  "tipoParada": 1,
+  "horarioApertura": "08:00:00",
+  "horarioCierre": "19:00:00"
+}
+
+### 5. Eliminar una Parada
+DELETE {{HostAddress}}/api/paradas/2

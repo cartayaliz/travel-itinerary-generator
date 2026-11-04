@@ -6,6 +6,7 @@ using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Turist.Domain.Models;
+using System;
 
 namespace Turist.Services
 {
@@ -18,7 +19,7 @@ namespace Turist.Services
     {
         private readonly IConfiguration _configuration;
 
-        public TokenService (IConfiguration configuration)
+        public TokenService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -35,12 +36,14 @@ namespace Turist.Services
             // Definimos los claims (información que viajará dentro del token)
             var claims = new[]
             {
+                new Claim(ClaimTypes.Name, usuario.Nombre),
                 new Claim(JwtRegisteredClaimNames.Sub, usuario.UsuarioID.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, usuario.UsuarioID.ToString()),
                 new Claim(ClaimTypes.Role, rol)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+            var jwtKey = _configuration["Jwt:Key"] ?? Environment.GetEnvironmentVariable("JWT_KEY");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

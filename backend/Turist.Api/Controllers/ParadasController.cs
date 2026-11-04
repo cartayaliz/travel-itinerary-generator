@@ -20,8 +20,6 @@ public class ParadasController : ControllerBase
     public async Task<ActionResult<IEnumerable<ParadaResponseDto>>> GetAll()
     {
         var paradas = await _paradaRepository.GetAllAsync();
-        
-        // El controlador solo delega: "Mapper, conviérteme esta lista"
         var response = paradas.Select(p => p.ToDto());
         return Ok(response);
     }
@@ -38,11 +36,32 @@ public class ParadasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] ParadaCreateDto dto)
     {
-        // El controlador le dice al Mapper: "Conviérteme esto en entidad"
         var nuevaParada = dto.ToEntity();
-
         await _paradaRepository.AddAsync(nuevaParada);
         
         return Ok(new { mensaje = "Parada creada exitosamente", id = nuevaParada.ParadaID });
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult> Update(int id, [FromBody] ParadaCreateDto dto)
+    {
+        var paradaExistente = await _paradaRepository.GetByIdAsync(id);
+        if (paradaExistente == null) return NotFound($"No se encontró la parada con ID {id}.");
+
+        // El Mapper hace la magia
+        dto.UpdateEntity(paradaExistente);
+
+        await _paradaRepository.UpdateAsync(paradaExistente);
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        var parada = await _paradaRepository.GetByIdAsync(id);
+        if (parada == null) return NotFound($"No se encontró la parada con ID {id}.");
+
+        await _paradaRepository.DeleteAsync(parada);
+        return NoContent();
     }
 }
