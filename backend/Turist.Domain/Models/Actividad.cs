@@ -22,3 +22,8 @@ public class ItineraryGenerationParameters
     public int CoberturaCategoriasMinima { get; set; }
     public int GuiaID { get; set; }
 }
+public class ActividadFilterOptions
+{
+    public NivelEsfuerzo? EsfuerzoMaximo { get; set; }
+    public List<TipoActividad> TiposPermitidos { get; set; } = new();
+}

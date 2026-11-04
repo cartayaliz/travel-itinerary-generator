@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 using Turist.Services.DTOs.Itinerario;
-
+using Turist.Domain.Interfaces.Services;
+using Turist.Services.Mappers;
 namespace Turist.Api.Controllers;
 
 [ApiController]
@@ -10,12 +11,12 @@ namespace Turist.Api.Controllers;
 public class ItinerariosController : ControllerBase
 {
     private readonly IItinerarioRepository _repository;
-    private readonly IItineraryGenerationStrategy _generation;
+    private readonly IItinerarioService _itinerarioService;
 
-    public ItinerariosController(IItinerarioRepository repository, IItineraryGenerationStrategy generation)
+    public ItinerariosController(IItinerarioRepository repository, IItinerarioService itinerarioService)
     {
         _repository = repository;
-        _generation = generation;
+        _itinerarioService = itinerarioService;
     }
 
     [HttpPost]
@@ -172,28 +173,32 @@ public class ItinerariosController : ControllerBase
     //==============
     // Endpoint para generar itinerarios de forma automática 
     //==============
-    [HttpPost("generar")]
-    public async Task<ActionResult<ItinerarioResponseDto>> GenerarItinerario([FromBody] ItineraryGenerationParameters parameters)
+    [HttpPost("generar-automatico")]
+    public async Task<IActionResult> GenerarAutomatico([FromBody] ItineraryGenerationParametersDto dto)
     {
-        //Ejecutamos la estrategia para construir el itinerario
-        var itinerarioGenerado = await _generation.GenerateAsync(parameters);
+        //Mapeo de DTO de entrada a Objeto de Dominio
+        var parameters = new ItineraryGenerationParameters
+        {
+            CantidadTotal = dto.CantidadTotal,
+            NivelEsfuerzoMaximo = dto.NivelEsfuerzoMaximo,
+            TiposActividadPermitidos = dto.TiposActividadPermitidos,
+            CoberturaCategoriasMinima = dto.CoberturaCategoriasMinima,
+            GuiaID = dto.GuiaID
+        };
 
-        //Guardamos el itinerario
-        await _repository.AddAsync(itinerarioGenerado);
+        try
+        {
+            //Ejecución del servicio de dominio
+            var itinerarioDominio = await _itinerarioService.GenerarItinerarioAutomaticoAsync(parameters);
 
-        // Mapeamos la respuesta al DTO de salida
-        var responseDto = new ItinerarioResponseDto(
-            itinerarioGenerado.ItinerarioID, 
-            itinerarioGenerado.Nombre, 
-            itinerarioGenerado.Origen, 
-            itinerarioGenerado.FechaCreacion, 
-            itinerarioGenerado.GuiaID,
-            itinerarioGenerado.CantidadActividades, 
-            itinerarioGenerado.ProporcionVisitas, 
-            itinerarioGenerado.ProporcionExcursiones,
-            itinerarioGenerado.ProporcionTalleres, 
-            itinerarioGenerado.CoberturaCategorias
-        );
-        return StatusCode(201, responseDto);
+            //Mapeo usando nuestra clase estática de servicios
+            var responseDto = ItinerarioMapper.ToResponseDto(itinerarioDominio);
+
+            return CreatedAtAction(nameof(GenerarAutomatico), new { id = responseDto.ItinerarioID }, responseDto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
     }
 }
