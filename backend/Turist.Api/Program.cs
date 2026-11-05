@@ -63,6 +63,7 @@ builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
 builder.Services.AddScoped<IParadaService, ParadaService>();
 builder.Services.AddScoped<IPaqueteTuristicoService, PaqueteTuristicoService>();
 builder.Services.AddScoped<IValidationService, ValidationService>();
+builder.Services.AddScoped<IGrupoService, GrupoService>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
