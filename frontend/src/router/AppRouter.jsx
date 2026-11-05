@@ -21,7 +21,7 @@ function AppRouter() {
      <Route path="/admin/dashboard" element={<h1>Bienvenido al Panel de Administrador (En construcción)</h1> }/>
      <Route path="/jefe/dashboard" element={<h1>Bienvenido al Panel de Jefe (En construcción)</h1> }/>
      <Route path="/reports" element={<Reports />} />
-     <Route path="/guia/itinerary/:id" element={<ItineraryDetail />} />
+     <Route path="/guia/itinerary/:id" element={< ItineraryDetail />} />
     </Routes>
   );
 }
