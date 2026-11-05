@@ -16,7 +16,7 @@ public class ItinerariosController : ControllerBase
         _service = service;
     }
 
-    /*[HttpGet]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<ItinerarioResponseDto>>> GetAll()
     {
         try { return Ok(await _service.GetAllAsync()); }
@@ -76,7 +76,7 @@ public class ItinerariosController : ControllerBase
     {
         try { await _service.AsignarTuristasAsync(id, dto); return Ok(new { mensaje = "Turistas asignados" }); }
         catch (Exception ex) { return BadRequest(ex.Message); }
-    }*/
+    }
     //==============
     // Endpoint para generar itinerarios de forma automática 
     //==============
