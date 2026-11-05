@@ -8,6 +8,8 @@ using DotNetEnv;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Turist.Services.Interfaces;
+using Turist.Services.Constraints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +58,7 @@ builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
 builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
 builder.Services.AddScoped<IActividadRepository, ActividadRepository>();
 builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
-
+builder.Services.AddScoped<IItineraryService, ItineraryService>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();

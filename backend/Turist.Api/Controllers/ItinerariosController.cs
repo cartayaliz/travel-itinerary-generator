@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 using Turist.Services.DTOs.Itinerario;
+using Turist.Services.Constraints;
+using Turist.Services.Interfaces;
 
 namespace Turist.Api.Controllers;
 
@@ -11,11 +13,13 @@ public class ItinerariosController : ControllerBase
 {
     private readonly IItinerarioRepository _repository;
     private readonly IItineraryGenerationStrategy _generation;
+    private readonly IItineraryService _itineraryService;
 
-    public ItinerariosController(IItinerarioRepository repository, IItineraryGenerationStrategy generation)
+    public ItinerariosController(IItinerarioRepository repository, IItineraryGenerationStrategy generation, IItineraryService itineraryService)
     {
         _repository = repository;
         _generation = generation;
+        _itineraryService = itineraryService;
     }
 
     [HttpPost]
@@ -150,24 +154,20 @@ public class ItinerariosController : ControllerBase
     [HttpPost("{id:int}/turistas")]
     public async Task<ActionResult> AsignarTuristas(int id, [FromBody] List<AsignarTuristaDto> turistasDto)
     {
-        var itinerario = await _repository.GetByIdAsync(id);
-        if (itinerario == null) return NotFound($"No se encontró el itinerario con ID {id}.");
-
-        
-        await _repository.LimpiarTuristasAsync(id);
-
-        
-        var turistas = turistasDto.Select(dto => new Itinerario_Turista
+        try
         {
-            ItinerarioID = id,
-            TuristaID = dto.TuristaID,
-            FechaAsignacion = dto.FechaAsignacion
-        }).ToList();
-
-        
-        await _repository.AsignarTuristasAsync(turistas);
-
-        return Ok(new { mensaje = "Turistas asignados exitosamente" });
+            // El controlador recibe la petición HTTP y la delega al Service
+            await _itineraryService.AsignarTuristasAsync(id, turistasDto);
+            return Ok(new { mensaje = "Turistas asignados exitosamente" });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     //==============
     // Endpoint para generar itinerarios de forma automática 
