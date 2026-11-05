@@ -44,4 +44,40 @@ public class ItineraryService : IItineraryService
 
         await _repository.AsignarTuristasAsync(turistas);
     }
+
+    public async Task AsignarParadasAsync(int itinerarioId, List<AsignarParadaDto> paradasDto)
+    {
+        var itinerario = await _repository.GetByIdAsync(itinerarioId);
+        if (itinerario == null)
+        {
+            throw new KeyNotFoundException($"No se encontró el itinerario con ID {itinerarioId}.");
+        }
+
+        if (paradasDto.GroupBy(p => p.Orden).Any(g => g.Count() > 1))
+        {
+            throw new InvalidOperationException("No se puede asignar el mismo número de orden a dos paradas.");
+        }
+
+        var paradasDuplicadas = paradasDto
+            .GroupBy(p => p.ParadaID)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
+
+        if (paradasDuplicadas.Any())
+        {
+            throw new InvalidOperationException($"El itinerario no puede tener la misma parada asignada 2 veces. ParadaID(s) duplicado(s): {string.Join(", ", paradasDuplicadas)}");
+        }
+
+        await _repository.LimpiarParadasAsync(itinerarioId);
+
+        var paradas = paradasDto.Select(dto => new Itinerario_Parada
+        {
+            ItinerarioID = itinerarioId,
+            ParadaID = dto.ParadaID,
+            Orden = dto.Orden
+        }).ToList();
+
+        await _repository.AsignarParadasAsync(paradas);
+    }
 }

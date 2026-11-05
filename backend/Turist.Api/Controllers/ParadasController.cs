@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Services.DTOs.Parada;
 using Turist.Services.Mappers;
+using Turist.Services.Interfaces;
 
 namespace Turist.Api.Controllers;
 
@@ -10,10 +11,12 @@ namespace Turist.Api.Controllers;
 public class ParadasController : ControllerBase
 {
     private readonly IParadaRepository _paradaRepository;
+    private readonly IParadaService _paradaService;
 
-    public ParadasController(IParadaRepository paradaRepository)
+    public ParadasController(IParadaRepository paradaRepository, IParadaService paradaService)
     {
         _paradaRepository = paradaRepository;
+        _paradaService = paradaService;
     }
 
     [HttpGet]
@@ -36,10 +39,15 @@ public class ParadasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] ParadaCreateDto dto)
     {
-        var nuevaParada = dto.ToEntity();
-        await _paradaRepository.AddAsync(nuevaParada);
-        
-        return Ok(new { mensaje = "Parada creada exitosamente", id = nuevaParada.ParadaID });
+        try
+        {
+            await _paradaService.CrearParadaAsync(dto);
+            return StatusCode(201, new { mensaje = "Parada creada exitosamente" });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPut("{id:int}")]
