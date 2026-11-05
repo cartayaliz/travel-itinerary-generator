@@ -56,4 +56,10 @@ public class GuiaRepository : IGuiaRepository
         await _context.Guia_Paquetes.AddRangeAsync(paquetes);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task<bool> IsAuthorizedForPackageAsync(int guiaId, int paqueteId)
+    {
+        return await _context.Guia_Paquetes
+            .AnyAsync(gp => gp.GuiaID == guiaId && gp.PaqueteID == paqueteId);
+    }
 }

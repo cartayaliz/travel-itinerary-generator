@@ -1,4 +1,4 @@
-using Turist.Domain.Interfaces.Repositories;
+/*using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Interfaces.Services;
 using Turist.Domain.Models;
 namespace Turist.Services.ItinerarioService;
@@ -48,4 +48,4 @@ public class ItinerarioService : IItinerarioService
 
             return itinerario;
         }
-    }
+    }*/

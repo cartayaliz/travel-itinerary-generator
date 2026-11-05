@@ -1,6 +1,6 @@
 namespace Turist.Services.DTOs.Itinerario;
 
-public record AsignarTuristaDto(
+public record AsignarTuristaAItinerarioDto(
     int TuristaID,
     DateTime FechaAsignacion
 );

@@ -1,0 +1,52 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Registrar una Visita
+POST {{HostAddress}}/api/visitas
+Content-Type: application/json
+
+{
+  "fecha": "2026-11-05T10:00:00Z",
+  "estado": 1,
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "paradaID": 1
+}
+
+### 2. Crear una Valoración de una Visita (Arco Exclusivo)
+POST {{HostAddress}}/api/valoraciones
+Content-Type: application/json
+
+{
+  "comentario": "Excelente tour",
+  "fecha": "2026-11-05T12:00:00Z",
+  "puntuacion": 5,
+  "turistaID": 1,
+  "itinerarioID": null,
+  "visitaID": 1
+}
+
+### 3. Crear una Modificación
+POST {{HostAddress}}/api/modificaciones
+Content-Type: application/json
+
+{
+  "fechaSolicitud": "2026-11-05T10:00:00Z",
+  "fechaRespuesta": null,
+  "estado": 1,
+  "resultado": null,
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "guiaID": null
+}
+
+### 4. Crear una Validación (Jefe de Operaciones)
+POST {{HostAddress}}/api/validaciones
+Content-Type: application/json
+
+{
+  "estado": 1,
+  "fechaValidacion": "2026-11-05T10:00:00Z",
+  "observaciones": "Aprobado",
+  "itinerarioID": 1,
+  "jefeID": 3
+}

@@ -86,6 +86,13 @@ public class TransportWebServiceTests
         public Task UpdateAsync(Parada parada) => Task.CompletedTask;
         public Task DeleteAsync(Parada parada) => Task.CompletedTask;
         public Task<IEnumerable<Parada>> GetByCategoryAsync(int categoriaId) => Task.FromResult(_paradas.Where(p => p.CategoriaID == categoriaId));
+        
+        //temporal esto es q no me dejaba compilar,Rene formaste tremenda pingueta brother :3
+        public Task<IEnumerable<Actividad>> GetParaGeneracionAsync(ActividadFilterOptions options)
+        {
+            // Como es un Fake para pruebas, devolvemos una lista vacía o simulada
+            return Task.FromResult<IEnumerable<Actividad>>(new List<Actividad>());
+        }
     }
 
     private static Atraccion CreateAtraccion(int id, string nombre, double lat, double lon)
