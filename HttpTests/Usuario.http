@@ -1,0 +1,59 @@
+@HostAddress = http://0.0.0.0:5064
+
+### ==========================================
+### CREACIÓN DE USUARIOS (Nuevos Endpoints)
+### ==========================================
+
+### 1. Crear un Turista (Requiere GrupoID)
+POST {{HostAddress}}/api/turistas
+Content-Type: application/json
+
+{
+  "nombre": "Ana Turista",
+  "password": "password123",
+  "edad": 25,
+  "grupoID": 1
+}
+
+### 2. Crear un Guía
+POST {{HostAddress}}/api/guias
+Content-Type: application/json
+
+{
+  "nombre": "Carlos Guía",
+  "password": "password123",
+  "especialidad": "Historia"
+}
+
+### 3. Crear un Jefe
+POST {{HostAddress}}/api/jefes
+Content-Type: application/json
+
+{
+  "nombre": "Jefe Operaciones",
+  "password": "password123"
+}
+
+### ==========================================
+### LISTAR Y ELIMINAR (Generales)
+### ==========================================
+
+### 4. Obtener todos los usuarios (Lista general)
+GET {{HostAddress}}/api/usuarios
+Accept: application/json
+
+### 5. Asignar Paquetes a un Turista (ID 1)
+POST {{HostAddress}}/api/turistas/1/paquetes
+Content-Type: application/json
+
+[
+  { "paqueteID": 1 }
+]
+
+### 6. Asignar Paquetes Autorizados a un Guía (ID 2)
+POST {{HostAddress}}/api/guias/2/paquetes-autorizados
+Content-Type: application/json
+
+[
+  { "paqueteID": 1 }
+]

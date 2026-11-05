@@ -4,29 +4,30 @@
 ### CATEGORIAS
 ### ==========================================
 
-### 1. Crear una Categoría
+### 1. Crear Categoría
 POST {{HostAddress}}/api/categorias
 Content-Type: application/json
 
 {
-  "nombre": "Deporte"
+  "nombre": "Cultural"
 }
 
 ### 2. Obtener todas las Categorías
 GET {{HostAddress}}/api/categorias
 Accept: application/json
 
-### 3. Obtener Categoría por ID (Cambia el 1 si es necesario)
-GET {{HostAddress}}/api/categorias/1
-Accept: application/json
+### ==========================================
+### GRUPOS
+### ==========================================
 
-### 4. Actualizar Categoría
-PUT {{HostAddress}}/api/categorias/1
+### 3. Crear Grupo
+POST {{HostAddress}}/api/grupos
 Content-Type: application/json
 
 {
-  "nombre": "Cultural y Patrimonial"
+  "nombre": "Familia García"
 }
 
-### 5. Eliminar Categoría
-DELETE {{HostAddress}}/api/categorias/1
+### 4. Obtener todos los Grupos
+GET {{HostAddress}}/api/grupos
+Accept: application/json

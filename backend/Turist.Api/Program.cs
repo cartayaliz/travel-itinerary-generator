@@ -57,16 +57,15 @@ builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
 builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
 
 // 5. Registrar Servicios
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
 builder.Services.AddScoped<IParadaService, ParadaService>();
-builder.Services.AddScoped<IPaqueteTuristicoService, PaqueteTuristicoService>();
-builder.Services.AddScoped<IValidationService, ValidationService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IGrupoService, GrupoService>();
-builder.Services.AddScoped<IJefeService, JefeService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ITuristaService, TuristaService>();
 builder.Services.AddScoped<IGuiaService, GuiaService>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IJefeService, JefeService>();
+builder.Services.AddScoped<IPaqueteTuristicoService, PaqueteTuristicoService>();
+builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
 builder.Services.AddScoped<IVisitaService, VisitaService>();
 builder.Services.AddScoped<IModificacionService, ModificacionService>();
 builder.Services.AddScoped<IValidacionService, ValidacionService>();
