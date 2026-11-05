@@ -6,5 +6,7 @@ public record ItineraryGenerationParametersDto
     NivelEsfuerzo? NivelEsfuerzoMaximo,
     List<TipoActividad> TiposActividadPermitidos,    
     int CoberturaCategoriasMinima,
-    int GuiaID
+    int GuiaID, 
+    TimeOnly? HoraInicio, 
+    TimeOnly? HorarioCierre
 );

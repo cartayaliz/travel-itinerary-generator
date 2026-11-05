@@ -70,6 +70,7 @@ builder.Services.AddScoped<IVisitaService, VisitaService>();
 builder.Services.AddScoped<IModificacionService, ModificacionService>();
 builder.Services.AddScoped<IValidacionService, ValidacionService>();
 builder.Services.AddScoped<IValoracionService, ValoracionService>();
+builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
 
 // 6. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();

@@ -53,14 +53,4 @@ public class ParadaRepository : IParadaRepository
             .Where(p => p.CategoriaID == categoriaId)
             .ToListAsync();
     }
-    public async Task<IEnumerable<Actividad>> GetParaGeneracionAsync(ActividadFilterOptions filters)
-    {
-        return await _context.Paradas
-            .OfType<Actividad>() // Aprovecha la herencia en EF Core
-            .Where(a => 
-                (!filters.EsfuerzoMaximo.HasValue || a.NivelEsfuerzo <= filters.EsfuerzoMaximo.Value) &&
-                (!filters.TiposPermitidos.Any() || filters.TiposPermitidos.Contains(a.Tipo))
-            )
-            .ToListAsync();
-    }
 }

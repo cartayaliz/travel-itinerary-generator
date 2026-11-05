@@ -2,6 +2,7 @@ using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 using Turist.Services.DTOs.Itinerario;
 using Turist.Services.Interfaces;
+using Turist.Domain.Enums;
 
 namespace Turist.Services.Services;
 
@@ -9,13 +10,15 @@ public class ItinerarioService : IItinerarioService
 {
     private readonly IItinerarioRepository _repository;
     private readonly IGuiaRepository _guiaRepository;
+    private readonly IItineraryGenerationStrategy _generationStrategy;
 
     public ItinerarioService(
          IItinerarioRepository repository,
-         IGuiaRepository guiaRepository)
+         IGuiaRepository guiaRepository, IItineraryGenerationStrategy generationStrategy)
     {
         _repository = repository;
         _guiaRepository = guiaRepository;
+        _generationStrategy = generationStrategy;
     }
 
     public async Task<IEnumerable<ItinerarioResponseDto>> GetAllAsync()
@@ -143,4 +146,47 @@ public class ItinerarioService : IItinerarioService
 
         await _repository.AsignarTuristasAsync(lista);
     }
+    public async Task<Itinerario> GenerarItinerarioAutomaticoAsync(ItineraryGenerationParametersDto dto)
+    {
+        if (dto.CantidadTotal <= 0)
+            throw new ArgumentException("La cantidad total debe ser mayor a cero.");
+
+        var seleccionFinal = (await _generationStrategy.GenerateAsync(dto)).ToList();
+
+        if (!seleccionFinal.Any())
+            throw new InvalidOperationException("No hay actividades que cumplan con los criterios.");
+
+        //Extraer las actividades de la selección.
+        var actividades = seleccionFinal.OfType<Actividad>().ToList();
+
+        var itinerario = new Itinerario
+        {
+            Nombre = $"Itinerario Automático - {DateTime.UtcNow:yyyyMMdd-HHmmssfff}",
+            FechaCreacion = DateTime.UtcNow,
+            GuiaID = dto.GuiaID,
+            Origen = OrigenItinerario.Automatico,
+
+            //Asignar los campos estadísticos directamente en la entidad.
+            CantidadActividades = actividades.Count,
+            ProporcionVisitas = actividades.Count(a => a.Tipo == TipoActividad.Visita),
+            ProporcionExcursiones = actividades.Count(a => a.Tipo == TipoActividad.Excursion),
+            ProporcionTalleres = actividades.Count(a => a.Tipo == TipoActividad.Taller),
+            CoberturaCategorias = actividades.Select(a => a.CategoriaID).Distinct().Count()
+        };
+
+        // Asignar las paradas con su orden correspondiente.
+        for (int i = 0; i < seleccionFinal.Count; i++)
+        {
+            itinerario.ItinerarioParadas.Add(new Itinerario_Parada
+            {
+                ParadaID = seleccionFinal[i].ParadaID,
+                Orden = i + 1, //Guardar el orden de la ruta.
+                Itinerario = itinerario
+            });
+        }
+
+        await _repository.AddAsync(itinerario);
+
+        return itinerario;
+    }   
 }
