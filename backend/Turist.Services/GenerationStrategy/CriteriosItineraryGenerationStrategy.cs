@@ -1,4 +1,4 @@
-using Turist.Domain.Interfaces.Repositories;
+/*using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 public class CriteriosItineraryGenerationStrategy : IItineraryGenerationStrategy
     {
@@ -29,4 +29,4 @@ public class CriteriosItineraryGenerationStrategy : IItineraryGenerationStrategy
                 .Take(parameters.CantidadTotal)
                 .ToList();
         }
-}
+}*/

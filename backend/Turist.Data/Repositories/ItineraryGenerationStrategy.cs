@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+/*using Microsoft.EntityFrameworkCore;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 using Turist.Domain.Enums;
@@ -56,4 +56,4 @@ public class CriteriosItineraryGenerationStrategy : IItineraryGenerationStrategy
 
         return itinerario;
     }
-}
+}*/

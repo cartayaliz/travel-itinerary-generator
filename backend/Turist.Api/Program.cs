@@ -8,8 +8,11 @@ using DotNetEnv;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Turist.Services.ItinerarioService;
+//using Turist.Services.ItinerarioService;
 using Turist.Domain.Interfaces.Services;
+using Turist.Services.Interfaces;
+using Turist.Services.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Cargar el archivo .env
@@ -55,8 +58,11 @@ builder.Services.AddScoped<IValidacionRepository, ValidacionRepository>();
 builder.Services.AddScoped<IValoracionRepository, ValoracionRepository>();
 builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
 builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
-builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
+//builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
 builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
+builder.Services.AddScoped<IParadaService, ParadaService>();
+builder.Services.AddScoped<IPaqueteTuristicoService, PaqueteTuristicoService>();
+builder.Services.AddScoped<IValidationService, ValidationService>();
 
 // 5. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
