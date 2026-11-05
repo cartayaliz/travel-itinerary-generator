@@ -64,9 +64,13 @@ builder.Services.AddScoped<IPaqueteTuristicoService, PaqueteTuristicoService>();
 builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddScoped<IGrupoService, GrupoService>();
 builder.Services.AddScoped<IJefeService, JefeService>();
-builder.Services.AddScoped<ITuristaService, TuristaService>(); 
-builder.Services.AddScoped<IGuiaService, GuiaService>();   
-builder.Services.AddScoped<IUsuarioService, UsuarioService>(); 
+builder.Services.AddScoped<ITuristaService, TuristaService>();
+builder.Services.AddScoped<IGuiaService, GuiaService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IVisitaService, VisitaService>();
+builder.Services.AddScoped<IModificacionService, ModificacionService>();
+builder.Services.AddScoped<IValidacionService, ValidacionService>();
+builder.Services.AddScoped<IValoracionService, ValoracionService>();
 
 // 6. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
