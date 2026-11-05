@@ -8,14 +8,14 @@ namespace Turist.Services.Services;
 public class ItinerarioService : IItinerarioService
 {
     private readonly IItinerarioRepository _repository;
-    private readonly IValidationService _validationService;
+    private readonly IGuiaRepository _guiaRepository;
 
     public ItinerarioService(
-        IItinerarioRepository repository,
-        IValidationService validationService)
+         IItinerarioRepository repository,
+         IGuiaRepository guiaRepository)
     {
         _repository = repository;
-        _validationService = validationService;
+        _guiaRepository = guiaRepository;
     }
 
     public async Task<IEnumerable<ItinerarioResponseDto>> GetAllAsync()
@@ -105,21 +105,20 @@ public class ItinerarioService : IItinerarioService
 
     public async Task AsignarPaquetesAsync(int itinerarioId, List<AsignarPaqueteAItinerarioDto> paquetes)
     {
-        // 1. Buscamos el itinerario para saber qué guía lo creó
+        //Buscamos el itinerario para saber qué guía lo creó
         var itinerario = await _repository.GetByIdAsync(itinerarioId);
         if (itinerario == null) throw new Exception("Itinerario no encontrado.");
 
-        // 2. Validamos que el guía esté autorizado para TODOS los paquetes que se le asignan
+        //  Validamos que el guía esté autorizado
         foreach (var p in paquetes)
         {
-            var isAuthorized = await _validationService.IsGuiaAuthorizedAsync(itinerario.GuiaID, p.PaqueteID);
+            var isAuthorized = await _guiaRepository.IsAuthorizedForPackageAsync(itinerario.GuiaID, p.PaqueteID);
             if (!isAuthorized)
             {
                 throw new Exception($"El guía con ID {itinerario.GuiaID} no está autorizado para el paquete {p.PaqueteID}.");
             }
         }
 
-        // 3. Si todo está bien, guardamos
         await _repository.LimpiarPaquetesAsync(itinerarioId);
 
         var lista = paquetes.Select(p => new Itinerario_Paquete
