@@ -60,6 +60,7 @@ function GuideDashboard() {
           <li className="active">My Itineraries</li>
           <li>Create Activity</li>
           <li>Profile</li>
+          <li onClick={() => navigate("/guia/other-guides")}>Other Guides</li>
         </ul>
       </aside>
 
