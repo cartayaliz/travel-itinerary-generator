@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Turist.Services.DTOs.Itinerario;
 using Turist.Services.Interfaces;
+using Turist.Services.Mappers;
 
 namespace Turist.Api.Controllers;
 
@@ -76,38 +77,23 @@ public class ItinerariosController : ControllerBase
         try { await _service.AsignarTuristasAsync(id, dto); return Ok(new { mensaje = "Turistas asignados" }); }
         catch (Exception ex) { return BadRequest(ex.Message); }
     }
-}
-/*
     //==============
     // Endpoint para generar itinerarios de forma automática 
     //==============
     [HttpPost("generar-automatico")]
     public async Task<IActionResult> GenerarAutomatico([FromBody] ItineraryGenerationParametersDto dto)
     {
-        //Mapeo de DTO de entrada a Objeto de Dominio
-        var parameters = new ItineraryGenerationParameters
-        {
-            CantidadTotal = dto.CantidadTotal,
-            NivelEsfuerzoMaximo = dto.NivelEsfuerzoMaximo,
-            TiposActividadPermitidos = dto.TiposActividadPermitidos,
-            CoberturaCategoriasMinima = dto.CoberturaCategoriasMinima,
-            GuiaID = dto.GuiaID
-        };
-
         try
         {
-            //Ejecución del servicio de dominio
-            var itinerarioDominio = await _itinerarioService.GenerarItinerarioAutomaticoAsync(parameters);
+            var itinerarioCreado = await _service.GenerarItinerarioAutomaticoAsync(dto);
 
-            //Mapeo usando nuestra clase estática de servicios
-            var responseDto = ItinerarioMapper.ToResponseDto(itinerarioDominio);
+            var responseDto = ItinerarioMapper.ToResponseDto(itinerarioCreado);
 
-            return CreatedAtAction(nameof(GenerarAutomatico), new { id = responseDto.ItinerarioID }, responseDto);
+            return Ok(responseDto);
         }
-        catch (Exception ex)
+        catch (InvalidOperationException ex)
         {
             return BadRequest(new { mensaje = ex.Message });
         }
     }
 }
-*/
