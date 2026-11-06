@@ -21,6 +21,14 @@ function TuristDashboard() {
         <header className="main-header">
           <h1>My Trip: Havana Colonial</h1>
           <p>Assigned Guide: René Díaz</p>
+
+          <div style={{ marginTop: "2rem" }}>
+            <Button 
+              texto={showReview ? "Your opinion helps us improve" : "Leave a Review"} 
+              onClick={() => setShowReview(true)} 
+            />
+            {showReview &&  <Review onCancel={() => setShowReview(false)}/>}
+          </div>
         </header>
         
         <section className="itinerary-section">
@@ -36,13 +44,7 @@ function TuristDashboard() {
             </div>
           </div>
      
-          <div style={{ marginTop: "2rem" }}>
-            <Button 
-              texto={showReview ? "Hide Review Form" : "Leave a Review"} 
-              onClick={() => setShowReview(!showReview)} 
-            />
-            {showReview && <Review />}
-          </div>
+          
         </section>
       </main>
     </div>

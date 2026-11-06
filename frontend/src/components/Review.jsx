@@ -4,7 +4,7 @@ import Button from "./Button";
 import Input from "./Input";
 import Alerts from "./Alerts";
 
-function Review()
+function Review({onCancel})
 {
     const[rating, setRating] = useState("5");
     const[comment, setComment] = useState("");
@@ -26,6 +26,7 @@ function Review()
     // Simulamos éxito
     setSuccessMessage("Thank you! Your review has been submitted.");
     setComment(""); // Limpiamos el formulario
+    setRating("5");
   };
 
     return(
@@ -58,8 +59,10 @@ function Review()
                         setMensajeError("");
                     }
                     }/>
-
+                   <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
                     <Button type="submit" texto="Submit Review" />
+                    <Button texto="Cancel" onClick={onCancel} />
+                   </div>
             </form>
 
         </div>
