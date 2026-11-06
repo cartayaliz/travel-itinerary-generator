@@ -1,5 +1,9 @@
-function Alerta({ mensaje }) {
+import "./Alerts.css";
+
+function Alerts({ mensaje , tipo = "error" }) {
   if (!mensaje) return null; // Si no hay mensaje, no dibuja nada
-  return <div className="error-mensaje">{mensaje}</div>;
+   const claseCSS = tipo === "exito" ? "alert-exito" : "alert-error";
+  return <div className={`alert-mensaje ${claseCSS}`}>{mensaje}</div>;
+ 
 }
-export default Alerta;
+export default Alerts;

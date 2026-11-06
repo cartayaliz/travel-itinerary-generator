@@ -1,11 +1,24 @@
-.error-mensaje {
-  background-color: #fee2e2; /* Fondo rojo suave */
-  color: #b91c1c;            /* Texto rojo oscuro */
+/* Estilos base para cualquier alerta */
+.alert-mensaje {
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #f87171;
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-align: center;
   font-weight: bold;
+  border: 1px solid transparent;
+}
+
+/* Estilos específicos para error (Rojo) */
+.alert-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-color: #f87171;
+}
+
+/* Estilos específicos para éxito (Verde) */
+.alert-exito {
+  background-color: #dcfce7;
+  color: #15803d;
+  border-color: #4ade80;
 }

@@ -34,7 +34,7 @@ function Review()
 
             {/* Mostrar mensaje de error o exito */}
             {mensajeError && <Alerts mensaje={mensajeError}/>}
-            {successMessage && <Alerts mensaje={successMessage}/>}
+            {successMessage && <Alerts mensaje={successMessage} tipo = "exito"/>}
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -47,11 +47,9 @@ function Review()
                         { value: "2", label: "⭐⭐ (Fair)" },
                         { value: "1", label: "⭐ (Poor)" }
                       ]}
-                    >
-                        
-                    </Select>
+                    />
                 </div>
-                    {/* Para el comentario, usamos un input normal por ahora */}
+
                     <Input 
                     label="Your Comment"
                     placeholder="Tell us about your experience..."
