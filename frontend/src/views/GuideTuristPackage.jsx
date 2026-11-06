@@ -47,3 +47,4 @@ function OtherGuides() {
     </div>
   );
 }
+export default OtherGuides;

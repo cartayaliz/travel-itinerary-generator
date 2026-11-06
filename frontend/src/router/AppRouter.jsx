@@ -6,6 +6,8 @@ import TuristDashboard from '../views/TuristDashboard';
 import Reports from "../views/Reports";
 import GuideDashboard from "../views/GuideDashboard";
 import ItineraryDetail from "../views/ItineraryDetail";
+import Register from "../views/Register";
+import OtherGuides from "../views/GuideTuristPackage";
 
 function AppRouter() {
   return (

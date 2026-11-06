@@ -50,6 +50,7 @@ function GuideDashboard() {
     setActivities("");
     setShowForm(false);
     navigate(`/guia/itinerary/${newItinerary.id}`, { state: { newItinerary } });//para que se muestren dos dashboard en el navegador
+    
   };
 
   return (
