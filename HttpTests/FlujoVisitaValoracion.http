@@ -50,3 +50,25 @@ Content-Type: application/json
   "itinerarioID": 1,
   "jefeID": 3
 }
+
+### Registrar una Visita
+POST {{HostAddress}}/api/visitas/registrar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "paradaID": 1,
+  "estado": 1
+}
+
+### Registrar una Visita (Debe fallar con 400)
+POST {{HostAddress}}/api/visitas/registrar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 2,
+  "paradaID": 1,
+  "estado": 1
+}

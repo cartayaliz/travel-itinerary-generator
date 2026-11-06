@@ -8,10 +8,12 @@ namespace Turist.Services.Services;
 public class VisitaService : IVisitaService
 {
     private readonly IVisitaRepository _repository;
+    private readonly IItinerarioRepository _itinerarioRepository;
 
-    public VisitaService(IVisitaRepository repository)
+    public VisitaService(IVisitaRepository repository, IItinerarioRepository itinerarioRepository)
     {
         _repository = repository;
+        _itinerarioRepository = itinerarioRepository;
     }
 
     public async Task<IEnumerable<VisitaResponseDto>> GetAllAsync()
@@ -65,5 +67,33 @@ public class VisitaService : IVisitaService
         var visita = await _repository.GetByIdAsync(id);
         if (visita == null) throw new Exception("Visita no encontrada.");
         await _repository.DeleteAsync(visita);
+    }
+
+    //==========
+    //Registrar una visita realizada por un turista
+    //==========
+    public async Task RegistrarVisitaAsync(RegistrarVisitaDto dto)
+    {
+        // Verificar que el itinerario existe
+        var itinerario = await _itinerarioRepository.GetByIdAsync(dto.ItinerarioID);
+        if (itinerario == null)
+            throw new Exception("Itinerario no encontrado.");
+
+        //  Verificar que el turista esté asignado 
+        var turistaAsignado = await _itinerarioRepository.IsTuristaAssignedAsync(dto.ItinerarioID, dto.TuristaID);
+        if (!turistaAsignado)
+            throw new Exception("El turista no está asignado a este itinerario.");
+
+
+        var visita = new Visita
+        {
+            Fecha = DateTime.UtcNow,
+            Estado = dto.Estado,
+            ItinerarioID = dto.ItinerarioID,
+            TuristaID = dto.TuristaID,
+            ParadaID = dto.ParadaID
+        };
+
+        await _repository.AddAsync(visita);
     }
 }
