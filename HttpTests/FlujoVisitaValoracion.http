@@ -25,20 +25,6 @@ Content-Type: application/json
   "visitaID": 1
 }
 
-### 3. Crear una Modificación
-POST {{HostAddress}}/api/modificaciones
-Content-Type: application/json
-
-{
-  "fechaSolicitud": "2026-11-05T10:00:00Z",
-  "fechaRespuesta": null,
-  "estado": 1,
-  "resultado": null,
-  "itinerarioID": 1,
-  "turistaID": 1,
-  "guiaID": null
-}
-
 ### 4. Crear una Validación (Jefe de Operaciones)
 POST {{HostAddress}}/api/validaciones
 Content-Type: application/json
@@ -71,4 +57,42 @@ Content-Type: application/json
   "turistaID": 2,
   "paradaID": 1,
   "estado": 1
+}
+### Crear Modificación (CRUD Admin)
+POST {{HostAddress}}/api/modificaciones
+Content-Type: application/json
+
+{
+  "fechaSolicitud": "2026-11-06T10:00:00Z",
+  "fechaRespuesta": null,
+  "estado": 1,
+  "resultado": "Solicitud inicial de prueba",
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "guiaID": null
+}
+###  Solicitar Modificación (Turista)
+POST {{HostAddress}}/api/modificaciones/solicitar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "motivo": "Quiero cambiar la visita al museo por una caminata.",
+  "guiaID": 1
+}
+
+### 3. Obtener todas las Modificaciones
+GET {{HostAddress}}/api/modificaciones
+Accept: application/json
+
+### 4. Solicitar Modificación (Debe fallar con 400)
+POST {{HostAddress}}/api/modificaciones/solicitar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 2,
+  "motivo": "Esto debería fallar",
+  "guiaID": null
 }
