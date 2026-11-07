@@ -40,4 +40,25 @@ public class PaqueteTuristicoRepository : IPaqueteTuristicoRepository
         _context.PaquetesTuristicos.Remove(paquete);
         await _context.SaveChangesAsync();
     }
+    //============
+    //Asignar Categorias
+    //============
+    public async Task LimpiarCategoriasAsync(int paqueteId)
+    {
+        var categoriasExistentes = await _context.Paquete_Categorias
+            .Where(pc => pc.PaqueteID == paqueteId)
+            .ToListAsync();
+
+        if (categoriasExistentes.Any())
+        {
+            _context.Paquete_Categorias.RemoveRange(categoriasExistentes);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task AsignarCategoriasAsync(List<Paquete_Categoria> categorias)
+    {
+        await _context.Paquete_Categorias.AddRangeAsync(categorias);
+        await _context.SaveChangesAsync();
+    }
 }

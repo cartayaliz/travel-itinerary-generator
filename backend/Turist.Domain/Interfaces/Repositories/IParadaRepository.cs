@@ -1,5 +1,4 @@
 using Turist.Domain.Models;
-
 namespace Turist.Domain.Interfaces.Repositories;
 
 public interface IParadaRepository

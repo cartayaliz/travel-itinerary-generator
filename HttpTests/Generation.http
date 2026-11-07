@@ -1,0 +1,13 @@
+@HostAddress = http://localhost:5064
+
+### 1. Generar Itinerario Automático
+POST {{HostAddress}}/api/itinerarios/generar-automatico
+Content-Type: application/json
+
+{
+  "cantidadTotal": 5,
+  "nivelEsfuerzoMaximo": 1,
+  "tiposActividadPermitidos": [],
+  "coberturaCategoriasMinima": 2,
+  "guiaID": 1
+}

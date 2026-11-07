@@ -9,4 +9,6 @@ public interface IPaqueteTuristicoRepository
     Task AddAsync(PaqueteTuristico paquete);
     Task UpdateAsync(PaqueteTuristico paquete);
     Task DeleteAsync(PaqueteTuristico paquete);
+    Task LimpiarCategoriasAsync(int paqueteId);
+    Task AsignarCategoriasAsync(List<Paquete_Categoria> categorias);
 }

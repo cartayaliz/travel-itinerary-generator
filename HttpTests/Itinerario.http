@@ -1,30 +1,13 @@
 @HostAddress = http://0.0.0.0:5064
 
-### 1. Crear un Itinerario Manual
-# Nota: Asegúrate de que el guiaID (1) exista en tu base de datos.
-# Como es Manual, no enviamos parámetros.
+### 1. Crear Itinerario (Requiere que el Guía esté autorizado en el Paquete)
 POST {{HostAddress}}/api/itinerarios
 Content-Type: application/json
 
 {
-  "nombre": "Ruta Histórica Santiago",
-  "origen": 1, 
-  "guiaID": 1,
-  "cantidadActividades": null,
-  "proporcionVisitas": null,
-  "proporcionExcursiones": null,
-  "proporcionTalleres": null,
-  "coberturaCategorias": null
-}
-
-### 2. Crear un Itinerario Automático (Con parámetros)
-POST {{HostAddress}}/api/itinerarios
-Content-Type: application/json
-
-{
-  "nombre": "Ruta Automática Naturaleza",
-  "origen": 2,
-  "guiaID": 1,
+  "nombre": "Ruta Santiago Histórico",
+  "origen": 1,
+  "guiaID": 2,
   "cantidadActividades": 5,
   "proporcionVisitas": 50,
   "proporcionExcursiones": 30,
@@ -32,35 +15,15 @@ Content-Type: application/json
   "coberturaCategorias": 80
 }
 
-### 3. Obtener todos los Itinerarios
-GET {{HostAddress}}/api/itinerarios
-Accept: application/json
-
-### 4. Obtener un Itinerario por ID (Cambia el 1 si es necesario)
-GET {{HostAddress}}/api/itinerarios/1
-Accept: application/json
-
-### 5. Actualizar un Itinerario
-# Cambiamos el nombre y los parámetros del itinerario 1
-PUT {{HostAddress}}/api/itinerarios/1
+### 2. Asignar Paquetes al Itinerario (Aquí se valida el Guía Autorizado)
+POST {{HostAddress}}/api/itinerarios/1/paquetes
 Content-Type: application/json
 
-{
-  "nombre": "Ruta Histórica Santiago (Actualizada)",
-  "origen": 2,
-  "guiaID": 1,
-  "cantidadActividades": 4,
-  "proporcionVisitas": 25,
-  "proporcionExcursiones": 25,
-  "proporcionTalleres": 50,
-  "coberturaCategorias": 100
-}
+[
+  { "paqueteID": 1 }
+]
 
-### 6. Eliminar un Itinerario (Cambia el 2 si es necesario)
-DELETE {{HostAddress}}/api/itinerarios/2
-
-
-### Asignar Paradas al Itinerario 1
+### 3. Asignar Paradas al Itinerario (con su Orden)
 POST {{HostAddress}}/api/itinerarios/1/paradas
 Content-Type: application/json
 
@@ -69,19 +32,10 @@ Content-Type: application/json
   { "paradaID": 2, "orden": 2 }
 ]
 
-### Asignar Paquetes al Itinerario 1
-POST {{HostAddress}}/api/itinerarios/1/paquetes
-Content-Type: application/json
-
-[
-  { "paqueteID": 1 }
-]
-
-### Asignar Turistas al Itinerario 1
+### 4. Asignar Turistas al Itinerario
 POST {{HostAddress}}/api/itinerarios/1/turistas
 Content-Type: application/json
 
 [
-  { "turistaID": 1, "fechaAsignacion": "2026-10-29T10:00:00Z" },
-  { "turistaID": 2, "fechaAsignacion": "2026-10-29T10:00:00Z" }
+  { "turistaID": 1, "fechaAsignacion": "2026-11-05T10:00:00Z" }
 ]
