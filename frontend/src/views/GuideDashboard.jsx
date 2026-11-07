@@ -11,6 +11,7 @@ function GuideDashboard() {
   const [activityHour, setActivityHour] = useState("");
   const [newActivities, setNewActivities] = useState([]); 
 
+  const [successMessage, setSuccessMessage] = useState("");
   const [activeTab, setActiveTab] = useState("My Itineraries");
   const[mensajeError, setMensajeError]= useState("");
   const navigate = useNavigate(); 
@@ -59,8 +60,10 @@ function GuideDashboard() {
     
   };
   const handleAddActivity = () => {
-        // Limpiamos errores anteriores
+        // Limpiamos errores y mensajes anteriores
         setMensajeError("");
+        setSuccessMessage("");
+
         if (activityName.trim() === "" || activityHour === "") {
         setMensajeError("Please fill all fields");
         return;
@@ -71,7 +74,7 @@ function GuideDashboard() {
       name: activityName,
       hour: activityHour
     };  
-  <Alerts mensaje={"Activity successfully created"} tipo="exito"/>  
+  
 
    // 1. Juntamos las actividades viejas con la nueva
     const updatedActivities = [...newActivities, newAct];
@@ -86,6 +89,12 @@ function GuideDashboard() {
 
     setActivityName("");
     setActivityHour("");
+    setSuccessMessage("Activity created successfully !");
+  };
+    const handleDeleteActivity = (id) => {
+    // Filtramos para dejar solo las actividades cuyo ID sea diferente al que queremos borrar
+    const updatedActivities = newActivities.filter((act) => act.id !== id);
+    setNewActivities(updatedActivities);
   };
   return (
     <div className="app-layout">
@@ -174,14 +183,17 @@ function GuideDashboard() {
           <section className="guide-section">
               <div className="form-container">
                 <h3>Create New Activity </h3>
-                <Alerts mensaje={mensajeError} />
+              
+              <Alerts mensaje={mensajeError} />
+              {successMessage && <Alerts mensaje={successMessage} tipo="exito" />}
+
                 <Input 
                 label="Activity Name" 
                 placeholder="Museum Visit" 
                 value={activityName} 
                 onChange={(e) => { setActivityName(e.target.value);
                 setMensajeError(""); 
-              
+                setSuccessMessage("");
               } }
                 
               />
@@ -217,6 +229,13 @@ function GuideDashboard() {
                         <h3>{act.name}</h3>
                         <p>Time: {act.hour}</p>
                       </div>
+                      <button 
+                        onClick={() => handleDeleteActivity(act.id)} 
+                        className="btn-delete"
+                        title="Delete activity"
+                      >
+                        🗑️
+                      </button>
                     </div>
                   ))
                 )}
