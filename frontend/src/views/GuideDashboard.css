@@ -135,3 +135,23 @@
   margin-bottom: 1.5rem;
   color: #374151;
 }
+
+/* Estilo para el botón de eliminar (basura) */
+.btn-delete {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem; /* Tamaño del emoji */
+  padding: 0.5rem;
+  border-radius: 50%; /* Lo hace circular */
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efecto al pasar el ratón por encima */
+.btn-delete:hover {
+  background-color: #fee2e2; /* Fondo rojo suave */
+  transform: scale(1.1); /* Se hace un poquito más grande */
+}
