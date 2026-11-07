@@ -4,10 +4,11 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import Layout from "../components/Layout";
+import Alerts from "../components/Alerts";
 import "./Register.css";
 
 function Register() {
-    const [error, setError] = useState("");
+    const [mensajeError, setMensajeError] = useState("");
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const [rol, setRol] = useState("guia");
@@ -20,16 +21,16 @@ function Register() {
     const navigate = useNavigate();  
 
     const handleSubmit = (e) => { e.preventDefault(); 
-    setError("");
+    setMensajeError("");
     // 1. Validar que tenga al menos una letra y un número
     const tieneLetraYNumero = /^(?=.*[A-Za-z])(?=.*\d).+$/;
 
     if (!usuario || !password) {
-      setError("Por favor, llena todos los campos");
+      setMensajeError("Por favor, llena todos los campos");
       return;
     }
     if (!tieneLetraYNumero.test(password)) {
-    setError("La contraseña debe contener al menos una letra y un número");
+    setMensajeError("La contraseña debe contener al menos una letra y un número");
     return;
 
     }
@@ -55,13 +56,15 @@ function Register() {
       <div className="register-container">
           <form className="register-form" onSubmit={handleSubmit}>
               <h2> </h2>  
-              {/* Si 'error' tiene texto, muestra este div rojo */}
-              {error && <div className="error-mensaje">{error}</div>}            
+              <Alerts mensaje={mensajeError} />         
               <Input 
               label="Usuario"
               placeholder="Escribe tu usuario" 
               value={usuario} 
-              onChange={(e) => setUsuario(e.target.value)} 
+               onChange={(e) => {setUsuario(e.target.value);
+                setMensajeError(""); // Limpia el error al escribir
+              
+              } }
                /> 
               
               <Input 
@@ -71,8 +74,11 @@ function Register() {
               value={password}                 
               /* Garantizar que la contraseña tenga 8 o más caracteres */
               minLength={8} 
-              onChange={(e) => setPassword(e.target.value)} 
-              /* No permitir campo vacío*/
+              onChange={(e) => {setPassword(e.target.value);
+                setMensajeError(""); // Limpia el error al escribir
+              
+              } }
+              
                />
 
               <Select

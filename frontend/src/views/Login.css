@@ -64,14 +64,3 @@
   background-color: #dfd3ec;
 }
 
-.error-mensaje {
-  background-color: #fee2e2; /* Fondo rojo suave */
-  color: #b91c1c;            /* Texto rojo oscuro */
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #f87171;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  text-align: center;
-  font-weight: bold;
-}

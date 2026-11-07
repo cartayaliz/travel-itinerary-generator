@@ -1,3 +1,4 @@
+import BarGraph from "../components/barGraph";
 import "./Reports.css";
 {/* ejemplos temp */}
 function Reports() {
@@ -6,7 +7,11 @@ function Reports() {
     { id: 2, package: "Varadero Beach", guide: "Liz Cartaya", date: "2026-10-05", status: "In Review" },
     { id: 3, package: "Viñales Trip", guide: "Maya Ramón", date: "2026-10-10", status: "Approved" },
   ];
-
+   const chartData = [
+    { name: 'Havana', total: 12 },
+    { name: 'Varadero', total: 19 },
+    { name: 'Viñales', total: 8 },
+   ];
   return (
     <div className="reports-layout">
       <header className="reports-header">
@@ -43,6 +48,12 @@ function Reports() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="report-card" style={{ marginTop: '2rem', height: '400px' }}>
+          <BarGraph
+            data={chartData} 
+            title="Generated Itineraries by Destination" 
+          />
         </div>
       </main>
     </div>
