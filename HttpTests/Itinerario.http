@@ -1,0 +1,41 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Crear Itinerario (Requiere que el Guía esté autorizado en el Paquete)
+POST {{HostAddress}}/api/itinerarios
+Content-Type: application/json
+
+{
+  "nombre": "Ruta Santiago Histórico",
+  "origen": 1,
+  "guiaID": 2,
+  "cantidadActividades": 5,
+  "proporcionVisitas": 50,
+  "proporcionExcursiones": 30,
+  "proporcionTalleres": 20,
+  "coberturaCategorias": 80
+}
+
+### 2. Asignar Paquetes al Itinerario (Aquí se valida el Guía Autorizado)
+POST {{HostAddress}}/api/itinerarios/1/paquetes
+Content-Type: application/json
+
+[
+  { "paqueteID": 1 }
+]
+
+### 3. Asignar Paradas al Itinerario (con su Orden)
+POST {{HostAddress}}/api/itinerarios/1/paradas
+Content-Type: application/json
+
+[
+  { "paradaID": 1, "orden": 1 },
+  { "paradaID": 2, "orden": 2 }
+]
+
+### 4. Asignar Turistas al Itinerario
+POST {{HostAddress}}/api/itinerarios/1/turistas
+Content-Type: application/json
+
+[
+  { "turistaID": 1, "fechaAsignacion": "2026-11-05T10:00:00Z" }
+]

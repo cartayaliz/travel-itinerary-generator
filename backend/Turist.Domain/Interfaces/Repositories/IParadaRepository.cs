@@ -9,5 +9,4 @@ public interface IParadaRepository
     Task UpdateAsync(Parada parada);
     Task DeleteAsync(Parada parada);
     Task<IEnumerable<Parada>> GetByCategoryAsync(int categoriaId);
-    Task<IEnumerable<Actividad>> GetParaGeneracionAsync(ActividadFilterOptions filterOptions);
 }

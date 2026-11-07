@@ -10,10 +10,8 @@ namespace Turist.Services.Mappers
             if (itinerario == null) return null!;
 
             // Filtramos y extraemos las actividades desde la tabla intermedia de forma segura
-            var actividades = itinerario.ItinerarioParadas?
-                .Select(ip => ip.Parada)
-                .OfType<Actividad>()
-                .ToList() ?? new List<Actividad>();
+            var paradas = itinerario.ItinerarioParadas?.Select(ip => ip.Parada).ToList() ?? new List<Parada>();
+            var actividades = paradas.OfType<Actividad>().ToList();
 
             return new ItinerarioResponseDto(
                 ItinerarioID: itinerario.ItinerarioID,
@@ -21,15 +19,11 @@ namespace Turist.Services.Mappers
                 Origen: itinerario.Origen,
                 FechaCreacion: itinerario.FechaCreacion,
                 GuiaID: itinerario.GuiaID,
-                CantidadActividades: actividades.Count,
-                
-                // Cálculo de proporciones basado en los tipos de actividad
-                ProporcionVisitas: actividades.Count(a => a.Tipo == TipoActividad.Excursion),
-                ProporcionExcursiones: actividades.Count(a => a.Tipo == TipoActividad.Taller),
-                ProporcionTalleres: actividades.Count(a => a.Tipo == TipoActividad.Visita),
-                
-                // Conteo de categorías distintas cubiertas
-                CoberturaCategorias: actividades.Select(a => a.CategoriaID).Distinct().Count()
+                CantidadActividades: itinerario.CantidadActividades ?? actividades.Count,
+                ProporcionVisitas: itinerario.ProporcionVisitas ?? actividades.Count(a => a.Tipo == TipoActividad.Visita),
+                ProporcionExcursiones: itinerario.ProporcionExcursiones ?? actividades.Count(a => a.Tipo == TipoActividad.Excursion),
+                ProporcionTalleres: itinerario.ProporcionTalleres ?? actividades.Count(a => a.Tipo == TipoActividad.Taller),
+                CoberturaCategorias: itinerario.CoberturaCategorias ?? actividades.Select(a => a.CategoriaID).Distinct().Count()
             );
         }
     }

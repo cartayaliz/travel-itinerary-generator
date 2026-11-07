@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Turist.Domain.Interfaces.Repositories;
-using Turist.Domain.Models;
 using Turist.Services.DTOs.Categoria;
+using Turist.Services.Interfaces;
 
 namespace Turist.Api.Controllers;
 
@@ -9,48 +8,42 @@ namespace Turist.Api.Controllers;
 [Route("api/[controller]")]
 public class CategoriasController : ControllerBase
 {
-    private readonly ICategoriaRepository _repository;
-    public CategoriasController(ICategoriaRepository repository) => _repository = repository;
+    private readonly ICategoriaService _service;
+
+    public CategoriasController(ICategoriaService service) => _service = service;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoriaResponseDto>>> GetAll()
     {
-        var categorias = await _repository.GetAllAsync();
-        return Ok(categorias.Select(c => new CategoriaResponseDto(c.CategoriaID, c.Nombre)));
+        try { return Ok(await _service.GetAllAsync()); }
+        catch (Exception ex) { return StatusCode(500, ex.Message); }
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<CategoriaResponseDto>> GetById(int id)
     {
-        var cat = await _repository.GetByIdAsync(id);
-        if (cat == null) return NotFound();
-        return Ok(new CategoriaResponseDto(cat.CategoriaID, cat.Nombre));
+        try { return Ok(await _service.GetByIdAsync(id)); }
+        catch (Exception ex) { return NotFound(ex.Message); }
     }
 
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] CategoriaCreateDto dto)
     {
-        var categoria = new Categoria { Nombre = dto.Nombre };
-        await _repository.AddAsync(categoria);
-        return Ok(new { mensaje = "Categoria creada", id = categoria.CategoriaID });
+        try { await _service.CreateAsync(dto); return Ok(new { mensaje = "Categoría creada" }); }
+        catch (Exception ex) { return BadRequest(ex.Message); }
     }
 
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] CategoriaCreateDto dto)
     {
-        var cat = await _repository.GetByIdAsync(id);
-        if (cat == null) return NotFound();
-        cat.Nombre = dto.Nombre;
-        await _repository.UpdateAsync(cat);
-        return NoContent();
+        try { await _service.UpdateAsync(id, dto); return NoContent(); }
+        catch (Exception ex) { return BadRequest(ex.Message); }
     }
 
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
-        var cat = await _repository.GetByIdAsync(id);
-        if (cat == null) return NotFound();
-        await _repository.DeleteAsync(cat);
-        return NoContent();
+        try { await _service.DeleteAsync(id); return NoContent(); }
+        catch (Exception ex) { return NotFound(ex.Message); }
     }
 }

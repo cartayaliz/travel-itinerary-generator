@@ -8,15 +8,16 @@ using DotNetEnv;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Turist.Services.ItinerarioService;
 using Turist.Domain.Interfaces.Services;
+using Turist.Services.Interfaces;
+using Turist.Services.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Cargar el archivo .env
 DotNetEnv.Env.Load("../../.env");
 
 // 2. Configurar la Base de Datos
-
 var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")
                        ?? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};Port={Environment.GetEnvironmentVariable("DB_PORT")};Database={Environment.GetEnvironmentVariable("DB_NAME")};Username={Environment.GetEnvironmentVariable("DB_USER")};Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 
@@ -41,8 +42,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// 4. Registrar Servicios y Repositorios (Inyección de Dependencias)
-builder.Services.AddScoped<ITokenService, TokenService>();
+// 4. Registrar Repositorios (Necesarios para que los Servicios)
 builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPaqueteTuristicoRepository, PaqueteTuristicoRepository>();
@@ -55,16 +55,30 @@ builder.Services.AddScoped<IValidacionRepository, ValidacionRepository>();
 builder.Services.AddScoped<IValoracionRepository, ValoracionRepository>();
 builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
 builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
-builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
-builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
 
-// 5. Configurar Controladores y OpenAPI
+// 5. Registrar Servicios
+builder.Services.AddScoped<IParadaService, ParadaService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IGrupoService, GrupoService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ITuristaService, TuristaService>();
+builder.Services.AddScoped<IGuiaService, GuiaService>();
+builder.Services.AddScoped<IJefeService, JefeService>();
+builder.Services.AddScoped<IPaqueteTuristicoService, PaqueteTuristicoService>();
+builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
+builder.Services.AddScoped<IVisitaService, VisitaService>();
+builder.Services.AddScoped<IModificacionService, ModificacionService>();
+builder.Services.AddScoped<IValidacionService, ValidacionService>();
+builder.Services.AddScoped<IValoracionService, ValoracionService>();
+builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
+
+// 6. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// 6. Pipeline de peticiones HTTP
+// 7. Pipeline de peticiones HTTP
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
