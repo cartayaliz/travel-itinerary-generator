@@ -8,7 +8,7 @@ import ItineraryDetail from "../views/ItineraryDetail";
 import Register from "../views/Register";
 import OtherGuides from "../views/GuideTuristPackage";
 import JefeDashboard from "../views/JefeDashboard";
-
+import Review from "../components/Review";
 
 function AppRouter() {
   return (
@@ -26,6 +26,8 @@ function AppRouter() {
      <Route path="/guia/itinerary/:id" element={<ItineraryDetail />} />
      <Route path="guia/other-guides" element={<OtherGuides />} />
      
+     <Route path="/guia/itinerary/:id" element={<ItineraryDetail />} />
+     <Route path="/Review" element= {<Review />}/>
     </Routes>
   );
 }

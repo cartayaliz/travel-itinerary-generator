@@ -2,12 +2,12 @@ import { useState } from "react"; // 1. IMPORTAMOS USESTATE
 import "./GuideDashboard.css";
 import Input from "../components/Input";
 import Button from "../components/Button"; 
-
+import Alerts from "../components/Alerts";
 import { useNavigate } from "react-router-dom";
 
 //importante todavia no funcionan profile y crear activity eso deberia llevarte a otro dashboard
 function GuideDashboard() {
-
+  const[mensajeError, setMensajeError]= useState("");
   const navigate = useNavigate(); 
   const [myItineraries, setMyItineraries] = useState([
     { 
@@ -33,8 +33,9 @@ function GuideDashboard() {
   const [name, setName] = useState("");
   const [activities, setActivities] = useState("");
   const handleSave = () => {
+    setMensajeError("");
     if (name.trim() === "" || activities === "") {
-      alert("Please fill all fields");
+      setMensajeError("Please fill all fields");
       return;
     }
 
@@ -79,16 +80,18 @@ function GuideDashboard() {
               onClick={() => setShowForm(true)} 
             />
           </div>
-          {/* se ve el formulario de crear nuevo solo cuando el show estrue que ocurre cuando el click */}
+          {/* se ve el formulario de crear nuevo solo cuando el show es true que ocurre cuando el click */}
           {showForm && (
             <div className="form-container">
               <h3>Create New Itinerary</h3>
-              
+              <Alerts mensaje={mensajeError} />
+
               <Input 
                 label="Itinerary Name" 
                 placeholder="Havana Adventure" 
                 value={name} 
-                onChange={(e) => setName(e.target.value)} 
+                onChange={(e) =>{ setName(e.target.value);
+                setMensajeError("");} }
               />
               
               <Input 
@@ -96,12 +99,16 @@ function GuideDashboard() {
                 type="number"
                 placeholder="5" 
                 value={activities} 
-                onChange={(e) => setActivities(e.target.value)} 
+                onChange={(e) => {setActivities(e.target.value);
+                setMensajeError("");} }
               />
 
               <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
                 <Button texto="Save" onClick={handleSave} />
-                <Button texto="Cancel" onClick={() => setShowForm(false)} />
+                <Button texto="Cancel" onClick={() => {setShowForm(false);
+                setMensajeError("");
+                setActivities("");
+                setName(""); }} />
               </div>
             </div>
           )}
