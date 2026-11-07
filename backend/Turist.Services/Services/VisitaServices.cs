@@ -84,6 +84,10 @@ public class VisitaService : IVisitaService
         if (!turistaAsignado)
             throw new Exception("El turista no está asignado a este itinerario.");
 
+        //EVITAR VISITAS DUPLICADAS
+        var yaVisitado = await _repository.ExisteVisitaAsync(dto.ItinerarioID, dto.TuristaID, dto.ParadaID);
+        if (yaVisitado)
+            throw new Exception("El turista ya ha registrado una visita para esta parada en este itinerario.");
 
         var visita = new Visita
         {
