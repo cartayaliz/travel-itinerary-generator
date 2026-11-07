@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 //importante todavia no funcionan profile y crear activity eso deberia llevarte a otro dashboard
 function GuideDashboard() {
+  const [activityName, setActivityName] = useState("");
+  const [activityHour, setActivityHour] = useState("");
+  const [newActivities, setNewActivities] = useState([]); 
+
+  const [activeTab, setActiveTab] = useState("My Itineraries");
   const[mensajeError, setMensajeError]= useState("");
   const navigate = useNavigate(); 
   const [myItineraries, setMyItineraries] = useState([
@@ -53,15 +58,38 @@ function GuideDashboard() {
     navigate(`/guia/itinerary/${newItinerary.id}`, { state: { newItinerary } });//para que se muestren dos dashboard en el navegador
     
   };
+  const handleAddActivity = () => {
+        // Limpiamos errores anteriores
+        setMensajeError("");
+        if (activityName.trim() === "" || activityHour === "") {
+        setMensajeError("Please fill all fields");
+        return;
+    }
 
+  const newAct = {
+      id: Date.now(),
+      name: activityName,
+      hour: activityHour
+    };  
+  <Alerts mensaje={"Activity successfully created"} tipo="exito"/>  
+  setNewActivities([...newActivities, newAct]);
+  setActivityName("");
+  setActivityHour("");
+  };
   return (
     <div className="app-layout">
       <aside className="sidebar">
         <h2>Guide Menu</h2>
         <ul>
-          <li className="active">My Itineraries</li>
-          <li>Create Activity</li>
-          <li>Profile</li>
+          <li className={activeTab === "My Itineraies" ? "active" : ""} onClick={() => setActiveTab("My Itineraries")}>
+            My Itineraries
+          </li>
+          <li className={activeTab === "Create Activity" ? "active" : ""} onClick={() => setActiveTab("Create Activity")}>
+            Create Activity
+          </li>
+          <li className={activeTab === "Profile" ? "active" : ""} onClick={() => setActiveTab("Profile")}>
+            Profile
+          </li>
           <li onClick={() => navigate("/guia/other-guides")}>Other Guides</li>
         </ul>
       </aside>
@@ -71,8 +99,9 @@ function GuideDashboard() {
           <h1>Guide Dashboard</h1>
           <p>Welcome back, René Díaz</p>
         </header>
+        { activeTab === "My Itineraries" && (
 
-        <section className="guide-section">
+          <section className="guide-section">
           <div className="section-header">
             <h2>My Itineraries</h2>
             <Button 
@@ -129,6 +158,62 @@ function GuideDashboard() {
             ))}
           </div>
         </section>
+        )}
+        { activeTab === "Create Activity" && (
+          <section className="guide-section">
+              <div className="form-container">
+                <h3>Create New Activity </h3>
+                <Alerts mensaje={mensajeError} />
+                <Input 
+                label="Activity Name" 
+                placeholder="Museum Visit" 
+                value={activityName} 
+                onChange={(e) => { setActivityName(e.target.value);
+                setMensajeError(""); 
+              
+              } }
+                
+              />
+              
+              <Input 
+                label="Hour" 
+                type="time"
+                placeholder="5" 
+                value={activityHour} 
+                onChange={(e) => {setActivityHour(e.target.value);
+                setMensajeError("");
+                }}
+              />
+              <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
+                <Button texto="Save" onClick={handleAddActivity} />
+                <Button texto="Cancel" onClick={() => {
+                  setActivityName("");
+                  setActivityHour("");
+                  setMensajeError("");
+                  setActiveTab("My Itineraries");
+                } }/>
+              </div>
+              </div>
+               {/* Lista de actividades creadas */}
+              <div className="itinerary-list" style={{ marginTop: "2rem" }}>
+                <h3>Activities Created</h3>
+                {newActivities.length === 0 ? (
+                  <p>No activities created yet. Fill the form above.</p>
+                ) : (
+                  newActivities.map((act) => (
+                    <div key={act.id} className="itinerary-card">
+                      <div className="itinerary-info">
+                        <h3>{act.name}</h3>
+                        <p>Time: {act.hour}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+          ) 
+        }
+        
       </main>
     </div>
   );
