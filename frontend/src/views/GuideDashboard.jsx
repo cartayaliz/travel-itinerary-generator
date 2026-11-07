@@ -72,9 +72,20 @@ function GuideDashboard() {
       hour: activityHour
     };  
   <Alerts mensaje={"Activity successfully created"} tipo="exito"/>  
-  setNewActivities([...newActivities, newAct]);
-  setActivityName("");
-  setActivityHour("");
+
+   // 1. Juntamos las actividades viejas con la nueva
+    const updatedActivities = [...newActivities, newAct];
+    
+    // 2. Las ordenamos por la propiedad 'hour'
+    // (localeCompare funciona perfecto con horas en formato "HH:MM")
+    updatedActivities.sort((a, b) => a.hour.localeCompare(b.hour));
+
+    // 3. Guardamos la lista ya ordenada
+    setNewActivities(updatedActivities);
+
+
+    setActivityName("");
+    setActivityHour("");
   };
   return (
     <div className="app-layout">
@@ -200,7 +211,7 @@ function GuideDashboard() {
                 {newActivities.length === 0 ? (
                   <p>No activities created yet. Fill the form above.</p>
                 ) : (
-                  newActivities.map((act) => (
+                  [...newActivities].sort((a, b) => a.hour.localeCompare(b.hour)).map((act) => (
                     <div key={act.id} className="itinerary-card">
                       <div className="itinerary-info">
                         <h3>{act.name}</h3>
