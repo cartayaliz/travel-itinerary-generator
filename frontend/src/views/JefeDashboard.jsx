@@ -27,7 +27,7 @@ function JefeDashboard() {
         <h2>Chief Operations</h2>
         <ul>
           <li className="active">Validate Itineraries</li>
-          <li>Reports</li>
+          <li onClick={() => navigate("/reports")}>Reports</li>
         </ul>
         <Button texto="Logout" onClick={() => navigate("/login")} />
       </aside>
