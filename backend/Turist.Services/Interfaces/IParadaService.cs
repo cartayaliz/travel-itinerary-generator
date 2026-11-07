@@ -1,8 +1,7 @@
-namespace Turist.Services.Interfaces;
-
 using Turist.Services.DTOs.Parada;
 
-public interface IParadaService
+namespace Turist.Services.Interfaces;
+
+public interface IParadaService : ICrudService<ParadaResponseDto, ParadaCreateDto>
 {
-    Task CrearParadaAsync(ParadaCreateDto dto);
 }

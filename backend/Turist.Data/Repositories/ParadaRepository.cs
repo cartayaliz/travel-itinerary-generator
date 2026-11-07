@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
-
 namespace Turist.Data.Repositories;
 
 public class ParadaRepository : IParadaRepository

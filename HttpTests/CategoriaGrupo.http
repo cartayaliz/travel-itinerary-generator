@@ -1,0 +1,33 @@
+@HostAddress = http://0.0.0.0:5064
+
+### ==========================================
+### CATEGORIAS
+### ==========================================
+
+### 1. Crear Categoría
+POST {{HostAddress}}/api/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Cultural"
+}
+
+### 2. Obtener todas las Categorías
+GET {{HostAddress}}/api/categorias
+Accept: application/json
+
+### ==========================================
+### GRUPOS
+### ==========================================
+
+### 3. Crear Grupo
+POST {{HostAddress}}/api/grupos
+Content-Type: application/json
+
+{
+  "nombre": "Familia García"
+}
+
+### 4. Obtener todos los Grupos
+GET {{HostAddress}}/api/grupos
+Accept: application/json
