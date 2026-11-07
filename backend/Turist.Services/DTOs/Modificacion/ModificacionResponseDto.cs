@@ -7,6 +7,7 @@ public record ModificacionResponseDto(
     DateTime FechaSolicitud,
     DateTime? FechaRespuesta,
     EstadoModificacion Estado,
+    string? Resultado,
     int ItinerarioID,
     int TuristaID,
     int? GuiaID

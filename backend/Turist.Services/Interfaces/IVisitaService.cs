@@ -4,4 +4,5 @@ namespace Turist.Services.Interfaces;
 
 public interface IVisitaService : ICrudService<VisitaResponseDto, VisitaCreateDto>
 {
+    Task RegistrarVisitaAsync(RegistrarVisitaDto dto);
 }

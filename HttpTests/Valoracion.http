@@ -1,0 +1,87 @@
+@HostAddress = http://0.0.0.0:5064
+
+### ==========================================
+### FLUJO DE VALORACIONES (B4)
+### ==========================================
+
+### 1. Valorar un Itinerario (Camino Feliz)
+# Debe devolver 200 OK
+POST {{HostAddress}}/api/valoraciones/valorar
+Content-Type: application/json
+
+{
+  "turistaID": 1,
+  "itinerarioID": 1,
+  "visitaID": null,
+  "puntuacion": 5,
+  "comentario": "El itinerario estuvo excelente, muy bien organizado."
+}
+
+### 2. Valorar una Visita (Camino Feliz)
+# Debe devolver 200 OK
+POST {{HostAddress}}/api/valoraciones/valorar
+Content-Type: application/json
+
+{
+  "turistaID": 1,
+  "itinerarioID": null,
+  "visitaID": 1,
+  "puntuacion": 4,
+  "comentario": "La visita al museo fue muy interesante."
+}
+
+### 3. Error: Arco Exclusivo (Ambos IDs)
+# Debe devolver 400 Bad Request
+POST {{HostAddress}}/api/valoraciones/valorar
+Content-Type: application/json
+
+{
+  "turistaID": 1,
+  "itinerarioID": 1,
+  "visitaID": 1,
+  "puntuacion": 5,
+  "comentario": "Esto debería fallar porque tiene ambos IDs."
+}
+
+### 4. Error: Arco Exclusivo (Ningún ID)
+# Debe devolver 400 Bad Request
+POST {{HostAddress}}/api/valoraciones/valorar
+Content-Type: application/json
+
+{
+  "turistaID": 1,
+  "itinerarioID": null,
+  "visitaID": null,
+  "puntuacion": 5,
+  "comentario": "Esto debería fallar porque no tiene ningún ID."
+}
+
+### 5. Error: Puntuación Inválida (Fuera de rango)
+# Debe devolver 400 Bad Request
+POST {{HostAddress}}/api/valoraciones/valorar
+Content-Type: application/json
+
+{
+  "turistaID": 1,
+  "itinerarioID": 1,
+  "visitaID": null,
+  "puntuacion": 10,
+  "comentario": "La puntuación debe ser entre 1 y 5."
+}
+
+### 6. Error: Visita no existe
+# Debe devolver 400 Bad Request
+POST {{HostAddress}}/api/valoraciones/valorar
+Content-Type: application/json
+
+{
+  "turistaID": 1,
+  "itinerarioID": null,
+  "visitaID": 999,
+  "puntuacion": 3,
+  "comentario": "La visita 999 no existe."
+}
+
+### 7. Ver todas las Valoraciones registradas
+GET {{HostAddress}}/api/valoraciones
+Accept: application/json

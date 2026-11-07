@@ -7,6 +7,7 @@ public class Modificacion
     public DateTime FechaSolicitud { get; set; }
     public DateTime? FechaRespuesta { get; set; }
     public EstadoModificacion Estado { get; set; }
+    public string? Resultado { get; set; } 
     public int ItinerarioID { get; set; }
     public int TuristaID { get; set; }
     public int? GuiaID { get; set; } // Opcional (el que apoya)
