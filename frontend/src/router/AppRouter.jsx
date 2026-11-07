@@ -18,7 +18,6 @@ function AppRouter() {
       <Route path="/guia/dashboard" element={<GuideDashboard />} />
       {/* Si la ruta es /, redirige automáticamente a Home */}
       <Route path="/" element={<Home/>} />
-
       <Route path="/register" element={<Register/>} />
      <Route path="/turista/dashboard" element={<TuristDashboard />} />
      <Route path="/admin/dashboard" element={<h1>Bienvenido al Panel de Administrador (En construcción)</h1> }/>

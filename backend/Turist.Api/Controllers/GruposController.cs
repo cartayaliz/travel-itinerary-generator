@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Turist.Domain.Interfaces.Repositories;
-using Turist.Domain.Models;
 using Turist.Services.DTOs.Grupo;
+using Turist.Services.Interfaces;
 
 namespace Turist.Api.Controllers;
 
@@ -9,48 +8,78 @@ namespace Turist.Api.Controllers;
 [Route("api/[controller]")]
 public class GruposController : ControllerBase
 {
-    private readonly IGrupoRepository _repository;
-    public GruposController(IGrupoRepository repository) => _repository = repository;
+    private readonly IGrupoService _service;
+
+    public GruposController(IGrupoService service)
+    {
+        _service = service;
+    }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GrupoResponseDto>>> GetAll()
     {
-        var grupos = await _repository.GetAllAsync();
-        return Ok(grupos.Select(g => new GrupoResponseDto(g.GrupoID, g.Nombre)));
+        try
+        {
+            return Ok(await _service.GetAllAsync());
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<GrupoResponseDto>> GetById(int id)
     {
-        var grupo = await _repository.GetByIdAsync(id);
-        if (grupo == null) return NotFound();
-        return Ok(new GrupoResponseDto(grupo.GrupoID, grupo.Nombre));
+        try
+        {
+            return Ok(await _service.GetByIdAsync(id));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] GrupoCreateDto dto)
     {
-        var grupo = new Grupo { Nombre = dto.Nombre };
-        await _repository.AddAsync(grupo);
-        return Ok(new { mensaje = "Grupo creado", id = grupo.GrupoID });
+        try
+        {
+            await _service.CreateAsync(dto);
+            return Ok(new { mensaje = "Grupo creado exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] GrupoCreateDto dto)
     {
-        var grupo = await _repository.GetByIdAsync(id);
-        if (grupo == null) return NotFound();
-        grupo.Nombre = dto.Nombre;
-        await _repository.UpdateAsync(grupo);
-        return NoContent();
+        try
+        {
+            await _service.UpdateAsync(id, dto);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
-        var grupo = await _repository.GetByIdAsync(id);
-        if (grupo == null) return NotFound();
-        await _repository.DeleteAsync(grupo);
-        return NoContent();
+        try
+        {
+            await _service.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 }

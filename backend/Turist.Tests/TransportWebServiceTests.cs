@@ -86,6 +86,7 @@ public class TransportWebServiceTests
         public Task UpdateAsync(Parada parada) => Task.CompletedTask;
         public Task DeleteAsync(Parada parada) => Task.CompletedTask;
         public Task<IEnumerable<Parada>> GetByCategoryAsync(int categoriaId) => Task.FromResult(_paradas.Where(p => p.CategoriaID == categoriaId));
+        
     }
 
     private static Atraccion CreateAtraccion(int id, string nombre, double lat, double lon)

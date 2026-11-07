@@ -1,24 +1,13 @@
 @HostAddress = http://localhost:5064
 
-### 1. Generación Estándar
-POST {{HostAddress}}/api/itinerarios/generar
+### 1. Generar Itinerario Automático
+POST {{HostAddress}}/api/itinerarios/generar-automatico
 Content-Type: application/json
 
 {
-  "cantidadTotal": 3,
-  "nivelEsfuerzoMaximo": null,
-  "tiposActividadPermitidos": [],
-  "coberturaCategoriasMinima": 1,
-  "guiaID": 1
-}
-
-### 2. Generación Bajo Esfuerzo
-POST {{HostAddress}}/api/itinerarios/generar
-Content-Type: application/json
-
-{
-  "cantidadTotal": 2,
+  "cantidadTotal": 5,
   "nivelEsfuerzoMaximo": 1,
   "tiposActividadPermitidos": [],
-  "coberturaCategoriasMinima": 1
+  "coberturaCategoriasMinima": 2,
+  "guiaID": 1
 }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Turist.Domain.Interfaces.Repositories;
-using Turist.Domain.Models;
 using Turist.Services.DTOs.Modificacion;
+using Turist.Services.Interfaces;
 
 namespace Turist.Api.Controllers;
 
@@ -9,78 +8,45 @@ namespace Turist.Api.Controllers;
 [Route("api/[controller]")]
 public class ModificacionesController : ControllerBase
 {
-    private readonly IModificacionRepository _repository;
+    private readonly IModificacionService _service;
 
-    public ModificacionesController(IModificacionRepository repository)
+    public ModificacionesController(IModificacionService service)
     {
-        _repository = repository;
+        _service = service;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ModificacionResponseDto>>> GetAll()
     {
-        var modificaciones = await _repository.GetAllAsync();
-        var response = modificaciones.Select(m => new ModificacionResponseDto(
-            m.ModificacionID, m.FechaSolicitud, m.FechaRespuesta, m.Estado,
-            m.ItinerarioID, m.TuristaID, m.GuiaID
-        ));
-        return Ok(response);
+        try { return Ok(await _service.GetAllAsync()); }
+        catch (Exception ex) { return StatusCode(500, ex.Message); }
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ModificacionResponseDto>> GetById(int id)
     {
-        var modificacion = await _repository.GetByIdAsync(id);
-        if (modificacion == null) return NotFound($"No se encontró la modificación con ID {id}.");
-
-        return Ok(new ModificacionResponseDto(
-            modificacion.ModificacionID, modificacion.FechaSolicitud, modificacion.FechaRespuesta,
-            modificacion.Estado, modificacion.ItinerarioID,
-            modificacion.TuristaID, modificacion.GuiaID
-        ));
+        try { return Ok(await _service.GetByIdAsync(id)); }
+        catch (Exception ex) { return NotFound(ex.Message); }
     }
 
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] ModificacionCreateDto dto)
     {
-        var modificacion = new Modificacion
-        {
-            FechaSolicitud = dto.FechaSolicitud,
-            FechaRespuesta = dto.FechaRespuesta,
-            Estado = dto.Estado,
-            ItinerarioID = dto.ItinerarioID,
-            TuristaID = dto.TuristaID,
-            GuiaID = dto.GuiaID
-        };
-
-        await _repository.AddAsync(modificacion);
-        return Ok(new { mensaje = "Modificación creada exitosamente", id = modificacion.ModificacionID });
+        try { await _service.CreateAsync(dto); return Ok(new { mensaje = "Modificación creada" }); }
+        catch (Exception ex) { return BadRequest(ex.Message); }
     }
 
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] ModificacionCreateDto dto)
     {
-        var modificacion = await _repository.GetByIdAsync(id);
-        if (modificacion == null) return NotFound($"No se encontró la modificación con ID {id}.");
-
-        modificacion.FechaSolicitud = dto.FechaSolicitud;
-        modificacion.FechaRespuesta = dto.FechaRespuesta;
-        modificacion.Estado = dto.Estado;
-        modificacion.ItinerarioID = dto.ItinerarioID;
-        modificacion.TuristaID = dto.TuristaID;
-        modificacion.GuiaID = dto.GuiaID;
-
-        await _repository.UpdateAsync(modificacion);
-        return NoContent();
+        try { await _service.UpdateAsync(id, dto); return NoContent(); }
+        catch (Exception ex) { return BadRequest(ex.Message); }
     }
 
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
-        var modificacion = await _repository.GetByIdAsync(id);
-        if (modificacion == null) return NotFound($"No se encontró la modificación con ID {id}.");
-
-        await _repository.DeleteAsync(modificacion);
-        return NoContent();
+        try { await _service.DeleteAsync(id); return NoContent(); }
+        catch (Exception ex) { return NotFound(ex.Message); }
     }
 }
