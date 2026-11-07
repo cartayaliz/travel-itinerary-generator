@@ -89,23 +89,36 @@ public class ValoracionService : IValoracionService
     //=========
     public async Task ValorarAsync(ValorarDto dto)
     {
-        // 1. Validación del Arco Exclusivo
+        // 1. Validar Arco Exclusivo y Puntuación (Lo que ya teníamos)
         if (dto.ItinerarioID.HasValue == dto.VisitaID.HasValue)
-            throw new Exception("La valoración debe estar asociada exactamente a un Itinerario o a una Visita (no a ambos, ni a ninguno).");
-
-        // 2. Validación de la Puntuación
+            throw new Exception("La valoración debe estar asociada a un Itinerario o a una Visita.");
         if (dto.Puntuacion < 1 || dto.Puntuacion > 5)
             throw new Exception("La puntuación debe estar entre 1 y 5.");
 
-        // 3. Si es de una Visita, validar que exista
+        // 2. Verificar si ya existe una valoración de este turista
+        Valoracion? valoracionExistente = null;
+
         if (dto.VisitaID.HasValue)
         {
-            var visita = await _visitaRepository.GetByIdAsync(dto.VisitaID.Value);
-            if (visita == null) throw new Exception("La visita especificada no existe.");
+            valoracionExistente = await _repository.GetByVisitaAndTuristaAsync(dto.TuristaID, dto.VisitaID.Value);
+        }
+        else if (dto.ItinerarioID.HasValue)
+        {
+            valoracionExistente = await _repository.GetByItinerarioAndTuristaAsync(dto.TuristaID, dto.ItinerarioID.Value);
         }
 
-        // 4. Crear la Valoración
-        var valoracion = new Valoracion
+        // 3. Si existe, la actualizamos (Edición)
+        if (valoracionExistente != null)
+        {
+            valoracionExistente.Puntuacion = dto.Puntuacion;
+            valoracionExistente.Comentario = dto.Comentario;
+            valoracionExistente.Fecha = DateTime.UtcNow; // Actualizamos la fecha de edición
+            await _repository.UpdateAsync(valoracionExistente);
+            return;
+        }
+
+        // 4. Si no existe, la creamos
+        var nuevaValoracion = new Valoracion
         {
             Comentario = dto.Comentario,
             Fecha = DateTime.UtcNow,
@@ -115,6 +128,6 @@ public class ValoracionService : IValoracionService
             VisitaID = dto.VisitaID
         };
 
-        await _repository.AddAsync(valoracion);
+        await _repository.AddAsync(nuevaValoracion);
     }
 }
