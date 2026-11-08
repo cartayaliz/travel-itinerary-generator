@@ -40,4 +40,12 @@ public class VisitaRepository : IVisitaRepository
         _context.Visitas.Remove(visita);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<bool> ExisteVisitaAsync(int itinerarioId, int turistaId, int paradaId)
+    {
+        return await _context.Visitas
+            .AnyAsync(v => v.ItinerarioID == itinerarioId
+                        && v.TuristaID == turistaId
+                        && v.ParadaID == paradaId);
+    }
 }

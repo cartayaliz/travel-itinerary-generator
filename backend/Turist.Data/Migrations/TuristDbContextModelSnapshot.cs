@@ -199,6 +199,9 @@ namespace Turist.Data.Migrations
                     b.Property<int>("ItinerarioID")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Resultado")
+                        .HasColumnType("text");
+
                     b.Property<int>("TuristaID")
                         .HasColumnType("integer");
 
