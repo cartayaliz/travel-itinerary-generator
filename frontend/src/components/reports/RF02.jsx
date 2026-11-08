@@ -1,5 +1,5 @@
 import BarGraph from "../barGraph";
-import "./Reports.css";
+import "../../views/Reports.css";
 
 
 function RF02()
