@@ -1,4 +1,4 @@
-import BarGraph from "../barGraph";
+import BarGraph from "../BarGraph";
 import "../../views/Reports.css";
 
 

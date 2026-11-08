@@ -1,4 +1,5 @@
-import BarGraph from "../barGraph";
+import BarGraph from "../BarGraph";
+import "../../views/Reports.css";
 
 function RF_01(){
    const reportsData = [
