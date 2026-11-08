@@ -94,6 +94,28 @@ public class ItinerarioService : IItinerarioService
 
     public async Task AsignarParadasAsync(int itinerarioId, List<AsignarParadaAItinerarioDto> paradas)
     {
+        var itinerario = await _repository.GetByIdAsync(itinerarioId);
+        if (itinerario == null)
+        {
+            throw new KeyNotFoundException($"No se encontró el itinerario con ID {itinerarioId}.");
+        }
+
+        if (paradas.GroupBy(p => p.Orden).Any(g => g.Count() > 1))
+        {
+            throw new InvalidOperationException("No se puede asignar el mismo número de orden a dos paradas.");
+        }
+
+        var paradasDuplicadas = paradas
+            .GroupBy(p => p.ParadaID)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
+
+        if (paradasDuplicadas.Any())
+        {
+            throw new InvalidOperationException($"El itinerario no puede tener la misma parada asignada 2 veces. ParadaID(s) duplicado(s): {string.Join(", ", paradasDuplicadas)}");
+        }
+
         await _repository.LimpiarParadasAsync(itinerarioId);
 
         var lista = paradas.Select(p => new Itinerario_Parada
@@ -135,6 +157,23 @@ public class ItinerarioService : IItinerarioService
 
     public async Task AsignarTuristasAsync(int itinerarioId, List<AsignarTuristaAItinerarioDto> turistas)
     {
+        var itinerario = await _repository.GetByIdAsync(itinerarioId);
+        if (itinerario == null)
+        {
+            throw new KeyNotFoundException($"No se encontró el itinerario con ID {itinerarioId}.");
+        }
+
+        var turistasDuplicados = turistas
+            .GroupBy(t => t.TuristaID)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
+
+        if (turistasDuplicados.Any())
+        {
+            throw new InvalidOperationException($"El itinerario no puede tener al mismo turista asignado 2 veces. TuristaID(s) duplicado(s): {string.Join(", ", turistasDuplicados)}");
+        }
+
         await _repository.LimpiarTuristasAsync(itinerarioId);
 
         var lista = turistas.Select(t => new Itinerario_Turista

@@ -8,8 +8,8 @@ using DotNetEnv;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Turist.Domain.Interfaces.Services;
 using Turist.Services.Interfaces;
+using Turist.Domain.Interfaces.Services;
 using Turist.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,7 +72,6 @@ builder.Services.AddScoped<IModificacionService, ModificacionService>();
 builder.Services.AddScoped<IValidacionService, ValidacionService>();
 builder.Services.AddScoped<IValoracionService, ValoracionService>();
 builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
-builder.Services.AddScoped<IReporteService, ReporteService>();
 builder.Services.AddScoped<IReporteService, ReporteService>();
 
 // 6. Configurar Controladores y OpenAPI
