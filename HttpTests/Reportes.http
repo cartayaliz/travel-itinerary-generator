@@ -1,0 +1,13 @@
+@HostAddress = http://0.0.0.0:5064
+
+### Reporte 2: Actividades más usadas
+GET {{HostAddress}}/api/reportes/actividades-mas-usadas
+Accept: application/json
+
+### Reporte 4: Satisfacción por esfuerzo
+GET {{HostAddress}}/api/reportes/satisfaccion-esfuerzo
+Accept: application/json
+
+### Reporte 5: Comparación de paquetes
+GET {{HostAddress}}/api/reportes/comparacion-paquetes
+Accept: application/json

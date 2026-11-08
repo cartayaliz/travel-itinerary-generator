@@ -82,4 +82,20 @@ public class ValoracionesController : ControllerBase
             return NotFound(ex.Message);
         }
     }
+    //================
+    //Endpoid para que un turista deje una valoracion
+    //===============
+    [HttpPost("valorar")]
+    public async Task<ActionResult> Valorar([FromBody] ValorarDto dto)
+    {
+        try
+        {
+            await _service.ValorarAsync(dto);
+            return Ok(new { mensaje = "Valoración registrada exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

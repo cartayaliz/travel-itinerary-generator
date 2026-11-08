@@ -55,6 +55,7 @@ builder.Services.AddScoped<IValidacionRepository, ValidacionRepository>();
 builder.Services.AddScoped<IValoracionRepository, ValoracionRepository>();
 builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
 builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
+builder.Services.AddScoped<IReporteRepository, ReporteRepository>();
 
 // 5. Registrar Servicios
 builder.Services.AddScoped<IParadaService, ParadaService>();
@@ -71,10 +72,7 @@ builder.Services.AddScoped<IModificacionService, ModificacionService>();
 builder.Services.AddScoped<IValidacionService, ValidacionService>();
 builder.Services.AddScoped<IValoracionService, ValoracionService>();
 builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
-builder.Services.AddScoped<IItinerarioService, ItinerarioService>();
-builder.Services.AddScoped<IParadaService, ParadaService>();
-
-// 5. Configurar Controladores y OpenAPI
+builder.Services.AddScoped<IReporteService, ReporteService>();
 
 // 6. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();

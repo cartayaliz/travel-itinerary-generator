@@ -1,0 +1,98 @@
+@HostAddress = http://0.0.0.0:5064
+
+### 1. Registrar una Visita
+POST {{HostAddress}}/api/visitas
+Content-Type: application/json
+
+{
+  "fecha": "2026-11-05T10:00:00Z",
+  "estado": 1,
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "paradaID": 1
+}
+
+### 2. Crear una Valoración de una Visita (Arco Exclusivo)
+POST {{HostAddress}}/api/valoraciones
+Content-Type: application/json
+
+{
+  "comentario": "Excelente tour",
+  "fecha": "2026-11-05T12:00:00Z",
+  "puntuacion": 5,
+  "turistaID": 1,
+  "itinerarioID": null,
+  "visitaID": 1
+}
+
+### 4. Crear una Validación (Jefe de Operaciones)
+POST {{HostAddress}}/api/validaciones
+Content-Type: application/json
+
+{
+  "estado": 1,
+  "fechaValidacion": "2026-11-05T10:00:00Z",
+  "observaciones": "Aprobado",
+  "itinerarioID": 1,
+  "jefeID": 3
+}
+
+### Registrar una Visita
+POST {{HostAddress}}/api/visitas/registrar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "paradaID": 1,
+  "estado": 1
+}
+
+### Registrar una Visita (Debe fallar con 400)
+POST {{HostAddress}}/api/visitas/registrar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 2,
+  "paradaID": 1,
+  "estado": 1
+}
+### Crear Modificación (CRUD Admin)
+POST {{HostAddress}}/api/modificaciones
+Content-Type: application/json
+
+{
+  "fechaSolicitud": "2026-11-06T10:00:00Z",
+  "fechaRespuesta": null,
+  "estado": 1,
+  "resultado": "Solicitud inicial de prueba",
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "guiaID": null
+}
+###  Solicitar Modificación (Turista)
+POST {{HostAddress}}/api/modificaciones/solicitar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 1,
+  "motivo": "Quiero cambiar la visita al museo por una caminata.",
+  "guiaID": 1
+}
+
+### 3. Obtener todas las Modificaciones
+GET {{HostAddress}}/api/modificaciones
+Accept: application/json
+
+### 4. Solicitar Modificación (Debe fallar con 400)
+POST {{HostAddress}}/api/modificaciones/solicitar
+Content-Type: application/json
+
+{
+  "itinerarioID": 1,
+  "turistaID": 2,
+  "motivo": "Esto debería fallar",
+  "guiaID": null
+}
