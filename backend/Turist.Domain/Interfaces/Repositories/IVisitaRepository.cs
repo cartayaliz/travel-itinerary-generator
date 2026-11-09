@@ -9,4 +9,6 @@ public interface IVisitaRepository
     Task AddAsync(Visita visita);
     Task UpdateAsync(Visita visita);
     Task DeleteAsync(Visita visita);
+
+    Task<bool> ExisteVisitaAsync(int itinerarioId, int turistaId, int paradaId);
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Turist.Services.DTOs.Parada;
+using Turist.Services.Mappers;
 using Turist.Services.Interfaces;
 
 namespace Turist.Api.Controllers;

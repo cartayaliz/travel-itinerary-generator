@@ -30,6 +30,13 @@ public class ParadaService : IParadaService
 
     public async Task CreateAsync(ParadaCreateDto dto)
     {
+        var paradasExistentes = await _repository.GetAllAsync();
+        var existeNombre = paradasExistentes.Any(p => p.Nombre.Equals(dto.Nombre, StringComparison.OrdinalIgnoreCase));
+
+        if (existeNombre)
+        {
+            throw new InvalidOperationException($"Ya existe una parada registrada con el nombre '{dto.Nombre}'.");
+        }
         var parada = dto.ToEntity();
         await _repository.AddAsync(parada);
     }
