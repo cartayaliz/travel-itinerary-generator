@@ -13,6 +13,29 @@ public class ReporteRepository : IReporteRepository
     public ReporteRepository(TuristDbContext context) => _context = context;
 
     /// <summary>
+    /// REPORTE 1: Obtiene el listado de itinerarios generados automáticamente para un paquete turístico específico, 
+    /// indicando el nombre del creador, la fecha de creación y los parámetros utilizados.
+    /// </summary>
+    public async Task<IEnumerable<ReporteItinerario>> GetAutomaticosByPaqueteIdAsync(int paqueteId)
+    {
+        return await _context.Itinerarios
+            .Where(i => i.Origen == OrigenItinerario.Automatico && 
+                        i.ItinerarioPaquetes.Any(ip => ip.PaqueteID == paqueteId))
+            .Select(i => new ReporteItinerario
+            {
+                ItinerarioID = i.ItinerarioID,
+                Nombre = i.Nombre,
+                FechaCreacion = i.FechaCreacion,
+                GuiaID = i.GuiaID,
+                CantidadActividades = i.CantidadActividades,
+                ProporcionVisitas = i.ProporcionVisitas,
+                ProporcionExcursiones = i.ProporcionExcursiones,
+                ProporcionTalleres = i.ProporcionTalleres,
+                CoberturaCategorias = i.CoberturaCategorias
+            })
+            .ToListAsync();
+    }
+    /// <summary>
     /// REPORTE 2: Obtiene las actividades más utilizadas en los itinerarios.
     /// Agrupa las paradas que son de tipo 'Actividad' por su Nombre, Categoría y Nivel de Esfuerzo.
     /// Devuelve el conteo de cuántas veces aparece cada actividad en los itinerarios.

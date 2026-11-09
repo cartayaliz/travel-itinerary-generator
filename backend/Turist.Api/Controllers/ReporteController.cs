@@ -12,6 +12,19 @@ public class ReportesController : ControllerBase
 
     public ReportesController(IReporteService service) => _service = service;
 
+    [HttpGet("paquete/{paqueteId:int}/itinerarios-automaticos")]
+    public async Task<ActionResult<IEnumerable<ReporteItinerariosAutomaticosPorPaqueteDto>>> GetItinerariosAutomaticosPorPaquete(int paqueteId)
+    {
+        try 
+        { 
+            return Ok(await _service.GetItinerariosAutomaticosPorPaqueteAsync(paqueteId)); 
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, ex.Message); 
+        }
+    }
+
     [HttpGet("actividades-mas-usadas")]
     public async Task<ActionResult<IEnumerable<ReporteActividadesUsadasDto>>> GetActividadesMasUsadas()
     {

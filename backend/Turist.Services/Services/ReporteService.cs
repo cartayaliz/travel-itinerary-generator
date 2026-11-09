@@ -10,6 +10,22 @@ public class ReporteService : IReporteService
 
     public ReporteService(IReporteRepository repository) => _repository = repository;
 
+    public async Task<IEnumerable<ReporteItinerariosAutomaticosPorPaqueteDto>> GetItinerariosAutomaticosPorPaqueteAsync(int paqueteId)
+{
+    var modelos = await _repository.GetAutomaticosByPaqueteIdAsync(paqueteId);
+    
+    return modelos.Select(m => new ReporteItinerariosAutomaticosPorPaqueteDto(
+        m.ItinerarioID,
+        m.Nombre,
+        m.FechaCreacion,
+        m.GuiaID,
+        m.CantidadActividades,
+        m.ProporcionVisitas,
+        m.ProporcionExcursiones,
+        m.ProporcionTalleres,
+        m.CoberturaCategorias
+    ));
+}
     public async Task<IEnumerable<ReporteActividadesUsadasDto>> GetActividadesMasUsadasAsync()
     {
         var modelos = await _repository.GetActividadesMasUsadasAsync();
