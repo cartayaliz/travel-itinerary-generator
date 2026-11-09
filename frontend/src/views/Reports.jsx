@@ -2,6 +2,7 @@ import RF01 from "../components/reports/RF01";
 import RF02 from "../components/reports/RF02";
 import RF03 from "../components/reports/RF03";
 import RF04 from "../components/reports/RF04";
+import RF05 from "../components/reports/RF05";
 import "./Reports.css";
 
 {/* ejemplos temp */}
@@ -19,6 +20,7 @@ function Reports() {
         <RF02/>
         <RF03/>
         <RF04/>
+        <RF05/>
       </main>
     </div>
   );
