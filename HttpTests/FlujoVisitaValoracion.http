@@ -96,3 +96,29 @@ Content-Type: application/json
   "motivo": "Esto debería fallar",
   "guiaID": null
 }
+### ==========================================
+### CP01: Aprobación exitosa de itinerario
+### ==========================================
+POST {{HostAddress}}/api/validaciones
+Content-Type: application/json
+
+{
+  "estado": 1,
+  "observaciones": "Itinerario aprobado sin observaciones.",
+  "itinerarioID": 2,
+  "jefeID": 2
+}
+
+### ==========================================
+### CP02: Rechazo exitoso de itinerario
+### ==========================================
+POST {{HostAddress}}/api/validaciones
+Content-Type: application/json
+
+{
+  "estado": 2,
+  "fechaValidacion": "2026-11-05T10:00:00Z",
+  "observaciones": "Se rechaza por falta de tiempo en el tramo de la tarde.",
+  "itinerarioID": 2,
+  "jefeID": 6
+}

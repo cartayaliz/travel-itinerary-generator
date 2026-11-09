@@ -46,4 +46,17 @@ public class ValidacionesController : ControllerBase
         try { await _service.DeleteAsync(id); return NoContent(); }
         catch (Exception ex) { return NotFound(ex.Message); }
     }
+    [HttpPost("validar")]
+    public async Task<ActionResult<ValidacionResponseDto>> ValidarItinerario([FromBody] ValidacionCreateDto dto)
+    {
+        try
+        {
+            await _service.CreateAsync(dto);
+            return Ok(new { mensaje = "Validación creada exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+    }
 }
