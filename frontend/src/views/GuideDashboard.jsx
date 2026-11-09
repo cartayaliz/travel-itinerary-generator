@@ -1,11 +1,11 @@
-import { useState } from "react"; // 1. IMPORTAMOS USESTATE
+import { useState, useEffect} from "react"; // 1. IMPORTAMOS USESTATE
 import "./GuideDashboard.css";
 import Input from "../components/Input";
 import Button from "../components/Button"; 
 import Alerts from "../components/Alerts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation} from "react-router-dom";
+import GuideSidebar from "../components/GuideSidebar";
 
-//importante todavia no funcionan profile y crear activity eso deberia llevarte a otro dashboard
 function GuideDashboard() {
   const [activityName, setActivityName] = useState("");
   const [activityHour, setActivityHour] = useState("");
@@ -15,6 +15,7 @@ function GuideDashboard() {
   const [activeTab, setActiveTab] = useState("My Itineraries");
   const[mensajeError, setMensajeError]= useState("");
   const navigate = useNavigate(); 
+  const location = useLocation(); 
   const [myItineraries, setMyItineraries] = useState([
     { 
       id: 1, 
@@ -38,6 +39,16 @@ function GuideDashboard() {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [activities, setActivities] = useState("");
+
+  useEffect(() => {
+    const cambiarTab = () => {
+      if (location.state?.tab) {
+        setActiveTab(location.state.tab);
+      }
+    };
+    cambiarTab();
+  }, [location]);
+
   const handleSave = () => {
     setMensajeError("");
     if (name.trim() === "" || activities === "") {
@@ -98,21 +109,7 @@ function GuideDashboard() {
   };
   return (
     <div className="app-layout">
-      <aside className="sidebar">
-        <h2>Guide Menu</h2>
-        <ul>
-          <li className={activeTab === "My Itineraies" ? "active" : ""} onClick={() => setActiveTab("My Itineraries")}>
-            My Itineraries
-          </li>
-          <li className={activeTab === "Create Activity" ? "active" : ""} onClick={() => setActiveTab("Create Activity")}>
-            Create Activity
-          </li>
-          <li className={activeTab === "Profile" ? "active" : ""} onClick={() => setActiveTab("Profile")}>
-            Profile
-          </li>
-          <li onClick={() => navigate("/guia/other-guides")}>Other Guides</li>
-        </ul>
-      </aside>
+      <GuideSidebar />
 
       <main className="main-content">
         <header className="main-header">
@@ -129,7 +126,7 @@ function GuideDashboard() {
               onClick={() => setShowForm(true)} 
             />
           </div>
-          {/* se ve el formulario de crear nuevo solo cuando el show es true que ocurre cuando el click */}
+       
           {showForm && (
             <div className="form-container">
               <h3>Create New Itinerary</h3>
@@ -213,7 +210,8 @@ function GuideDashboard() {
                   setActivityName("");
                   setActivityHour("");
                   setMensajeError("");
-                  setActiveTab("My Itineraries");
+                  setSuccessMessage("");
+                  navigate("/guia/dashboard", {state:{tab:"My Itineraries"}});
                 } }/>
               </div>
               </div>
@@ -243,6 +241,14 @@ function GuideDashboard() {
             </section>
           ) 
         }
+        { activeTab === "Profile" && (
+          <section className="guide-section">
+            <div className="section-header">
+              <h2>My Profile</h2>
+            </div>
+            
+          </section>
+        )}
         
       </main>
     </div>

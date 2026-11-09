@@ -3,6 +3,7 @@ import RF02 from "../components/reports/RF02";
 import RF03 from "../components/reports/RF03";
 import RF04 from "../components/reports/RF04";
 import RF05 from "../components/reports/RF05";
+import RF06 from "../components/reports/RF06";
 import "./Reports.css";
 
 {/* ejemplos temp */}
@@ -21,6 +22,7 @@ function Reports() {
         <RF03/>
         <RF04/>
         <RF05/>
+        <RF06/>
       </main>
     </div>
   );

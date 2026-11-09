@@ -4,9 +4,9 @@ import "../../views/Reports.css";
 function RF05()
 {
     const data = [
-    { id: 1, package: "Museum Visit", totalActivities: 3, category: "Culture" , effort: "Low" },
-    { id: 2, package: "Old Havana Tour", totalActivities: 5, category: "Culture", effort: "Medium"},
-    { id: 3, package: "Malecon Walk", totalActivities: 2, category: "Tour", effort: "Low" },
+    { id: 1, package: "Havana Colonial", totalActivities: 8, category: "Culture" , effort: "Medium" },
+    { id: 2, package: "Varadero Beach", totalActivities: 6, category: "Nature", effort: "Low"},
+    { id: 3, package: "Viñales Trip", totalActivities: 5, category: "Tour", effort: "High" },
     ];
     const radarData = [
     { package: "Havana Colonial", Low: 2, Medium: 4, High: 2 },
@@ -26,11 +26,11 @@ function RF05()
 
      // 3. Definimos la leyenda
     const radarLeyenda = [
-    "Cada punto del gráfico representa un paquete turístico.",
-    "Las áreas más grandes hacia el <strong>verde</strong> indican que el paquete tiene más actividades de bajo esfuerzo.",
-     "Las áreas hacia el <strong>amarillo</strong> indican actividades de <strong>esfuerzo medio</strong>.",
-    "Las áreas hacia el <strong>rojo</strong> indican que el paquete exige más esfuerzo físico.",
-    "Un gráfico más equilibrado significa que el itinerario tiene una buena variedad de niveles de esfuerzo."
+    "Each point on the graph represents a tour package.",
+    "Larger areas toward the <strong>green</strong> indicate that the package has more low-effort activities.",
+    "Areas toward <strong>yellow</strong> indicate moderate-intensity activities.",
+    "Areas toward <strong>red</strong> indicate that the activity requires more physical effort.",
+    "A more balanced chart means the route has a good variety of effort levels."
     ];
     return(
         <div className="report-card">

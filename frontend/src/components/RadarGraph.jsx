@@ -52,7 +52,7 @@ function RadarGraph({data, title, xAxisKey, keys, colors, leyenda})
 
             {leyenda && (
                 <div style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#555", backgroundColor: "#f9f9f9", padding: "1rem", borderRadius: "8px" }}>
-                <p style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>¿Cómo leer este gráfico?</p>
+                <p style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>How to read this graph?</p>
                 <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
                     {leyenda.map((texto, index) => (
                     <li key={index} dangerouslySetInnerHTML={{ __html: texto }}></li>
