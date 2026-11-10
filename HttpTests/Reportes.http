@@ -1,7 +1,15 @@
 @HostAddress = http://0.0.0.0:5064
 
+### Reporte 1: Itinerarios automáticos por paquete específico
+GET {{HostAddress}}/api/reportes/paquete/1/itinerarios-automaticos
+Accept: application/json
+
 ### Reporte 2: Actividades más usadas
 GET {{HostAddress}}/api/reportes/actividades-mas-usadas
+Accept: application/json
+
+### Reporte 3: Itinerarios validados por un revisor determinado
+GET {{HostAddress}}/api/reportes/jefe/1/itinerarios-validados
 Accept: application/json
 
 ### Reporte 4: Satisfacción por esfuerzo

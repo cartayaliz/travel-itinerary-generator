@@ -32,6 +32,20 @@ public class ReporteService : IReporteService
         return modelos.Select(m => new ReporteActividadesUsadasDto(m.Nombre, m.Categoria, m.Esfuerzo, m.Cantidad));
     }
 
+    public async Task<IEnumerable<ReporteItinerariosPorRevisorDto>> GetItinerariosValidadosPorJefeAsync(int jefeId)
+    {
+        var modelos = await _repository.GetItinerariosValidadosByJefeIdAsync(jefeId);
+        
+        return modelos.Select(m => new ReporteItinerariosPorRevisorDto(
+            m.ItinerarioID,
+            m.NombreItinerario,
+            m.FechaCreacion,
+            m.FechaValidacion,
+            m.Observaciones,
+            m.EstadoValidacion
+        ));
+    }
+
     public async Task<IEnumerable<ReporteSatisfaccionEsfuerzoDto>> GetSatisfaccionPorEsfuerzoAsync()
     {
         var modelos = await _repository.GetSatisfaccionPorEsfuerzoAsync();

@@ -68,6 +68,26 @@ public class ReporteRepository : IReporteRepository
     }
 
     /// <summary>
+    /// REPORTE 3: Lista los itinerarios que fueron validados por un revisor determinado,
+    /// indicando la fecha de validación y las observaciones hechas durante el proceso.
+    /// </summary>
+    public async Task<IEnumerable<ReporteItinerarioRevisor>> GetItinerariosValidadosByJefeIdAsync(int jefeId)
+    {
+        return await _context.Validaciones
+            .Where(v => v.JefeID == jefeId)
+            .Select(v => new ReporteItinerarioRevisor
+            {
+                ItinerarioID = v.Itinerario.ItinerarioID,
+                NombreItinerario = v.Itinerario.Nombre,
+                FechaCreacion = v.Itinerario.FechaCreacion,
+                FechaValidacion = v.FechaValidacion,
+                Observaciones = v.Observaciones,
+                EstadoValidacion = v.Estado.ToString()
+            })
+            .ToListAsync();
+    }
+
+    /// <summary>
     /// REPORTE 4: Obtiene la satisfacción (promedio de valoraciones) agrupada por nivel de esfuerzo físico.
     /// Hace un JOIN entre Valoraciones -> Visita -> Parada para saber el nivel de esfuerzo de la actividad valorada.
     /// </summary>

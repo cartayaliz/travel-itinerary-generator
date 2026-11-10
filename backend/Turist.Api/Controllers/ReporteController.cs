@@ -32,6 +32,19 @@ public class ReportesController : ControllerBase
         catch (Exception ex) { return StatusCode(500, ex.Message); }
     }
 
+    [HttpGet("jefe/{jefeId:int}/itinerarios-validados")]
+    public async Task<ActionResult<IEnumerable<ReporteItinerariosPorRevisorDto>>> GetItinerariosValidadosPorJefe(int jefeId)
+    {
+        try 
+        { 
+            return Ok(await _service.GetItinerariosValidadosPorJefeAsync(jefeId)); 
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, ex.Message); 
+        }
+    }
+
     [HttpGet("satisfaccion-esfuerzo")]
     public async Task<ActionResult<IEnumerable<ReporteSatisfaccionEsfuerzoDto>>> GetSatisfaccionEsfuerzo()
     {
