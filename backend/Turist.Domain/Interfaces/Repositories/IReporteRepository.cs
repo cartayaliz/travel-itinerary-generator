@@ -7,4 +7,5 @@ public interface IReporteRepository
     Task<IEnumerable<ReporteActividad>> GetActividadesMasUsadasAsync();
     Task<IEnumerable<ReporteSatisfaccion>> GetSatisfaccionPorEsfuerzoAsync();
     Task<IEnumerable<ReporteComparacion>> GetComparacionPaquetesAsync();
+    Task<IEnumerable<ReporteComparacionModificacion>> GetComparacionModificacionesGrupoAsync();
 }
