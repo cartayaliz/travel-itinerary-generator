@@ -18,9 +18,10 @@ function AppRouter() {
 
       {/* Cuando la ruta sea /login, muestra el componente Login */}
      <Route path="/login" element={<Login />} />
-     <Route path="/guia/dashboard" element={<GuideDashboard />} />
       
      <Route path="/register" element={<Register/>} />
+     
+     <Route path="/guia/dashboard" element={<GuideDashboard />} />
      <Route path="/turista/dashboard" element={<TuristDashboard />} />
      <Route path="/admin/dashboard" element={<h1>Bienvenido al Panel de Administrador (En construcción)</h1> }/>
      <Route path="/jefe/dashboard" element={<JefeDashboard /> }/>

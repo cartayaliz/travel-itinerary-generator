@@ -26,4 +26,7 @@ Accept: application/json
 
 ### Reporte 6: Top 10 actividades con mayor tasa de abandono
 GET {{HostAddress}}/api/reportes/actividades-mayor-abandono
+
+### Reporte 6: Obtener el reporte de comparación de modificaciones vs grupo
+GET {{HostAddress}}/api/reportes/comparacion-modificaciones
 Accept: application/json

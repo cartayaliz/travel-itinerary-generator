@@ -82,4 +82,16 @@ public class ReporteService : IReporteService
             m.VisitasAbandonadas
         ));
     }
+    public async Task<IEnumerable<ReporteComparacionModificacionDto>> GetComparacionModificacionesGrupoAsync()
+    {
+        var modelos = await _repository.GetComparacionModificacionesGrupoAsync();
+        return modelos.Select(m => new ReporteComparacionModificacionDto(
+            m.TuristaID, 
+            m.TuristaNombre, 
+            m.PaqueteNombre, 
+            m.PromedioTuristaModificado, 
+            m.PromedioGrupo
+        ));
+    }
+
 }

@@ -11,4 +11,5 @@ public interface IReporteRepository
     Task<IEnumerable<ReporteItinerarioRevisor>> GetItinerariosValidadosByJefeIdAsync(int jefeId);
     Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracion>> GetCorrelacionEsfuerzoValoracionAsync();
     Task<IEnumerable<ReporteActividadAbandono>> GetTop10ActividadesAbandonoAsync();
+    Task<IEnumerable<ReporteComparacionModificacion>> GetComparacionModificacionesGrupoAsync();
 }

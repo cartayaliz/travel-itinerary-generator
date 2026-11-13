@@ -58,6 +58,7 @@ public class ReportesController : ControllerBase
         try { return Ok(await _service.GetComparacionPaquetesAsync()); }
         catch (Exception ex) { return StatusCode(500, ex.Message); }
     }
+<<<<<<< HEAD
 
     [HttpGet("correlacion-esfuerzo-valoracion")]
     public async Task<ActionResult<IEnumerable<ReporteCorrelacionEsfuerzoValoracionDto>>> GetCorrelacionEsfuerzoValoracion()
@@ -78,6 +79,15 @@ public class ReportesController : ControllerBase
         try 
         { 
             return Ok(await _service.GetTop10ActividadesAbandonoAsync()); 
+=======
+    [HttpGet("comparacion-modificaciones")]
+    public async Task<ActionResult<IEnumerable<ReporteComparacionModificacionDto>>> GetComparacionModificacionesGrupo()
+    {
+        try 
+        { 
+            var resultado = await _service.GetComparacionModificacionesGrupoAsync();
+            return Ok(resultado); 
+>>>>>>> 87ab66608742fb6675756477eed2d74e3eafa772
         }
         catch (Exception ex) 
         { 

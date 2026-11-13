@@ -1,5 +1,6 @@
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
+using Turist.Services.DTOs.Validacion;
 using Turist.Services.DTOs.Valoracion;
 using Turist.Services.Interfaces;
 

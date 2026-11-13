@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
+import GuideSidebar from "../components/GuideSidebar"; 
 import "./GuideDashboard.css";
 
 function OtherGuides() {
@@ -12,15 +12,7 @@ function OtherGuides() {
   ];
   return (
     <div className="app-layout">
-      <aside className="sidebar">
-        <h2>Guide Menu</h2>
-        <ul>
-          <li onClick={() => navigate("/guia/dashboard")}>My Itineraries</li>
-          <li onClick={() => navigate("/guia/create-activity")}>Create Activity</li> {/* despues con lo que liz hizo */}
-          <li>Profile</li>
-          <li className="active">Other Guides' Itineraries</li>
-        </ul>
-      </aside>
+      <GuideSidebar />
 
       <main className="main-content">
         <header className="main-header">
@@ -28,9 +20,10 @@ function OtherGuides() {
           <p>Package: Havana travel</p>
         </header>
 
-        <div className="itinerary-list">
+       <div className="itinerary-list">
           {otherGuidesItineraries.map((it) => (
-            <div key={it.id} className="itinerary-card">
+            <div key={it.id} className="itinerary-card" onClick={() => navigate(`/guia/itinerary/${it.id}`, { state: { newItinerary: it } })} style={{ cursor: "pointer" }}>
+              {/* NOTA: Agregué el onClick al div de la tarjeta para que al hacer clic te lleve al detalle, así funcionará el botón de volver atrás */}
               <div className="itinerary-info">
                 <h3>{it.package}</h3>
                 <p>Created by: <strong>{it.guide}</strong></p>

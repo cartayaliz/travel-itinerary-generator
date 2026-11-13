@@ -216,4 +216,80 @@ public class ReporteRepository : IReporteRepository
             .Take(10)
             .ToListAsync();
     }
+    /// REPORTE 6: Compara el desempeño de los turistas que solicitaron una modificación del itinerario 
+    /// con el promedio general de valoraciones de sus respectivos grupos de viaje para esos mismos paquetes turísticos.
+    /// </summary>
+    public async Task<IEnumerable<ReporteComparacionModificacion>> GetComparacionModificacionesGrupoAsync()
+    {
+        var paquetes = await _context.PaquetesTuristicos
+            .Include(p => p.ItinerarioPaquetes)
+                .ThenInclude(ip => ip.Itinerario)
+                    .ThenInclude(i => i.Modificaciones)
+            .Include(p => p.ItinerarioPaquetes)
+                .ThenInclude(ip => ip.Itinerario)
+                    .ThenInclude(i => i.Valoraciones)
+                        .ThenInclude(v => v.Turista)
+                            .ThenInclude(t => t.Grupo)
+            .ToListAsync();
+
+        var reportes = new List<ReporteComparacionModificacion>();
+
+        // Procesar las métricas por paquete e itinerario
+        foreach (var paquete in paquetes)
+        {
+            foreach (var ip in paquete.ItinerarioPaquetes)
+            {
+                var itinerario = ip.Itinerario;
+                
+                // Turistas que tienen solicitudes de modificación registradas en este itinerario
+                var turistasConModificacionIds = itinerario.Modificaciones
+                    .Select(m => m.TuristaID)
+                    .Distinct()
+                    .ToList();
+
+                if (!turistasConModificacionIds.Any()) 
+                    continue;
+
+                // Obtener todas las valoraciones hechas sobre este itinerario
+                var valoracionesItinerario = itinerario.Valoraciones
+                    .Where(v => v.ItinerarioID == itinerario.ItinerarioID)
+                    .ToList();
+
+                if (!valoracionesItinerario.Any()) 
+                    continue;
+
+                foreach (var turistaId in turistasConModificacionIds)
+                {
+                    var valoracionTuristaModificado = valoracionesItinerario
+                        .FirstOrDefault(v => v.TuristaID == turistaId);
+
+                    if (valoracionTuristaModificado == null) 
+                        continue;
+
+                    var turista = valoracionTuristaModificado.Turista;
+
+                    // Calcular el promedio general de valoraciones del resto de miembros de su grupo de viaje
+                    var valoracionesRestoGrupo = valoracionesItinerario
+                        .Where(v => v.Turista.GrupoID == turista.GrupoID && v.TuristaID != turistaId)
+                        .Select(v => (double)v.Puntuacion)
+                        .ToList();
+
+                    double promedioGrupo = valoracionesRestoGrupo.Any() 
+                        ? valoracionesRestoGrupo.Average() 
+                        : (double)valoracionTuristaModificado.Puntuacion; //si el grupo solo tiene un integrante
+
+                    reportes.Add(new ReporteComparacionModificacion
+                    {
+                        TuristaID = turista.UsuarioID,
+                        TuristaNombre = turista.Nombre,
+                        PaqueteNombre = paquete.Nombre,
+                        PromedioTuristaModificado = valoracionTuristaModificado.Puntuacion,
+                        PromedioGrupo = Math.Round(promedioGrupo, 2)
+                    });
+                }
+            }
+        }
+        return reportes;
+    }
+
 }
