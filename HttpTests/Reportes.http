@@ -23,3 +23,7 @@ Accept: application/json
 ### Reporte 6: Correlación entre nivel de esfuerzo físico y valoración promedio
 GET {{HostAddress}}/api/reportes/correlacion-esfuerzo-valoracion
 Accept: application/json
+
+### Reporte 6: Top 10 actividades con mayor tasa de abandono
+GET {{HostAddress}}/api/reportes/actividades-mayor-abandono
+Accept: application/json

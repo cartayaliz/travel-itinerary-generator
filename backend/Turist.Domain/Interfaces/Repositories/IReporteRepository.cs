@@ -10,4 +10,5 @@ public interface IReporteRepository
     Task<IEnumerable<ReporteItinerario>> GetAutomaticosByPaqueteIdAsync(int paqueteId);
     Task<IEnumerable<ReporteItinerarioRevisor>> GetItinerariosValidadosByJefeIdAsync(int jefeId);
     Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracion>> GetCorrelacionEsfuerzoValoracionAsync();
+    Task<IEnumerable<ReporteActividadAbandono>> GetTop10ActividadesAbandonoAsync();
 }

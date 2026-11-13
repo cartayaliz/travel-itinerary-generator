@@ -10,4 +10,5 @@ public interface IReporteService
     Task<IEnumerable<ReporteSatisfaccionEsfuerzoDto>> GetSatisfaccionPorEsfuerzoAsync();
     Task<IEnumerable<ReporteComparacionPaquetesDto>> GetComparacionPaquetesAsync();
     Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracionDto>> GetCorrelacionEsfuerzoValoracionAsync();
+    Task<IEnumerable<ReporteActividadAbandonoDto>> GetTop10ActividadesAbandonoAsync();
 }

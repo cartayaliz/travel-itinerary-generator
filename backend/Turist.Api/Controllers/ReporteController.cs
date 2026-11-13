@@ -71,4 +71,17 @@ public class ReportesController : ControllerBase
             return StatusCode(500, ex.Message); 
         }
     }
+
+    [HttpGet("actividades-mayor-abandono")]
+    public async Task<ActionResult<IEnumerable<ReporteActividadAbandonoDto>>> GetTop10ActividadesAbandono()
+    {
+        try 
+        { 
+            return Ok(await _service.GetTop10ActividadesAbandonoAsync()); 
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, ex.Message); 
+        }
+    }
 }

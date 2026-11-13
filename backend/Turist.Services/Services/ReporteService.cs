@@ -69,4 +69,17 @@ public class ReporteService : IReporteService
             m.TotalValoraciones
         ));
     }
+    public async Task<IEnumerable<ReporteActividadAbandonoDto>> GetTop10ActividadesAbandonoAsync()
+    {
+        var modelos = await _repository.GetTop10ActividadesAbandonoAsync();
+        
+        return modelos.Select(m => new ReporteActividadAbandonoDto(
+            m.NombreActividad,
+            m.NombreGuia,
+            m.NombrePaquete,
+            Math.Round(m.TasaAbandono, 2),
+            m.TotalVisitas,
+            m.VisitasAbandonadas
+        ));
+    }
 }

@@ -182,4 +182,38 @@ public class ReporteRepository : IReporteRepository
             })
             .ToListAsync();
     }
+
+    /// <summary>
+    /// REPORTE 6: Identifica las 10 actividades con la tasa de abandono más alta,
+    /// el guía que las creó y el paquete turístico al que pertenecen.
+    /// </summary>
+    public async Task<IEnumerable<ReporteActividadAbandono>> GetTop10ActividadesAbandonoAsync()
+    {
+        return await _context.Visitas
+            .GroupBy(v => v.ParadaID)
+            .Select(g => new 
+            {
+                ParadaID = g.Key,
+                TotalVisitas = g.Count(),
+                VisitasAbandonadas = g.Count(v => v.Estado == EstadoVisita.Abandonada),
+                TasaAbandono = g.Count() > 0 ? (double)g.Count(v => v.Estado == EstadoVisita.Abandonada) / g.Count() * 100 : 0
+            })
+            .Join(_context.Set<Actividad>(), x => x.ParadaID, a => a.ParadaID, (x, actividad) => new { x, actividad })
+            .Join(_context.GuiasTuristicos, x => x.actividad.GuiaID, g => g.UsuarioID, (x, guia) => new { x.x, x.actividad, guia })
+            .Join(_context.Itinerario_Paradas, x => x.actividad.ParadaID, ip => ip.ParadaID, (x, ip) => new { x.x, x.actividad, x.guia, ip.ItinerarioID })
+            .Join(_context.Itinerario_Paquetes, x => x.ItinerarioID, ip => ip.ItinerarioID, (x, ip) => new { x.x, x.actividad, x.guia, ip.PaqueteID })
+            .Join(_context.PaquetesTuristicos, x => x.PaqueteID, p => p.PaqueteID, (x, paquete) => new ReporteActividadAbandono
+            {
+                NombreActividad = x.actividad.Nombre,
+                NombreGuia = x.guia.Nombre,
+                NombrePaquete = paquete.Nombre,
+                TasaAbandono = x.x.TasaAbandono,
+                TotalVisitas = x.x.TotalVisitas,
+                VisitasAbandonadas = x.x.VisitasAbandonadas
+            })
+            .Distinct()
+            .OrderByDescending(r => r.TasaAbandono)
+            .Take(10)
+            .ToListAsync();
+    }
 }
