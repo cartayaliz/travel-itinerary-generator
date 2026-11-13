@@ -150,4 +150,36 @@ public class ReporteRepository : IReporteRepository
             };
         });
     }
+    /// <summary>
+    /// REPORTE 6: Determina para cada paquete turístico, la correlación entre
+    ///  el nivel de esfuerzo físico de las actividades y la valoración promedio de los turistas.
+    /// </summary>
+    public async Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracion>> GetCorrelacionEsfuerzoValoracionAsync()
+    {
+        // Partimos de los paquetes turísticos para relacionarlos con sus itinerarios
+        return await _context.Itinerario_Paquetes
+            .SelectMany(ip => ip.Itinerario.ItinerarioParadas, (ip, parada) => new { ip.Paquete, parada.Parada })
+            .Join(
+                _context.Set<Actividad>(), // Aseguramos que la parada es una Actividad para obtener el NivelEsfuerzo
+                x => x.Parada.ParadaID,
+                a => a.ParadaID,
+                (x, actividad) => new { x.Paquete, actividad.NivelEsfuerzo, x.Parada.ItinerarioParadas }
+            )
+            // Vinculamos con las valoraciones de los itinerarios de esas paradas
+            .SelectMany(x => x.ItinerarioParadas.Select(ip => ip.Itinerario), (x, itinerario) => new { x.Paquete, x.NivelEsfuerzo, itinerario.Valoraciones })
+            .SelectMany(x => x.Valoraciones, (x, valoracion) => new { 
+                NombrePaquete = x.Paquete.Nombre, 
+                NivelEsfuerzo = x.NivelEsfuerzo.ToString(), 
+                valoracion.Puntuacion 
+            })
+            .GroupBy(x => new { x.NombrePaquete, x.NivelEsfuerzo })
+            .Select(g => new ReporteCorrelacionEsfuerzoValoracion
+            {
+                NombrePaquete = g.Key.NombrePaquete,
+                NivelEsfuerzo = g.Key.NivelEsfuerzo,
+                PromedioValoracion = g.Average(v => (double)v.Puntuacion),
+                TotalValoraciones = g.Count()
+            })
+            .ToListAsync();
+    }
 }

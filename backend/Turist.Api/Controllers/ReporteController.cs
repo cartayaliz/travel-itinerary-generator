@@ -58,4 +58,17 @@ public class ReportesController : ControllerBase
         try { return Ok(await _service.GetComparacionPaquetesAsync()); }
         catch (Exception ex) { return StatusCode(500, ex.Message); }
     }
+
+    [HttpGet("correlacion-esfuerzo-valoracion")]
+    public async Task<ActionResult<IEnumerable<ReporteCorrelacionEsfuerzoValoracionDto>>> GetCorrelacionEsfuerzoValoracion()
+    {
+        try 
+        { 
+            return Ok(await _service.GetCorrelacionEsfuerzoValoracionAsync()); 
+        }
+        catch (Exception ex) 
+        { 
+            return StatusCode(500, ex.Message); 
+        }
+    }
 }

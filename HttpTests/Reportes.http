@@ -19,3 +19,7 @@ Accept: application/json
 ### Reporte 5: Comparación de paquetes
 GET {{HostAddress}}/api/reportes/comparacion-paquetes
 Accept: application/json
+
+### Reporte 6: Correlación entre nivel de esfuerzo físico y valoración promedio
+GET {{HostAddress}}/api/reportes/correlacion-esfuerzo-valoracion
+Accept: application/json

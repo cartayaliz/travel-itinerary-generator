@@ -57,4 +57,16 @@ public class ReporteService : IReporteService
         var modelos = await _repository.GetComparacionPaquetesAsync();
         return modelos.Select(m => new ReporteComparacionPaquetesDto(m.Paquete, m.Itinerarios, m.Paradas, m.PromedioEsfuerzo));
     }
+
+    public async Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracionDto>> GetCorrelacionEsfuerzoValoracionAsync()
+    {
+        var modelos = await _repository.GetCorrelacionEsfuerzoValoracionAsync();
+        
+        return modelos.Select(m => new ReporteCorrelacionEsfuerzoValoracionDto(
+            m.NombrePaquete,
+            m.NivelEsfuerzo,
+            Math.Round(m.PromedioValoracion, 2),
+            m.TotalValoraciones
+        ));
+    }
 }
