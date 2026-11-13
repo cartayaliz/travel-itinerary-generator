@@ -11,3 +11,6 @@ Accept: application/json
 ### Reporte 5: Comparación de paquetes
 GET {{HostAddress}}/api/reportes/comparacion-paquetes
 Accept: application/json
+### 1. Obtener el reporte de comparación de modificaciones vs grupo
+GET {{HostAddress}}/api/reportes/comparacion-modificaciones
+Accept: application/json
