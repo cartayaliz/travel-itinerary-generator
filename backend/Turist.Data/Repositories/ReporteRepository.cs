@@ -13,6 +13,29 @@ public class ReporteRepository : IReporteRepository
     public ReporteRepository(TuristDbContext context) => _context = context;
 
     /// <summary>
+    /// REPORTE 1: Obtiene el listado de itinerarios generados automáticamente para un paquete turístico específico, 
+    /// indicando el nombre del creador, la fecha de creación y los parámetros utilizados.
+    /// </summary>
+    public async Task<IEnumerable<ReporteItinerario>> GetAutomaticosByPaqueteIdAsync(int paqueteId)
+    {
+        return await _context.Itinerarios
+            .Where(i => i.Origen == OrigenItinerario.Automatico && 
+                        i.ItinerarioPaquetes.Any(ip => ip.PaqueteID == paqueteId))
+            .Select(i => new ReporteItinerario
+            {
+                ItinerarioID = i.ItinerarioID,
+                Nombre = i.Nombre,
+                FechaCreacion = i.FechaCreacion,
+                GuiaID = i.GuiaID,
+                CantidadActividades = i.CantidadActividades,
+                ProporcionVisitas = i.ProporcionVisitas,
+                ProporcionExcursiones = i.ProporcionExcursiones,
+                ProporcionTalleres = i.ProporcionTalleres,
+                CoberturaCategorias = i.CoberturaCategorias
+            })
+            .ToListAsync();
+    }
+    /// <summary>
     /// REPORTE 2: Obtiene las actividades más utilizadas en los itinerarios.
     /// Agrupa las paradas que son de tipo 'Actividad' por su Nombre, Categoría y Nivel de Esfuerzo.
     /// Devuelve el conteo de cuántas veces aparece cada actividad en los itinerarios.
@@ -41,6 +64,26 @@ public class ReporteRepository : IReporteRepository
                 Cantidad = g.Count()
             })
             .OrderByDescending(r => r.Cantidad) // Ordenamos de mayor a menor uso
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// REPORTE 3: Lista los itinerarios que fueron validados por un revisor determinado,
+    /// indicando la fecha de validación y las observaciones hechas durante el proceso.
+    /// </summary>
+    public async Task<IEnumerable<ReporteItinerarioRevisor>> GetItinerariosValidadosByJefeIdAsync(int jefeId)
+    {
+        return await _context.Validaciones
+            .Where(v => v.JefeID == jefeId)
+            .Select(v => new ReporteItinerarioRevisor
+            {
+                ItinerarioID = v.Itinerario.ItinerarioID,
+                NombreItinerario = v.Itinerario.Nombre,
+                FechaCreacion = v.Itinerario.FechaCreacion,
+                FechaValidacion = v.FechaValidacion,
+                Observaciones = v.Observaciones,
+                EstadoValidacion = v.Estado.ToString()
+            })
             .ToListAsync();
     }
 
@@ -108,9 +151,73 @@ public class ReporteRepository : IReporteRepository
         });
     }
     /// <summary>
-    /// REPORTE 6 Parte 3: Compara
-    ///el desempeño de los turistas que solicitaron una modificación del itinerario con el promedio general de
-    ///valoraciones de sus respectivos grupos de viaje para esos mismos paquetes turísticos.
+    /// REPORTE 6: Determina para cada paquete turístico, la correlación entre
+    ///  el nivel de esfuerzo físico de las actividades y la valoración promedio de los turistas.
+    /// </summary>
+    public async Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracion>> GetCorrelacionEsfuerzoValoracionAsync()
+    {
+        // Partimos de los paquetes turísticos para relacionarlos con sus itinerarios
+        return await _context.Itinerario_Paquetes
+            .SelectMany(ip => ip.Itinerario.ItinerarioParadas, (ip, parada) => new { ip.Paquete, parada.Parada })
+            .Join(
+                _context.Set<Actividad>(), // Aseguramos que la parada es una Actividad para obtener el NivelEsfuerzo
+                x => x.Parada.ParadaID,
+                a => a.ParadaID,
+                (x, actividad) => new { x.Paquete, actividad.NivelEsfuerzo, x.Parada.ItinerarioParadas }
+            )
+            // Vinculamos con las valoraciones de los itinerarios de esas paradas
+            .SelectMany(x => x.ItinerarioParadas.Select(ip => ip.Itinerario), (x, itinerario) => new { x.Paquete, x.NivelEsfuerzo, itinerario.Valoraciones })
+            .SelectMany(x => x.Valoraciones, (x, valoracion) => new { 
+                NombrePaquete = x.Paquete.Nombre, 
+                NivelEsfuerzo = x.NivelEsfuerzo.ToString(), 
+                valoracion.Puntuacion 
+            })
+            .GroupBy(x => new { x.NombrePaquete, x.NivelEsfuerzo })
+            .Select(g => new ReporteCorrelacionEsfuerzoValoracion
+            {
+                NombrePaquete = g.Key.NombrePaquete,
+                NivelEsfuerzo = g.Key.NivelEsfuerzo,
+                PromedioValoracion = g.Average(v => (double)v.Puntuacion),
+                TotalValoraciones = g.Count()
+            })
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// REPORTE 6: Identifica las 10 actividades con la tasa de abandono más alta,
+    /// el guía que las creó y el paquete turístico al que pertenecen.
+    /// </summary>
+    public async Task<IEnumerable<ReporteActividadAbandono>> GetTop10ActividadesAbandonoAsync()
+    {
+        return await _context.Visitas
+            .GroupBy(v => v.ParadaID)
+            .Select(g => new 
+            {
+                ParadaID = g.Key,
+                TotalVisitas = g.Count(),
+                VisitasAbandonadas = g.Count(v => v.Estado == EstadoVisita.Abandonada),
+                TasaAbandono = g.Count() > 0 ? (double)g.Count(v => v.Estado == EstadoVisita.Abandonada) / g.Count() * 100 : 0
+            })
+            .Join(_context.Set<Actividad>(), x => x.ParadaID, a => a.ParadaID, (x, actividad) => new { x, actividad })
+            .Join(_context.GuiasTuristicos, x => x.actividad.GuiaID, g => g.UsuarioID, (x, guia) => new { x.x, x.actividad, guia })
+            .Join(_context.Itinerario_Paradas, x => x.actividad.ParadaID, ip => ip.ParadaID, (x, ip) => new { x.x, x.actividad, x.guia, ip.ItinerarioID })
+            .Join(_context.Itinerario_Paquetes, x => x.ItinerarioID, ip => ip.ItinerarioID, (x, ip) => new { x.x, x.actividad, x.guia, ip.PaqueteID })
+            .Join(_context.PaquetesTuristicos, x => x.PaqueteID, p => p.PaqueteID, (x, paquete) => new ReporteActividadAbandono
+            {
+                NombreActividad = x.actividad.Nombre,
+                NombreGuia = x.guia.Nombre,
+                NombrePaquete = paquete.Nombre,
+                TasaAbandono = x.x.TasaAbandono,
+                TotalVisitas = x.x.TotalVisitas,
+                VisitasAbandonadas = x.x.VisitasAbandonadas
+            })
+            .Distinct()
+            .OrderByDescending(r => r.TasaAbandono)
+            .Take(10)
+            .ToListAsync();
+    }
+    /// REPORTE 6: Compara el desempeño de los turistas que solicitaron una modificación del itinerario 
+    /// con el promedio general de valoraciones de sus respectivos grupos de viaje para esos mismos paquetes turísticos.
     /// </summary>
     public async Task<IEnumerable<ReporteComparacionModificacion>> GetComparacionModificacionesGrupoAsync()
     {
