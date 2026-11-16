@@ -336,7 +336,14 @@ namespace Turist.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("UsuarioID");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
                     b.ToTable("Usuarios");
 

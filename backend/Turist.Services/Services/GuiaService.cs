@@ -2,6 +2,7 @@ using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
 using Turist.Services.DTOs.Usuario.Guia;
 using Turist.Services.Interfaces;
+using Turist.Services.Security;
 
 namespace Turist.Services.Services;
 
@@ -21,7 +22,7 @@ public class GuiaService : IGuiaService
         // Filtramos solo a los Guías
         var guias = usuarios.OfType<GuiaTuristico>();
 
-        return guias.Select(g => new GuiaResponseDto(g.UsuarioID, g.Nombre, g.Especialidad));
+        return guias.Select(g => new GuiaResponseDto(g.UsuarioID, g.Nombre, g.UserName, g.Especialidad));
     }
 
     public async Task<GuiaResponseDto> GetByIdAsync(int id)
@@ -30,7 +31,7 @@ public class GuiaService : IGuiaService
         if (usuario is not GuiaTuristico guia)
             throw new Exception("El usuario no es un Guía o no existe.");
 
-        return new GuiaResponseDto(guia.UsuarioID, guia.Nombre, guia.Especialidad);
+        return new GuiaResponseDto(guia.UsuarioID, guia.Nombre, guia.UserName, guia.Especialidad);
     }
 
     public async Task CreateAsync(GuiaCreateDto dto)
@@ -38,7 +39,8 @@ public class GuiaService : IGuiaService
         var guia = new GuiaTuristico
         {
             Nombre = dto.Nombre,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+            UserName = dto.UserName,
+            PasswordHash = PasswordHelper.HashPasswordCompleto(dto.Password),
             Especialidad = dto.Especialidad
         };
         await _repository.AddAsync(guia);
@@ -49,10 +51,11 @@ public class GuiaService : IGuiaService
         var usuario = await _repository.GetByIdAsync(id);
         if (usuario is not GuiaTuristico guia)
             throw new Exception("El usuario no es un Guía o no existe.");
-
+        
+        guia.UserName = dto.UserName;
         guia.Nombre = dto.Nombre;
         if (!string.IsNullOrWhiteSpace(dto.Password))
-            guia.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            guia.PasswordHash = PasswordHelper.HashPasswordCompleto(dto.Password);
         guia.Especialidad = dto.Especialidad;
 
         await _repository.UpdateAsync(guia);
