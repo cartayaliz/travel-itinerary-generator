@@ -5,5 +5,5 @@ public record TuristaCreateDto(
     string UserName,
     string Password,
     int Edad,
-    int GrupoID
+    int? GrupoID= null
 );

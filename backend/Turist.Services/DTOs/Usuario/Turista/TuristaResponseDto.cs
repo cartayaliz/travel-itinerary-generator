@@ -5,5 +5,5 @@ public record TuristaResponseDto(
     string Nombre,
     string UserName,
     int Edad,
-    int GrupoID
+    int? GrupoID
 );
