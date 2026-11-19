@@ -18,7 +18,7 @@ public class ReporteService : IReporteService
         m.ItinerarioID,
         m.Nombre,
         m.FechaCreacion,
-        m.GuiaID,
+        m.NombreCreador,
         m.CantidadActividades,
         m.ProporcionVisitas,
         m.ProporcionExcursiones,
@@ -53,10 +53,17 @@ public class ReporteService : IReporteService
     }
 
     public async Task<IEnumerable<ReporteComparacionPaquetesDto>> GetComparacionPaquetesAsync()
-    {
-        var modelos = await _repository.GetComparacionPaquetesAsync();
-        return modelos.Select(m => new ReporteComparacionPaquetesDto(m.Paquete, m.Itinerarios, m.Paradas, m.PromedioEsfuerzo));
-    }
+{
+    var modelos = await _repository.GetComparacionPaquetesAsync();
+    
+    return modelos.Select(m => new ReporteComparacionPaquetesDto(
+        m.Paquete,
+        m.TotalItinerarios,
+        m.TotalParadas,
+        m.DistribucionCategorias,
+        m.DistribucionEsfuerzo   
+    ));
+}
 
     public async Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracionDto>> GetCorrelacionEsfuerzoValoracionAsync()
     {
