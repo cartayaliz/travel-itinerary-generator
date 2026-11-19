@@ -21,7 +21,7 @@ public class TuristaService : ITuristaService
         // Filtramos solo a los que son Turistas
         var turistas = usuarios.OfType<Turista>();
 
-        return turistas.Select(t => new TuristaResponseDto(t.UsuarioID, t.Nombre, t.Edad, t.GrupoID));
+        return turistas.Select(t => new TuristaResponseDto(t.UsuarioID, t.Nombre, t.UserName, t.Edad, t.GrupoID));
     }
 
     public async Task<TuristaResponseDto> GetByIdAsync(int id)
@@ -32,7 +32,7 @@ public class TuristaService : ITuristaService
         if (usuario is not Turista turista)
             throw new Exception("El usuario no es un Turista o no existe.");
 
-        return new TuristaResponseDto(turista.UsuarioID, turista.Nombre, turista.Edad, turista.GrupoID);
+        return new TuristaResponseDto(turista.UsuarioID, turista.Nombre, turista.UserName, turista.Edad, turista.GrupoID);
     }
 
     public async Task CreateAsync(TuristaCreateDto dto)
@@ -40,6 +40,7 @@ public class TuristaService : ITuristaService
         var turista = new Turista
         {
             Nombre = dto.Nombre,
+            UserName = dto.UserName,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             Edad = dto.Edad,
             GrupoID = dto.GrupoID
@@ -54,6 +55,7 @@ public class TuristaService : ITuristaService
             throw new Exception("El usuario no es un Turista o no existe.");
 
         turista.Nombre = dto.Nombre;
+        turista.UserName = dto.UserName;
         if (!string.IsNullOrWhiteSpace(dto.Password))
             turista.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
         turista.Edad = dto.Edad;
