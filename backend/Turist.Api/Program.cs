@@ -13,7 +13,15 @@ using Turist.Domain.Interfaces.Services;
 using Turist.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // Puerto por defecto de Vite
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 // 1. Cargar el archivo .env
 DotNetEnv.Env.Load("../../.env");
 
@@ -85,7 +93,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseCors("PermitirFrontend");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

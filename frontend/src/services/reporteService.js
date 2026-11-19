@@ -1,0 +1,96 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
+/**
+ * Obtiene el reporte comparativo de modificaciones vs. promedio del grupo.
+ * @returns {Promise<Array<{
+ *   turistaID: number,
+ *   turistaNombre: string,
+ *   paqueteNombre: string,
+ *   promedioTuristaModificado: number,
+ *   promedioGrupo: number
+ * }>>}
+ */
+export async function obtenerComparacionModificaciones() {
+    const response = await fetch(`${API_URL}/reportes/comparacion-modificaciones`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al obtener el reporte: ${response.status}`);
+  }
+
+  return await response.json();
+}
+/**
+ * Obtiene las actividades con mayor tasa de abandono.
+ * @returns {Promise<Array<{
+ *   nombreActividad: string,
+ *   nombreGuia: string,
+ *   nombrePaquete: string,
+ *   tasaAbandono: number,
+ *   totalVisitas: number,
+ *   visitasAbandonadas: number
+ * }>>}
+ */
+export async function obtenerAbandonoActividades() {
+  const response = await fetch(`${API_URL}/reportes/actividades-mayor-abandono`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al obtener el reporte de abandono: ${response.status}`);
+  }
+
+  return await response.json();
+}
+/**
+ * Obtiene la correlación entre nivel de esfuerzo y valoración promedio por paquete.
+ * @returns {Promise<Array<{
+ *   nombrePaquete: string,
+ *   nivelEsfuerzo: string,
+ *   promedioValoracion: number,
+ *   totalValoraciones: number
+ * }>>}
+ */
+export async function obtenerCorrelacionEsfuerzoValoracion() {
+  const response = await fetch(`${API_URL}/reportes/correlacion-esfuerzo-valoracion`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`Error al obtener el reporte de abandono: ${response.status}`);
+  }
+
+  return await response.json();
+}
+/**
+ * Obtiene el reporte comparativo entre paquetes turísticos.
+ * @returns {Promise<Array<{
+ *   nombrePaquete: string,
+ *   totalItinerarios: number,
+ *   totalParadas: number,
+ *   promedioEsfuerzo: number
+ * }>>}
+ */
+/*export async function obtenerComparacionPaquetes() {
+  const response = await fetch(`${API_URL}/reportes/comparacion-paquetes`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al obtener el reporte de paquetes: ${response.status}`);
+  }
+
+  return await response.json();
+}*/
