@@ -4,5 +4,6 @@ public record ReporteComparacionPaquetesDto(
     string NombrePaquete,
     int TotalItinerarios,
     int TotalParadas,
-    double PromedioEsfuerzo 
+    Dictionary<string, int> DistribucionCategorias,
+    Dictionary<string, int> DistribucionEsfuerzo
 );

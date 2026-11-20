@@ -19,19 +19,24 @@ public class ReporteRepository : IReporteRepository
     public async Task<IEnumerable<ReporteItinerario>> GetAutomaticosByPaqueteIdAsync(int paqueteId)
     {
         return await _context.Itinerarios
-            .Where(i => i.Origen == OrigenItinerario.Automatico && 
+            .Where(i => i.Origen == OrigenItinerario.Automatico &&
                         i.ItinerarioPaquetes.Any(ip => ip.PaqueteID == paqueteId))
-            .Select(i => new ReporteItinerario
+            // Hacemos un Join con GuiasTuristicos para obtener el Nombre
+            .Join(_context.GuiasTuristicos,
+                  itinerario => itinerario.GuiaID,
+                  guia => guia.UsuarioID,
+                  (itinerario, guia) => new { itinerario, guia })
+            .Select(x => new ReporteItinerario
             {
-                ItinerarioID = i.ItinerarioID,
-                Nombre = i.Nombre,
-                FechaCreacion = i.FechaCreacion,
-                GuiaID = i.GuiaID,
-                CantidadActividades = i.CantidadActividades,
-                ProporcionVisitas = i.ProporcionVisitas,
-                ProporcionExcursiones = i.ProporcionExcursiones,
-                ProporcionTalleres = i.ProporcionTalleres,
-                CoberturaCategorias = i.CoberturaCategorias
+                ItinerarioID = x.itinerario.ItinerarioID,
+                Nombre = x.itinerario.Nombre,
+                FechaCreacion = x.itinerario.FechaCreacion,
+                NombreCreador = x.guia.Nombre,
+                CantidadActividades = x.itinerario.CantidadActividades,
+                ProporcionVisitas = x.itinerario.ProporcionVisitas,
+                ProporcionExcursiones = x.itinerario.ProporcionExcursiones,
+                ProporcionTalleres = x.itinerario.ProporcionTalleres,
+                CoberturaCategorias = x.itinerario.CoberturaCategorias
             })
             .ToListAsync();
     }
@@ -116,37 +121,44 @@ public class ReporteRepository : IReporteRepository
     /// y el promedio de esfuerzo físico de sus actividades.
     /// Se traen las entidades a memoria para hacer el cálculo de agregación con LINQ en C#.
     /// </summary>
-    public async Task<IEnumerable<ReporteComparacion>> GetComparacionPaquetesAsync()
+    public async Task<IEnumerable<ReporteComparacionInterPaquete>> GetComparacionPaquetesAsync()
     {
-        // Traemos los paquetes con todas sus relaciones anidadas en una sola consulta
         var paquetes = await _context.PaquetesTuristicos
-            .Include(p => p.ItinerarioPaquetes) // Paquete -> Itinerarios
+            .Include(p => p.ItinerarioPaquetes)
                 .ThenInclude(ip => ip.Itinerario)
-                    .ThenInclude(i => i.ItinerarioParadas) // Itinerario -> Paradas
-                        .ThenInclude(ipar => ipar.Parada) // Parada (para saber el esfuerzo)
+                    .ThenInclude(i => i.ItinerarioParadas)
+                        .ThenInclude(ipar => ipar.Parada)
+                            .ThenInclude(par => par.Categoria) // <-- Incluimos la categoría
             .ToListAsync();
 
-        // Realizamos los cálculos de agregación en memoria (C#) para mayor claridad
         return paquetes.Select(p =>
         {
-            // Aplanamos todas las paradas de todos los itinerarios del paquete
             var paradas = p.ItinerarioPaquetes
                 .SelectMany(ip => ip.Itinerario.ItinerarioParadas)
                 .ToList();
 
-            // Filtramos solo las Actividades para calcular el esfuerzo promedio
             var actividades = paradas
                 .Where(ip => ip.Parada is Actividad)
-                .Select(ip => (int)((Actividad)ip.Parada).NivelEsfuerzo)
+                .Select(ip => (Actividad)ip.Parada)
                 .ToList();
 
-            // Construimos el modelo de reporte
-            return new ReporteComparacion
+            // Distribución por Categoría
+            var distCategorias = paradas
+                .GroupBy(ip => ip.Parada.Categoria.Nombre)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            // Distribución por Nivel de Esfuerzo
+            var distEsfuerzo = actividades
+                .GroupBy(a => a.NivelEsfuerzo.ToString())
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            return new ReporteComparacionInterPaquete
             {
                 Paquete = p.Nombre,
-                Itinerarios = p.ItinerarioPaquetes.Count,
-                Paradas = paradas.Count,
-                PromedioEsfuerzo = actividades.Any() ? actividades.Average() : 0
+                TotalItinerarios = p.ItinerarioPaquetes.Count,
+                TotalParadas = paradas.Count,
+                DistribucionCategorias = distCategorias,
+                DistribucionEsfuerzo = distEsfuerzo
             };
         });
     }
@@ -167,10 +179,11 @@ public class ReporteRepository : IReporteRepository
             )
             // Vinculamos con las valoraciones de los itinerarios de esas paradas
             .SelectMany(x => x.ItinerarioParadas.Select(ip => ip.Itinerario), (x, itinerario) => new { x.Paquete, x.NivelEsfuerzo, itinerario.Valoraciones })
-            .SelectMany(x => x.Valoraciones, (x, valoracion) => new { 
-                NombrePaquete = x.Paquete.Nombre, 
-                NivelEsfuerzo = x.NivelEsfuerzo.ToString(), 
-                valoracion.Puntuacion 
+            .SelectMany(x => x.Valoraciones, (x, valoracion) => new
+            {
+                NombrePaquete = x.Paquete.Nombre,
+                NivelEsfuerzo = x.NivelEsfuerzo.ToString(),
+                valoracion.Puntuacion
             })
             .GroupBy(x => new { x.NombrePaquete, x.NivelEsfuerzo })
             .Select(g => new ReporteCorrelacionEsfuerzoValoracion
@@ -191,7 +204,7 @@ public class ReporteRepository : IReporteRepository
     {
         return await _context.Visitas
             .GroupBy(v => v.ParadaID)
-            .Select(g => new 
+            .Select(g => new
             {
                 ParadaID = g.Key,
                 TotalVisitas = g.Count(),
@@ -240,14 +253,14 @@ public class ReporteRepository : IReporteRepository
             foreach (var ip in paquete.ItinerarioPaquetes)
             {
                 var itinerario = ip.Itinerario;
-                
+
                 // Turistas que tienen solicitudes de modificación registradas en este itinerario
                 var turistasConModificacionIds = itinerario.Modificaciones
                     .Select(m => m.TuristaID)
                     .Distinct()
                     .ToList();
 
-                if (!turistasConModificacionIds.Any()) 
+                if (!turistasConModificacionIds.Any())
                     continue;
 
                 // Obtener todas las valoraciones hechas sobre este itinerario
@@ -255,7 +268,7 @@ public class ReporteRepository : IReporteRepository
                     .Where(v => v.ItinerarioID == itinerario.ItinerarioID)
                     .ToList();
 
-                if (!valoracionesItinerario.Any()) 
+                if (!valoracionesItinerario.Any())
                     continue;
 
                 foreach (var turistaId in turistasConModificacionIds)
@@ -263,7 +276,7 @@ public class ReporteRepository : IReporteRepository
                     var valoracionTuristaModificado = valoracionesItinerario
                         .FirstOrDefault(v => v.TuristaID == turistaId);
 
-                    if (valoracionTuristaModificado == null) 
+                    if (valoracionTuristaModificado == null)
                         continue;
 
                     var turista = valoracionTuristaModificado.Turista;
@@ -274,8 +287,8 @@ public class ReporteRepository : IReporteRepository
                         .Select(v => (double)v.Puntuacion)
                         .ToList();
 
-                    double promedioGrupo = valoracionesRestoGrupo.Any() 
-                        ? valoracionesRestoGrupo.Average() 
+                    double promedioGrupo = valoracionesRestoGrupo.Any()
+                        ? valoracionesRestoGrupo.Average()
                         : (double)valoracionTuristaModificado.Puntuacion; //si el grupo solo tiene un integrante
 
                     reportes.Add(new ReporteComparacionModificacion

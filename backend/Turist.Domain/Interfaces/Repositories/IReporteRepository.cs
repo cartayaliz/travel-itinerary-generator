@@ -6,7 +6,7 @@ public interface IReporteRepository
 {
     Task<IEnumerable<ReporteActividad>> GetActividadesMasUsadasAsync();
     Task<IEnumerable<ReporteSatisfaccion>> GetSatisfaccionPorEsfuerzoAsync();
-    Task<IEnumerable<ReporteComparacion>> GetComparacionPaquetesAsync();
+    Task<IEnumerable<ReporteComparacionInterPaquete>> GetComparacionPaquetesAsync();
     Task<IEnumerable<ReporteItinerario>> GetAutomaticosByPaqueteIdAsync(int paqueteId);
     Task<IEnumerable<ReporteItinerarioRevisor>> GetItinerariosValidadosByJefeIdAsync(int jefeId);
     Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracion>> GetCorrelacionEsfuerzoValoracionAsync();
