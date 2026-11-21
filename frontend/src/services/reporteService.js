@@ -1,5 +1,3 @@
-const API_URL = import.meta.env.VITE_API_URL;
-
 /**
  * Obtiene el reporte comparativo de modificaciones vs. promedio del grupo.
  * @returns {Promise<Array<{
@@ -11,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL;
  * }>>}
  */
 export async function obtenerComparacionModificaciones() {
-    const response = await fetch(`${API_URL}/reportes/comparacion-modificaciones`, {
+    const response = await fetch("http://localhost:5064/api/reportes/comparacion-modificaciones", {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +34,7 @@ export async function obtenerComparacionModificaciones() {
  * }>>}
  */
 export async function obtenerAbandonoActividades() {
-  const response = await fetch(`${API_URL}/reportes/actividades-mayor-abandono`, {
+  const response = await fetch("http://localhost:5064/api/reportes/actividades-mayor-abandono", {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +57,7 @@ export async function obtenerAbandonoActividades() {
  * }>>}
  */
 export async function obtenerCorrelacionEsfuerzoValoracion() {
-  const response = await fetch(`${API_URL}/reportes/correlacion-esfuerzo-valoracion`, {
+  const response = await fetch("http://localhost:5064/api/reportes/correlacion-esfuerzo-valoracion", {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -81,7 +79,7 @@ export async function obtenerCorrelacionEsfuerzoValoracion() {
  * }>>}
  */
 /*export async function obtenerComparacionPaquetes() {
-  const response = await fetch(`${API_URL}/reportes/comparacion-paquetes`, {
+  const response = await fetch("http://localhost:5064/api/reportes/comparacion-paquetes", {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
