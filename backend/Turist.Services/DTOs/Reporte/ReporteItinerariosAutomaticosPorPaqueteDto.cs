@@ -4,7 +4,7 @@ public record ReporteItinerariosAutomaticosPorPaqueteDto(
     int ItinerarioID,
     string NombreItinerario,
     DateTime FechaCreacion,
-    int GuiaID,
+    string NombreCreador,
     int? CantidadActividades,
     int? ProporcionVisitas,
     int? ProporcionExcursiones,

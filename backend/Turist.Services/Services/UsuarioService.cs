@@ -22,6 +22,7 @@ public class UsuarioService : IUsuarioService
         return usuarios.Select(u => new UsuarioResponseDto(
             u.UsuarioID,
             u.Nombre,
+            u.UserName,
             // Pattern Matching para saber el rol exacto
             u is GuiaTuristico ? TipoUsuario.Guia :
             u is Turista ? TipoUsuario.Turista :
@@ -37,6 +38,7 @@ public class UsuarioService : IUsuarioService
         return new UsuarioResponseDto(
             usuario.UsuarioID,
             usuario.Nombre,
+            usuario.UserName,
             usuario is GuiaTuristico ? TipoUsuario.Guia :
             usuario is Turista ? TipoUsuario.Turista :
             TipoUsuario.JefeOperaciones

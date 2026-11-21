@@ -1,6 +1,6 @@
 namespace Turist.Services.DTOs.Auth;
 
 public record LoginDto(
-    int UsuarioID,
+    string UserName,
     string Password
 );

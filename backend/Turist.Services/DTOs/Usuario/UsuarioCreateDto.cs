@@ -4,6 +4,7 @@ namespace Turist.Services.DTOs.Usuario;
 
 public record UsuarioCreateDto(
     string Nombre,
+    string UserName,
     string Password,
     TipoUsuario TipoUsuario,
     

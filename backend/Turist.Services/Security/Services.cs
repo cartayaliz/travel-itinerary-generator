@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Turist.Domain.Models;
 using System;
 
-namespace Turist.Services
+namespace Turist.Services.Security
 {
     public interface ITokenService
     {

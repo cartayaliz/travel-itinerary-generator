@@ -75,6 +75,10 @@ public class TransportWebServiceTests
         {
             throw new NotImplementedException();
         }
+        public Task<Itinerario?> GetByIdWithValidacionesAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     private class FakeParadaRepository : IParadaRepository
