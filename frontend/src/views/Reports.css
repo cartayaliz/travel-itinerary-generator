@@ -69,3 +69,25 @@
     background-color: #fef3c7;
     color: #92400e;
   }
+
+ .effort-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+ }
+
+ .effort-high {
+  background-color: #fee2e2;
+  color: #b91c1c;
+ }
+
+ .effort-medium {
+  background-color: #fef3c7;
+  color: #92400e;
+ }
+
+ .effort-low {
+  background-color: #dcfce7;
+  color: #15803d;
+ }

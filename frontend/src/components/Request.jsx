@@ -46,7 +46,7 @@ function Request({onCancel})
                 />
                 <Input 
                 label="Reason for change"
-                placeholder="E.g. I feel too tired for this activity..."
+                placeholder="I feel too tired for this activity..."
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 />

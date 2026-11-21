@@ -49,4 +49,21 @@ public class VisitasController : ControllerBase
         try { await _service.DeleteAsync(id); return NoContent(); }
         catch (Exception ex) { return NotFound(ex.Message); }
     }
+    //================
+    //Registrar una visita por un turista
+    //================
+
+    [HttpPost("registrar")]
+    public async Task<ActionResult> RegistrarVisita([FromBody] RegistrarVisitaDto dto)
+    {
+        try
+        {
+            await _service.RegistrarVisitaAsync(dto);
+            return Ok(new { mensaje = "Visita registrada exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

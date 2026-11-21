@@ -46,4 +46,24 @@ public class ValidacionesController : ControllerBase
         try { await _service.DeleteAsync(id); return NoContent(); }
         catch (Exception ex) { return NotFound(ex.Message); }
     }
+    [HttpPost]
+    [HttpPost("jefes/{jefeId}/validar")]
+    public async Task<ActionResult> ValidarItinerario(int jefeId, [FromBody] ValidacionItinerarioDto request)
+    {
+        try
+        {
+            // Delegamos al servicio pasando el jefeId de la ruta y el DTO
+            await _service.ValidacionJefeDeOperaciones(jefeId, request);
+
+            return Ok(new { mensaje = "Validación registrada exitosamente." });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { mensaje = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+    }
 }

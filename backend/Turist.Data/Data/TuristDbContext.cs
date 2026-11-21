@@ -91,5 +91,13 @@ public class TuristDbContext : DbContext
         modelBuilder.Entity<Itinerario>()
             .HasIndex(i => i.Nombre)
             .IsUnique();
+        // 6. El UserName del Usuario no puede repetirse y es obligatorio
+        modelBuilder.Entity<Usuario>()
+            .HasIndex(u => u.UserName)
+            .IsUnique();
+
+        modelBuilder.Entity<Usuario>()
+            .Property(u => u.UserName)
+            .IsRequired();
     }
 }

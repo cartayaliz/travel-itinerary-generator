@@ -49,4 +49,18 @@ public class ModificacionesController : ControllerBase
         try { await _service.DeleteAsync(id); return NoContent(); }
         catch (Exception ex) { return NotFound(ex.Message); }
     }
+
+    [HttpPost("solicitar")]
+    public async Task<ActionResult> SolicitarModificacion([FromBody] SolicitarModificacionDto dto)
+    {
+        try
+        {
+            await _service.SolicitarModificacionAsync(dto);
+            return Ok(new { mensaje = "Solicitud de modificación registrada exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

@@ -3,13 +3,13 @@ using Turist.Data;
 using Turist.Data.Repositories;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
-using Turist.Services;
+using Turist.Services.Security;
 using DotNetEnv;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Turist.Domain.Interfaces.Services;
 using Turist.Services.Interfaces;
+using Turist.Domain.Interfaces.Services;
 using Turist.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +55,7 @@ builder.Services.AddScoped<IValidacionRepository, ValidacionRepository>();
 builder.Services.AddScoped<IValoracionRepository, ValoracionRepository>();
 builder.Services.AddScoped<ITuristaRepository, TuristaRepository>();
 builder.Services.AddScoped<IGuiaRepository, GuiaRepository>();
+builder.Services.AddScoped<IReporteRepository, ReporteRepository>();
 
 // 5. Registrar Servicios
 builder.Services.AddScoped<IParadaService, ParadaService>();
@@ -71,20 +72,34 @@ builder.Services.AddScoped<IModificacionService, ModificacionService>();
 builder.Services.AddScoped<IValidacionService, ValidacionService>();
 builder.Services.AddScoped<IValoracionService, ValoracionService>();
 builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
+builder.Services.AddScoped<IReporteService, ReporteService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
-// 6. Configurar Controladores y OpenAPI
+// 6. Configurar CORS para permitir peticiones desde React (Vite)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// 7. Configurar Controladores y OpenAPI
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// 7. Pipeline de peticiones HTTP
+// 8. Pipeline de peticiones HTTP
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

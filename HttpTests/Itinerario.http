@@ -1,6 +1,6 @@
 @HostAddress = http://0.0.0.0:5064
 
-### 1. Crear Itinerario (Requiere que el Guía esté autorizado en el Paquete)
+### 1. Crear Itinerario 
 POST {{HostAddress}}/api/itinerarios
 Content-Type: application/json
 

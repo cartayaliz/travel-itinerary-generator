@@ -74,8 +74,20 @@ public class ItinerariosController : ControllerBase
     [HttpPost("{id:int}/turistas")]
     public async Task<ActionResult> AsignarTuristas(int id, [FromBody] List<AsignarTuristaAItinerarioDto> dto)
     {
-        try { await _service.AsignarTuristasAsync(id, dto); return Ok(new { mensaje = "Turistas asignados" }); }
-        catch (Exception ex) { return BadRequest(ex.Message); }
+        try
+        {
+            // El controlador recibe la petición HTTP y la delega al Service
+            await _service.AsignarTuristasAsync(id, dto);
+            return Ok(new { mensaje = "Turistas asignados exitosamente" });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     //==============
     // Endpoint para generar itinerarios de forma automática 

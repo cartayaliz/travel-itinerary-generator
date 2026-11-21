@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Alerts from "../components/Alerts";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import GuideSidebar from "../components/GuideSidebar";
 import "./GuideDashboard.css"; //mismo que el CSS del dashboard original
 
 function ItineraryDetail() {
@@ -66,17 +67,13 @@ function ItineraryDetail() {
 
   return (
     <div className="app-layout">
-      <aside className="sidebar">
-        <h2>Guide Menu</h2>
-        <ul>
-          <li className="active" onClick={() => navigate("/guia/dashboard")}>Back to Dashboard</li>
-        </ul>
-      </aside>
+      <GuideSidebar />
 
       <main className="main-content">
         <header className="main-header">
           <h1>{itinerary.name}</h1>
           <p>Status: {itinerary.status}</p>
+          <Button texto="← Back" onClick={() => navigate(-1)} />
         </header>
 
         <section className="guide-section">

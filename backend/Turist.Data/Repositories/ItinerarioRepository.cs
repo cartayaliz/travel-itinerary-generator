@@ -105,7 +105,9 @@ public class ItinerarioRepository : IItinerarioRepository
         await _context.Itinerario_Turistas.AddRangeAsync(turistas);
         await _context.SaveChangesAsync();
     }
-
+    //==============
+    // Obtiene todos los itinerarios, incluyendo sus paradas y la información detallada de cada parada.
+    //==============
     public async Task<IEnumerable<Itinerario>> GetAllWithParadasOrderedAsync()
     {
         var itinerarios = await _context.Itinerarios
@@ -120,5 +122,22 @@ public class ItinerarioRepository : IItinerarioRepository
         }
 
         return itinerarios;
+    }
+    //========
+    //Validar si el turista x pertenece al itinerario y
+    //=========
+    public async Task<bool> IsTuristaAssignedAsync(int itinerarioId, int turistaId)
+    {
+        return await _context.Itinerario_Turistas
+            .AnyAsync(it => it.ItinerarioID == itinerarioId && it.TuristaID == turistaId);
+    }
+    //========
+    //Obtiene el itinerario con sus validaciones
+    //=========
+    public async Task<Itinerario?> GetByIdWithValidacionesAsync(int id)
+    {
+        return await _context.Itinerarios
+        .Include(i => i.Validaciones)
+        .FirstOrDefaultAsync(i => i.ItinerarioID == id);
     }
 }

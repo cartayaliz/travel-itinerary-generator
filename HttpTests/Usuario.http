@@ -10,6 +10,7 @@ Content-Type: application/json
 
 {
   "nombre": "Ana Turista",
+  "UserName": "Ana_turista",
   "password": "password123",
   "edad": 25,
   "grupoID": 1
@@ -21,6 +22,7 @@ Content-Type: application/json
 
 {
   "nombre": "Carlos Guía",
+  "UserName": "Carlos_guia",
   "password": "password123",
   "especialidad": "Historia"
 }
@@ -31,6 +33,7 @@ Content-Type: application/json
 
 {
   "nombre": "Jefe Operaciones",
+  "UserName": "Jefe_operaciones",
   "password": "password123"
 }
 

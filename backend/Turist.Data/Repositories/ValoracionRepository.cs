@@ -40,4 +40,28 @@ public class ValoracionRepository : IValoracionRepository
         _context.Valoraciones.Remove(valoracion);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<bool> ExisteValoracionDeVisitaAsync(int turistaId, int visitaId)
+    {
+        return await _context.Valoraciones
+            .AnyAsync(v => v.TuristaID == turistaId && v.VisitaID == visitaId);
+    }
+
+    public async Task<bool> ExisteValoracionDeItinerarioAsync(int turistaId, int itinerarioId)
+    {
+        return await _context.Valoraciones
+            .AnyAsync(v => v.TuristaID == turistaId && v.ItinerarioID == itinerarioId);
+    }
+
+    public async Task<Valoracion?> GetByVisitaAndTuristaAsync(int turistaId, int visitaId)
+    {
+        return await _context.Valoraciones
+            .FirstOrDefaultAsync(v => v.TuristaID == turistaId && v.VisitaID == visitaId);
+    }
+
+    public async Task<Valoracion?> GetByItinerarioAndTuristaAsync(int turistaId, int itinerarioId)
+    {
+        return await _context.Valoraciones
+            .FirstOrDefaultAsync(v => v.TuristaID == turistaId && v.ItinerarioID == itinerarioId);
+    }
 }

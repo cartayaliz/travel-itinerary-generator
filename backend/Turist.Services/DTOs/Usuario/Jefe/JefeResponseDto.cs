@@ -2,5 +2,6 @@ namespace Turist.Services.DTOs.Usuario.Jefe;
 
 public record JefeResponseDto(
     int UsuarioID,
-    string Nombre
+    string Nombre,
+    string UserName
 );

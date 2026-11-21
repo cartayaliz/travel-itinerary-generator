@@ -71,6 +71,14 @@ public class TransportWebServiceTests
         {
             throw new NotImplementedException();
         }
+        public async Task<bool> IsTuristaAssignedAsync(int itinerarioId, int turistaId)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<Itinerario?> GetByIdWithValidacionesAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     private class FakeParadaRepository : IParadaRepository
@@ -86,7 +94,7 @@ public class TransportWebServiceTests
         public Task UpdateAsync(Parada parada) => Task.CompletedTask;
         public Task DeleteAsync(Parada parada) => Task.CompletedTask;
         public Task<IEnumerable<Parada>> GetByCategoryAsync(int categoriaId) => Task.FromResult(_paradas.Where(p => p.CategoriaID == categoriaId));
-        
+
     }
 
     private static Atraccion CreateAtraccion(int id, string nombre, double lat, double lon)

@@ -20,4 +20,7 @@ public interface IItinerarioRepository
     Task AsignarTuristasAsync(List<Itinerario_Turista> turistas);
 
     Task<IEnumerable<Itinerario>> GetAllWithParadasOrderedAsync();
+
+    Task<bool> IsTuristaAssignedAsync(int itinerarioId, int turistaId);
+    Task<Itinerario?> GetByIdWithValidacionesAsync(int id);
 }

@@ -199,6 +199,9 @@ namespace Turist.Data.Migrations
                     b.Property<int>("ItinerarioID")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Resultado")
+                        .HasColumnType("text");
+
                     b.Property<int>("TuristaID")
                         .HasColumnType("integer");
 
@@ -333,7 +336,14 @@ namespace Turist.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("UsuarioID");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
                     b.ToTable("Usuarios");
 
@@ -509,7 +519,7 @@ namespace Turist.Data.Migrations
                     b.Property<int>("Edad")
                         .HasColumnType("integer");
 
-                    b.Property<int>("GrupoID")
+                    b.Property<int?>("GrupoID")
                         .HasColumnType("integer");
 
                     b.HasIndex("GrupoID");
@@ -759,9 +769,7 @@ namespace Turist.Data.Migrations
                 {
                     b.HasOne("Turist.Domain.Models.Grupo", "Grupo")
                         .WithMany("Turistas")
-                        .HasForeignKey("GrupoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GrupoID");
 
                     b.Navigation("Grupo");
                 });
