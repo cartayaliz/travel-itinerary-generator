@@ -4,13 +4,16 @@ using Turist.Data.Repositories;
 using Turist.Domain.Enums;
 using Turist.Domain.Models;
 using Turist.Services.Services;
-using Xunit;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 
 namespace Turist.Tests.Services;
 //para testear 
 //dotnet test --filter "FullyQualifiedName~ReporteServiceIntegrationTests"
 public class ReporteServiceIntegrationTests
 {
+    private static IDistributedCache CrearCache() => new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()));
     // Este método crea un contexto en memoria con un "Universo" de datos completo
     private async Task<TuristDbContext> GetDbContextWithComplexDataAsync()
     {
@@ -79,7 +82,7 @@ public class ReporteServiceIntegrationTests
     public async Task GetActividadesMasUsadasAsync_DeberiaContarSoloActividadesEIgnorarAtracciones()
     {
         var context = await GetDbContextWithComplexDataAsync();
-        var service = new ReporteService(new ReporteRepository(context));
+        var service = new ReporteService(new ReporteRepository(context), CrearCache());
 
         var result = await service.GetActividadesMasUsadasAsync();
 
@@ -98,7 +101,7 @@ public class ReporteServiceIntegrationTests
     public async Task GetSatisfaccionPorEsfuerzoAsync_DeberiaCalcularPromediosCorrectamente()
     {
         var context = await GetDbContextWithComplexDataAsync();
-        var service = new ReporteService(new ReporteRepository(context));
+        var service = new ReporteService(new ReporteRepository(context), CrearCache());
 
         var result = await service.GetSatisfaccionPorEsfuerzoAsync();
 
@@ -119,7 +122,7 @@ public class ReporteServiceIntegrationTests
     public async Task GetComparacionPaquetesAsync_DeberiaAgruparPorPaqueteYCalcularPromedios()
     {
         var context = await GetDbContextWithComplexDataAsync();
-        var service = new ReporteService(new ReporteRepository(context));
+        var service = new ReporteService(new ReporteRepository(context), CrearCache());
 
         var result = await service.GetComparacionPaquetesAsync();
 
@@ -155,7 +158,7 @@ public class ReporteServiceIntegrationTests
         context.Paradas.Add(actividadHuerfana);
         await context.SaveChangesAsync();
 
-        var service = new ReporteService(new ReporteRepository(context));
+        var service = new ReporteService(new ReporteRepository(context), CrearCache());
 
         // Act
         var result = await service.GetActividadesMasUsadasAsync();
@@ -185,7 +188,7 @@ public class ReporteServiceIntegrationTests
         context.Visitas.Add(visitaSinValoracion);
         await context.SaveChangesAsync();
 
-        var service = new ReporteService(new ReporteRepository(context));
+        var service = new ReporteService(new ReporteRepository(context), CrearCache());
 
         // Act
         var result = await service.GetSatisfaccionPorEsfuerzoAsync();
@@ -211,7 +214,7 @@ public class ReporteServiceIntegrationTests
         context.PaquetesTuristicos.Add(paqueteVacio);
         await context.SaveChangesAsync();
 
-        var service = new ReporteService(new ReporteRepository(context));
+        var service = new ReporteService(new ReporteRepository(context), CrearCache());
 
         // Act
         var result = await service.GetComparacionPaquetesAsync();
