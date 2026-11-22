@@ -132,13 +132,15 @@ public class ReporteServiceIntegrationTests
         Assert.NotNull(pack1);
         Assert.Equal(2, pack1.TotalItinerarios);
         Assert.Equal(4, pack1.TotalParadas);
-        Assert.Equal(2.33, Math.Round(pack1.PromedioEsfuerzo, 2));
+        Assert.Equal(2, pack1.DistribucionEsfuerzo["Medio"]);
+        Assert.Equal(1, pack1.DistribucionEsfuerzo["Alto"]);
 
         var pack2 = result.FirstOrDefault(r => r.NombrePaquete == "Pack 2");
         Assert.NotNull(pack2);
         Assert.Equal(1, pack2.TotalItinerarios);
         Assert.Equal(2, pack2.TotalParadas);
-        Assert.Equal(2.0, pack2.PromedioEsfuerzo);
+        Assert.Equal(1, pack2.DistribucionEsfuerzo["Medio"]);
+        Assert.False(pack2.DistribucionEsfuerzo.ContainsKey("Alto"));
     }
     [Fact]
     public async Task GetActividadesMasUsadasAsync_DeberiaIgnorarActividadesQueNoEstanEnNingunItinerario()
@@ -227,7 +229,7 @@ public class ReporteServiceIntegrationTests
         Assert.NotNull(packVacio);
         Assert.Equal(0, packVacio.TotalItinerarios);
         Assert.Equal(0, packVacio.TotalParadas);
-        // ¡AQUÍ ESTÁ EL TRUCO! El promedio de esfuerzo debe ser 0 (no debe dar error de división por cero)
-        Assert.Equal(0, packVacio.PromedioEsfuerzo);
+        // ¡AQUÍ ESTÁ EL TRUCO! Sin actividades, la distribución debe quedar vacía (sin división por cero)
+        Assert.Empty(packVacio.DistribucionEsfuerzo);
     }
 }
