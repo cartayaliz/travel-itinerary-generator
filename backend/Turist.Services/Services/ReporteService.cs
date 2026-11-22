@@ -9,11 +9,7 @@ public class ReporteService : IReporteService
 {
     private readonly IReporteRepository _repository;
     private readonly IDistributedCache _cache;
-    private static readonly DistributedCacheEntryOptions OpcionesReportes = new()
-    {
-        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
-    };
-
+    
     public ReporteService(IReporteRepository repository, IDistributedCache cache)
     {
         _repository = repository;
@@ -22,7 +18,7 @@ public class ReporteService : IReporteService
 
     public Task<IEnumerable<ReporteItinerariosAutomaticosPorPaqueteDto>> GetItinerariosAutomaticosPorPaqueteAsync(int paqueteId)
         => _cache.GetOrCreateAsync<IEnumerable<ReporteItinerariosAutomaticosPorPaqueteDto>>(
-                "reportes:actividades-mas-usadas",
+                $"reportes:auto:{paqueteId}",
                 async () => [.. (await _repository.GetAutomaticosByPaqueteIdAsync(paqueteId))
                     .Select(m => new ReporteItinerariosAutomaticosPorPaqueteDto(m.ItinerarioID,
                         m.Nombre,
@@ -44,7 +40,7 @@ public class ReporteService : IReporteService
 
     public Task<IEnumerable<ReporteItinerariosPorRevisorDto>> GetItinerariosValidadosPorJefeAsync(int jefeId)
         => _cache.GetOrCreateAsync<IEnumerable<ReporteItinerariosPorRevisorDto>>(
-            "reportes:itinerarios-por-revisor",
+            $"reportes:validados:{jefeId}",
             async () => [.. (await _repository.GetItinerariosValidadosByJefeIdAsync(jefeId))
                 .Select(m => new ReporteItinerariosPorRevisorDto(
                     m.ItinerarioID,m.NombreItinerario,
