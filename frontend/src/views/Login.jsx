@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import Select from "../components/Select";
 import Layout from "../components/Layout";
 import Alerts from "../components/Alerts";
 import "./Login.css";
