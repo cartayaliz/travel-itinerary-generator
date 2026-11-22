@@ -131,4 +131,13 @@ public class ItinerarioRepository : IItinerarioRepository
         return await _context.Itinerario_Turistas
             .AnyAsync(it => it.ItinerarioID == itinerarioId && it.TuristaID == turistaId);
     }
+    //========
+    //Obtiene el itinerario con sus validaciones
+    //=========
+    public async Task<Itinerario?> GetByIdWithValidacionesAsync(int id)
+    {
+        return await _context.Itinerarios
+        .Include(i => i.Validaciones)
+        .FirstOrDefaultAsync(i => i.ItinerarioID == id);
+    }
 }

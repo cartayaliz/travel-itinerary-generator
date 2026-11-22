@@ -10,10 +10,40 @@ public class ReporteService : IReporteService
 
     public ReporteService(IReporteRepository repository) => _repository = repository;
 
+    public async Task<IEnumerable<ReporteItinerariosAutomaticosPorPaqueteDto>> GetItinerariosAutomaticosPorPaqueteAsync(int paqueteId)
+{
+    var modelos = await _repository.GetAutomaticosByPaqueteIdAsync(paqueteId);
+    
+    return modelos.Select(m => new ReporteItinerariosAutomaticosPorPaqueteDto(
+        m.ItinerarioID,
+        m.Nombre,
+        m.FechaCreacion,
+        m.NombreCreador,
+        m.CantidadActividades,
+        m.ProporcionVisitas,
+        m.ProporcionExcursiones,
+        m.ProporcionTalleres,
+        m.CoberturaCategorias
+    ));
+}
     public async Task<IEnumerable<ReporteActividadesUsadasDto>> GetActividadesMasUsadasAsync()
     {
         var modelos = await _repository.GetActividadesMasUsadasAsync();
         return modelos.Select(m => new ReporteActividadesUsadasDto(m.Nombre, m.Categoria, m.Esfuerzo, m.Cantidad));
+    }
+
+    public async Task<IEnumerable<ReporteItinerariosPorRevisorDto>> GetItinerariosValidadosPorJefeAsync(int jefeId)
+    {
+        var modelos = await _repository.GetItinerariosValidadosByJefeIdAsync(jefeId);
+        
+        return modelos.Select(m => new ReporteItinerariosPorRevisorDto(
+            m.ItinerarioID,
+            m.NombreItinerario,
+            m.FechaCreacion,
+            m.FechaValidacion,
+            m.Observaciones,
+            m.EstadoValidacion
+        ));
     }
 
     public async Task<IEnumerable<ReporteSatisfaccionEsfuerzoDto>> GetSatisfaccionPorEsfuerzoAsync()
@@ -23,8 +53,52 @@ public class ReporteService : IReporteService
     }
 
     public async Task<IEnumerable<ReporteComparacionPaquetesDto>> GetComparacionPaquetesAsync()
+{
+    var modelos = await _repository.GetComparacionPaquetesAsync();
+    
+    return modelos.Select(m => new ReporteComparacionPaquetesDto(
+        m.Paquete,
+        m.TotalItinerarios,
+        m.TotalParadas,
+        m.DistribucionCategorias,
+        m.DistribucionEsfuerzo   
+    ));
+}
+
+    public async Task<IEnumerable<ReporteCorrelacionEsfuerzoValoracionDto>> GetCorrelacionEsfuerzoValoracionAsync()
     {
-        var modelos = await _repository.GetComparacionPaquetesAsync();
-        return modelos.Select(m => new ReporteComparacionPaquetesDto(m.Paquete, m.Itinerarios, m.Paradas, m.PromedioEsfuerzo));
+        var modelos = await _repository.GetCorrelacionEsfuerzoValoracionAsync();
+        
+        return modelos.Select(m => new ReporteCorrelacionEsfuerzoValoracionDto(
+            m.NombrePaquete,
+            m.NivelEsfuerzo,
+            Math.Round(m.PromedioValoracion, 2),
+            m.TotalValoraciones
+        ));
     }
+    public async Task<IEnumerable<ReporteActividadAbandonoDto>> GetTop10ActividadesAbandonoAsync()
+    {
+        var modelos = await _repository.GetTop10ActividadesAbandonoAsync();
+        
+        return modelos.Select(m => new ReporteActividadAbandonoDto(
+            m.NombreActividad,
+            m.NombreGuia,
+            m.NombrePaquete,
+            Math.Round(m.TasaAbandono, 2),
+            m.TotalVisitas,
+            m.VisitasAbandonadas
+        ));
+    }
+    public async Task<IEnumerable<ReporteComparacionModificacionDto>> GetComparacionModificacionesGrupoAsync()
+    {
+        var modelos = await _repository.GetComparacionModificacionesGrupoAsync();
+        return modelos.Select(m => new ReporteComparacionModificacionDto(
+            m.TuristaID, 
+            m.TuristaNombre, 
+            m.PaqueteNombre, 
+            m.PromedioTuristaModificado, 
+            m.PromedioGrupo
+        ));
+    }
+
 }

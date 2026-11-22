@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Turist.Data;
 using Turist.Domain.Models;
-using Turist.Services;
+using Turist.Services.Security;
 using Turist.Services.DTOs.Auth;
 namespace Turist.Api.Controllers
 {
@@ -22,12 +22,12 @@ namespace Turist.Api.Controllers
         public IActionResult Login([FromBody] LoginDto dto)
         {
             // Buscamos al usuario por su ID en la tabla Usuarios
-            var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioID == dto.UsuarioID);
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.UserName == dto.UserName);
 
             // Verificamos que el usuario exista y que la contraseña coincida usando BCrypt
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(dto.Password, usuario.PasswordHash))
             {
-                return Unauthorized(new { message = "Credenciales inválidas (UsuarioID o contraseña incorrectos)" });
+                return Unauthorized(new { message = "Credenciales inválidas (Nombre de Usuario o contraseña incorrectos)" });
             }
 
             // Generamos el token JWT (el servicio deducirá automáticamente si es Guía, Jefe o Turista por herencia)
