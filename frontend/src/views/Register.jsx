@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import Select from "../components/Select";
 import Layout from "../components/Layout";
 import Alerts from "../components/Alerts";
 import { registrarTurista } from "../services/authService";
@@ -30,9 +29,12 @@ function Register() {
       return;
     }
     if (!tieneLetraYNumero.test(password)) {
-    setMensajeError("La contraseña debe contener al menos una letra y un número");
-    return;
-
+      setMensajeError("La contraseña debe contener al menos una letra y un número");
+      return;
+    }
+    if (edad <= 0){
+      setMensajeError("Tu edad debe ser mayor que 0");
+      return;
     }
 
     setCargando(true);
