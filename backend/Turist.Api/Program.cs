@@ -13,7 +13,6 @@ using Turist.Domain.Interfaces.Services;
 using Turist.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // 1. Cargar el archivo .env
 DotNetEnv.Env.Load("../../.env");
 
