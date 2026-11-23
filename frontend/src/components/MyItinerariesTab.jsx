@@ -55,12 +55,18 @@ function MyItinerariesTab(){
 
  return (
       <section className="guide-section">
+        <div id="itineraries-section">
       <div className="section-header">
         <h2>My Itineraries</h2>
-           <Button texto="+ Generate New Itinerary" onClick={() => setShowForm(true)} />
-         <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", flex: 1, minWidth: 0 }}>
+           <Button
+            texto="+ Generate New Itinerary"
+            onClick={() => setShowForm(true)}
+            className="btn-primary itinerary-top-btn btn-ignore-pdf"
+          />
           <ExportButton elementId="itineraries-section" fileName="my-itineraries.pdf" />
-          </div>
+        </div>
       </div>
    
       {showForm && (
@@ -95,7 +101,7 @@ function MyItinerariesTab(){
         </div>
       )}
 
-      <div className="itinerary-list" id="itineraries-section">
+      <div className="itinerary-list" >
         {myItineraries.map((itinerary) => (
           <div key={itinerary.id} className="itinerary-card">
             <div className="itinerary-info">
@@ -109,6 +115,7 @@ function MyItinerariesTab(){
             </div>
           </div>
         ))}
+      </div>
       </div>
     </section>
  );

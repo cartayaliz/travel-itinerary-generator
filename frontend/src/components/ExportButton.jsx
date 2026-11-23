@@ -7,7 +7,12 @@ function ExportButton({ elementId, fileName = "report.pdf" }) {
     const input = document.getElementById(elementId);
     if (!input) return;
 
-    html2canvas(input, { scale: 2 }).then((canvas) => {
+    html2canvas(input, { scale: 2 ,
+       // Ignora el botón de exportar y cualquier botón que le pongamos la clase "btn-ignore-pdf"
+       ignoreElements: (element) => { return element.classList.contains("btn-export-icon") || element.classList.contains("btn-ignore-pdf");
+   
+       } })
+       .then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4"); 
       
@@ -18,6 +23,8 @@ function ExportButton({ elementId, fileName = "report.pdf" }) {
       pdf.save(fileName);
     });
   };
+
+
 
   return (
     <button 
