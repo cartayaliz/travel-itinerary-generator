@@ -2,19 +2,24 @@ using Microsoft.EntityFrameworkCore;
 using Turist.Data;
 using Turist.Data.Repositories;
 using Turist.Domain.Interfaces.Repositories;
-using Turist.Domain.Models;
 using Turist.Services.Security;
-using DotNetEnv;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Turist.Services.Interfaces;
-using Turist.Domain.Interfaces.Services;
 using Turist.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // 1. Cargar el archivo .env
 DotNetEnv.Env.Load("../../.env");
+
+var redisConnection = Environment.GetEnvironmentVariable("REDIS_CONNECTION") ?? "localhost:6379,abortConnect=false,connectTimeout=5000";
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redisConnection;
+    options.InstanceName = "turist:";
+});
 
 // 2. Configurar la Base de Datos
 var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")
