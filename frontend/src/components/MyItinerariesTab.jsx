@@ -3,7 +3,7 @@ import { useNavigate} from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button"; 
 import Alerts from "../components/Alerts";
-
+import ExportButton from "./ExportButton";
 
 function MyItinerariesTab(){
    
@@ -31,13 +31,15 @@ function MyItinerariesTab(){
       ] 
     },
    ]);
+   
  const handleSave = () => {
     setMensajeError("");
     if (name.trim() === "" || activities === "") {
       setMensajeError("Please fill all fields");
       return;
     }
- const newItinerary = {
+    
+    const newItinerary = {
       id: Date.now(), // ID único
       name: name,
       status: "In Review", // los nuevos entran en revisión
@@ -48,71 +50,67 @@ function MyItinerariesTab(){
     setName("");
     setActivities("");
     setShowForm(false);
-    navigate(`/guia/itinerary/${newItinerary.id}`, { state: { newItinerary } });//para que se muestren dos dashboard en el navegador
-    
-  
+    navigate(`/guia/itinerary/${newItinerary.id}`, { state: { newItinerary } });
+ }; 
 
-    return(
-        
-          <section className="guide-section">
-          <div className="section-header">
-            <h2>My Itineraries</h2>
-            <Button 
-              texto="+ Generate New Itinerary" 
-              onClick={() => setShowForm(true)} 
-            />
+ return (
+      <section className="guide-section">
+      <div className="section-header">
+        <h2>My Itineraries</h2>
+           <Button texto="+ Generate New Itinerary" onClick={() => setShowForm(true)} />
+         <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <ExportButton elementId="itineraries-section" fileName="my-itineraries.pdf" />
           </div>
-       
-          {showForm && (
-            <div className="form-container">
-              <h3>Create New Itinerary</h3>
-              <Alerts mensaje={mensajeError} />
+      </div>
+   
+      {showForm && (
+        <div className="form-container">
+          <h3>Create New Itinerary</h3>
+          <Alerts mensaje={mensajeError} />
 
-              <Input 
-                label="Itinerary Name" 
-                placeholder="Havana Adventure" 
-                value={name} 
-                onChange={(e) =>{ setName(e.target.value);
-                setMensajeError("");} }
-              />
-              
-              <Input 
-                label="Number of Activities" 
-                type="number"
-                placeholder="5" 
-                value={activities} 
-                onChange={(e) => {setActivities(e.target.value);
-                setMensajeError("");} }
-              />
+          <Input 
+            label="Itinerary Name" 
+            placeholder="Havana Adventure" 
+            value={name} 
+            onChange={(e) =>{ setName(e.target.value);
+            setMensajeError("");} }
+          />
+          
+          <Input 
+            label="Number of Activities" 
+            type="number"
+            placeholder="5" 
+            value={activities} 
+            onChange={(e) => {setActivities(e.target.value);
+            setMensajeError("");} }
+          />
 
-              <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
-                <Button texto="Save" onClick={handleSave} />
-                <Button texto="Cancel" onClick={() => {setShowForm(false);
-                setMensajeError("");
-                setActivities("");
-                setName(""); }} />
-              </div>
+          <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
+            <Button texto="Save" onClick={handleSave} />
+            <Button texto="Cancel" onClick={() => {setShowForm(false);
+            setMensajeError("");
+            setActivities("");
+            setName(""); }} />
+          </div>
+        </div>
+      )}
+
+      <div className="itinerary-list" id="itineraries-section">
+        {myItineraries.map((itinerary) => (
+          <div key={itinerary.id} className="itinerary-card">
+            <div className="itinerary-info">
+              <h3>{itinerary.name}</h3>
+              <p>Activities: {itinerary.activities.length}</p>
             </div>
-          )}
-
-          <div className="itinerary-list">
-            {myItineraries.map((itinerary) => (
-              <div key={itinerary.id} className="itinerary-card">
-                <div className="itinerary-info">
-                  <h3>{itinerary.name}</h3>
-                  <p>Activities: {itinerary.activities.length}</p>
-                </div>
-                <div className="itinerary-status">
-                  <span className={`status ${itinerary.status === 'Approved' ? 'approved' : 'pending'}`}>
-                    {itinerary.status}
-                  </span>
-                </div>
-              </div>
-            ))}
+            <div className="itinerary-status">
+              <span className={`status ${itinerary.status === 'Approved' ? 'approved' : 'pending'}`}>
+                {itinerary.status}
+              </span>
+            </div>
           </div>
-        </section>
-
-    );
-}
-}
+        ))}
+      </div>
+    </section>
+ );
+} 
 export default MyItinerariesTab;

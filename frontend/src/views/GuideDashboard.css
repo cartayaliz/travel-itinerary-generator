@@ -155,7 +155,27 @@
   transform: scale(1.1); /* Se hace un poquito más grande */
 }
 .active-link {
-  background-color: #764ba2; /* El color morado */
+  background-color: #764ba2; 
   color: white !important;
   border-radius: 6px;
+}
+
+/* Estilo para el botón de exportar con solo el ícono */
+.btn-export-icon {
+  background-color: transparent;
+  color: #764ba2; 
+  border: 1px solid #ddd; /* Un borde sutil */
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-export-icon:hover {
+  background-color: #f0f0f0; /* Fondo gris suave al pasar el ratón */
+  border-color: #764ba2;
 }
