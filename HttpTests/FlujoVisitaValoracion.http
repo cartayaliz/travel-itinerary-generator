@@ -118,7 +118,7 @@ Content-Type: application/json
 {
   "estado": 1,
   "observaciones": "Itinerario aprobado sin observaciones.",
-  "itinerarioID": 10
+  "itinerarioID": 21
 }
 ### ==========================================
 ### CP02: Rechazo exitoso de itinerario

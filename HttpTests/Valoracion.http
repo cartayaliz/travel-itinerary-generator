@@ -10,8 +10,8 @@ POST {{HostAddress}}/api/valoraciones/valorar
 Content-Type: application/json
 
 {
-  "turistaID": 1,
-  "itinerarioID": 1,
+  "turistaID": 10,
+  "itinerarioID": 22,
   "visitaID": null,
   "puntuacion": 5,
   "comentario": "El itinerario estuvo excelente, muy bien organizado."

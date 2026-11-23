@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### 2. Asignar Paquetes al Itinerario (Aquí se valida el Guía Autorizado)
-POST {{HostAddress}}/api/itinerarios/1/paquetes
+POST {{HostAddress}}/api/itinerarios/22/paquetes
 Content-Type: application/json
 
 [
@@ -24,12 +24,12 @@ Content-Type: application/json
 ]
 
 ### 3. Asignar Paradas al Itinerario (con su Orden)
-POST {{HostAddress}}/api/itinerarios/1/paradas
+POST {{HostAddress}}/api/itinerarios/22/paradas
 Content-Type: application/json
 
 [
-  { "paradaID": 1, "orden": 1 },
-  { "paradaID": 2, "orden": 2 }
+  { "paradaID": 12, "orden": 1 },
+  { "paradaID": 13, "orden": 2 }
 ]
 
 ### 4. Asignar Turistas al Itinerario
