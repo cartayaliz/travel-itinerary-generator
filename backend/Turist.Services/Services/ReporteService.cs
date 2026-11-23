@@ -54,7 +54,7 @@ public class ReporteService : IReporteService
         => _cache.GetOrCreateAsync<IEnumerable<ReporteSatisfaccionEsfuerzoDto>>(
                 "reportes:satisfaccion-esfuerzo",
                 async () => [.. (await _repository.GetSatisfaccionPorEsfuerzoAsync())
-                    .Select(m => new ReporteSatisfaccionEsfuerzoDto(m.Esfuerzo, m.Promedio, m.Total))],
+                    .Select(m => new ReporteSatisfaccionEsfuerzoDto(m.NombreActividad, m.Esfuerzo, m.Promedio, m.Total))],
                 TimeSpan.FromMinutes(10));
 
     public Task<IEnumerable<ReporteComparacionPaquetesDto>> GetComparacionPaquetesAsync()

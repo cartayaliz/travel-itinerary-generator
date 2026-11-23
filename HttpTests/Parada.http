@@ -20,14 +20,14 @@ POST {{HostAddress}}/api/paradas
 Content-Type: application/json
 
 {
-  "nombre": "Tour a pie por el centro",
+  "nombre": "Tour a pie por el centro de la habana",
   "latitud": 23.1400,
   "longitud": -82.3500,
   "categoriaID": 1,
-  "guiaID": 2,
+  "guiaID": 12,
   "tipoParada": 2,
   "tipoActividad": "Excursion",
-  "nivelEsfuerzo": "Medio",
+  "nivelEsfuerzo": "Bajo",
   "horaInicio": "10:00:00",
   "duracionMinutos": 120
 }
