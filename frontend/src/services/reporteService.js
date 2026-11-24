@@ -70,15 +70,18 @@ export async function obtenerCorrelacionEsfuerzoValoracion() {
   return await response.json();
 }
 /**
- * Obtiene el reporte comparativo entre paquetes turísticos.
+ * Obtiene el reporte comparativo entre paquetes turísticos con distribuciones
+ * de categorías y niveles de esfuerzo.
+ *
  * @returns {Promise<Array<{
  *   nombrePaquete: string,
  *   totalItinerarios: number,
  *   totalParadas: number,
- *   promedioEsfuerzo: number
+ *   distribucionCategorias: Record<string, number>,
+ *   distribucionEsfuerzo: Record<string, number>
  * }>>}
  */
-/*export async function obtenerComparacionPaquetes() {
+export async function obtenerComparacionPaquetes() {
   const response = await fetch("http://localhost:5064/api/reportes/comparacion-paquetes", {
     method: 'GET',
     headers: {
@@ -91,4 +94,27 @@ export async function obtenerCorrelacionEsfuerzoValoracion() {
   }
 
   return await response.json();
-}*/
+}
+/**
+ * Obtiene el reporte de satisfacción y esfuerzo físico por actividad.
+ * @returns {Promise<Array<{
+ *   nombreActividad: string,
+ *   nivelEsfuerzo: string,
+ *   promedioValoracion: number,
+ *   totalValoraciones: number
+ * }>>}
+ */
+export async function obtenerSatisfaccionEsfuerzo() {
+  const response = await fetch("http://localhost:5064/api/reportes/satisfaccion-esfuerzo", {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al obtener el reporte de satisfacción y esfuerzo: ${response.status}`);
+  }
+
+  return await response.json();
+}
