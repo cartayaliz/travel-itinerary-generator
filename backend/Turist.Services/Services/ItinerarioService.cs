@@ -228,4 +228,23 @@ public class ItinerarioService : IItinerarioService
 
         return itinerario;
     }   
+
+    public async Task<IEnumerable<ItinerarioResponseDto>> GetByTuristaIdAsync(int turistaId)
+{
+    var itinerarios = await _repository
+        .GetByTuristaIdWithParadasOrderedAsync(turistaId);
+
+    return itinerarios.Select(i => new ItinerarioResponseDto(
+        i.ItinerarioID,
+        i.Nombre,
+        i.Origen,
+        i.FechaCreacion,
+        i.GuiaID,
+        i.CantidadActividades,
+        i.ProporcionVisitas,
+        i.ProporcionExcursiones,
+        i.ProporcionTalleres,
+        i.CoberturaCategorias
+    ));
+}
 }

@@ -140,4 +140,26 @@ public class ItinerarioRepository : IItinerarioRepository
         .Include(i => i.Validaciones)
         .FirstOrDefaultAsync(i => i.ItinerarioID == id);
     }
+
+    // Obtiene los itinerarios asignados a un turista incluyendo sus paradas ordenadas.
+    //consultar si la original sin el turista id es necesaria o una implementacion vieja antes de los id
+    public async Task<IEnumerable<Itinerario>> GetByTuristaIdWithParadasOrderedAsync(int turistaId)
+    {
+        var itinerarios = await _context.Itinerarios
+            .Where(i => i.ItinerarioTuristas
+                .Any(it => it.TuristaID == turistaId))
+            .Include(i => i.ItinerarioParadas)
+                .ThenInclude(ip => ip.Parada)
+            .ToListAsync();
+
+        foreach (var itinerario in itinerarios)
+        {
+            itinerario.ItinerarioParadas = itinerario.ItinerarioParadas
+                .OrderBy(ip => ip.Orden)
+                .ToList();
+        }
+
+        return itinerarios;
+    }
 }
+

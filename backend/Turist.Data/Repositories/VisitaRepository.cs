@@ -48,4 +48,13 @@ public class VisitaRepository : IVisitaRepository
                         && v.TuristaID == turistaId
                         && v.ParadaID == paradaId);
     }
+
+    public async Task<IEnumerable<Visita>> GetByTuristaIdAsync(int turistaId)
+{
+    return await _context.Visitas
+        .AsNoTracking()
+        .Where(v => v.TuristaID == turistaId)
+        .OrderByDescending(v => v.Fecha)
+        .ToListAsync();
+}
 }

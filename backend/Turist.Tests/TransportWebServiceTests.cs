@@ -5,6 +5,7 @@ using Turist.Services.TransportWeb;
 
 namespace Turist.Tests;
 
+bool
 public class TransportWebServiceTests
 {
     private class FakeItinerarioRepository : IItinerarioRepository
@@ -71,13 +72,16 @@ public class TransportWebServiceTests
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> IsTuristaAssignedAsync(int itinerarioId, int turistaId)
+
+        public Task<bool> IsTuristaAssignedAsync(int itinerarioId, int turistaId)
         {
-            throw new NotImplementedException();
-        }
-        public Task<Itinerario?> GetByIdWithValidacionesAsync(int id)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(
+                _itinerarios.Any(i =>
+                    i.ItinerarioID == itinerarioId &&
+                    i.ItinerarioTuristas != null &&
+                    i.ItinerarioTuristas.Any(t => t.TuristaID == turistaId)
+                )
+            );
         }
     }
 
@@ -312,5 +316,23 @@ public class TransportWebServiceTests
 
         // Assert
         Assert.DoesNotContain(2, alternatives);
+    }
+
+    [Fact]
+    public Task<IEnumerable<Itinerario>> GetByTuristaIdWithParadasOrderedAsync(int turistaId)
+    {
+        var itinerarios = itinerarios
+            .Where(i => i.ItinerarioTuristas != null &&
+                        i.ItinerarioTuristas.Any(t => t.TuristaID == turistaId))
+            .ToList();
+
+        foreach (var itinerario in itinerarios)
+        {
+            itinerario.ItinerarioParadas = itinerario.ItinerarioParadas
+                .OrderBy(p => p.Orden)
+                .ToList();
+        }
+
+        return Task.FromResult<IEnumerable<Itinerario>>(itinerarios);
     }
 }

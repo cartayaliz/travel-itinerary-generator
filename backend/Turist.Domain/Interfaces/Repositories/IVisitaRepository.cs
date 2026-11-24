@@ -11,4 +11,7 @@ public interface IVisitaRepository
     Task DeleteAsync(Visita visita);
 
     Task<bool> ExisteVisitaAsync(int itinerarioId, int turistaId, int paradaId);
+    
+    //nuevo
+    Task<IEnumerable<Visita>> GetByTuristaIdAsync(int turistaId);
 }

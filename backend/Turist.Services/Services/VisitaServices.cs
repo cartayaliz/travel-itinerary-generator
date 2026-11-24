@@ -70,34 +70,53 @@ public class VisitaService : IVisitaService
     }
 
     //==========
-    //Registrar una visita realizada por un turista
+    //Registrar una visita realizada por un turista, cambiado la version anterior a revibir turista id
     //==========
-    public async Task RegistrarVisitaAsync(RegistrarVisitaDto dto)
+
+public async Task RegistrarVisitaAsync(RegistrarVisitaDto dto, int turistaId)
+{
+    var itinerario = await _itinerarioRepository.GetByIdAsync(dto.ItinerarioID);
+
+    if (itinerario == null)
+        throw new Exception("Itinerario no encontrado.");
+
+    var turistaAsignado = await _itinerarioRepository
+        .IsTuristaAssignedAsync(dto.ItinerarioID, turistaId);
+
+    if (!turistaAsignado)
+        throw new Exception("El turista no está asignado a este itinerario.");
+
+    var yaVisitado = await _repository.ExisteVisitaAsync(
+        dto.ItinerarioID,
+        turistaId,
+        dto.ParadaID
+    );
+
+    if (yaVisitado)
+        throw new Exception("El turista ya ha registrado una visita para esta parada en este itinerario.");
+
+    var visita = new Visita
     {
-        // Verificar que el itinerario existe
-        var itinerario = await _itinerarioRepository.GetByIdAsync(dto.ItinerarioID);
-        if (itinerario == null)
-            throw new Exception("Itinerario no encontrado.");
+        Fecha = DateTime.UtcNow,
+        Estado = dto.Estado,
+        ItinerarioID = dto.ItinerarioID,
+        TuristaID = turistaId,
+        ParadaID = dto.ParadaID
+    };
 
-        //  Verificar que el turista esté asignado 
-        var turistaAsignado = await _itinerarioRepository.IsTuristaAssignedAsync(dto.ItinerarioID, dto.TuristaID);
-        if (!turistaAsignado)
-            throw new Exception("El turista no está asignado a este itinerario.");
+    await _repository.AddAsync(visita);
+}
+    public async Task<IEnumerable<VisitaResponseDto>> GetByTuristaIdAsync(int turistaId)
+{
+    var visitas = await _repository.GetByTuristaIdAsync(turistaId);
 
-        //EVITAR VISITAS DUPLICADAS
-        var yaVisitado = await _repository.ExisteVisitaAsync(dto.ItinerarioID, dto.TuristaID, dto.ParadaID);
-        if (yaVisitado)
-            throw new Exception("El turista ya ha registrado una visita para esta parada en este itinerario.");
-
-        var visita = new Visita
-        {
-            Fecha = DateTime.UtcNow,
-            Estado = dto.Estado,
-            ItinerarioID = dto.ItinerarioID,
-            TuristaID = dto.TuristaID,
-            ParadaID = dto.ParadaID
-        };
-
-        await _repository.AddAsync(visita);
-    }
+    return visitas.Select(v => new VisitaResponseDto(
+        v.VisitaID,
+        v.Fecha,
+        v.Estado,
+        v.ItinerarioID,
+        v.TuristaID,
+        v.ParadaID
+    ));
+}
 }

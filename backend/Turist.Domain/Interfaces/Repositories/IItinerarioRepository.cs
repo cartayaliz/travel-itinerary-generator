@@ -23,4 +23,5 @@ public interface IItinerarioRepository
 
     Task<bool> IsTuristaAssignedAsync(int itinerarioId, int turistaId);
     Task<Itinerario?> GetByIdWithValidacionesAsync(int id);
+    Task<IEnumerable<Itinerario>> GetByTuristaIdWithParadasOrderedAsync(int turistaId);
 }

@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Turist.Services.DTOs.Itinerario;
 using Turist.Services.Interfaces;
 using Turist.Services.Mappers;
-
 namespace Turist.Api.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 [ApiController]
 [Route("api/[controller]")]
 public class ItinerariosController : ControllerBase
@@ -107,5 +108,24 @@ public class ItinerariosController : ControllerBase
         {
             return BadRequest(new { mensaje = ex.Message });
         }
+    }
+
+    [Authorize(Roles = "Turista")]
+    [HttpGet("mis-itinerarios")]
+    public async Task<ActionResult<IEnumerable<ItinerarioResponseDto>>> GetMisItinerarios()
+    {
+        var usuarioIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(usuarioIdClaim, out var turistaId))
+        {
+            return Unauthorized(new
+            {
+                mensaje = "No se pudo identificar al turista autenticado."
+            });
+        }
+
+        var itinerarios = await _service.GetByTuristaIdAsync(turistaId);
+
+        return Ok(itinerarios);
     }
 }
