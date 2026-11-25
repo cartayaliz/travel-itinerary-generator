@@ -1,6 +1,7 @@
 using Turist.Domain.Enums;
 namespace Turist.Domain.Models;
 
+
 public class Modificacion
 {
     public int ModificacionID { get; set; }

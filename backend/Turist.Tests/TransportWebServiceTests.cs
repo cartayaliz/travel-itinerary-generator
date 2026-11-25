@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Turist.Domain.Graph;
 using Turist.Domain.Interfaces.Repositories;
 using Turist.Domain.Models;
@@ -5,7 +6,6 @@ using Turist.Services.TransportWeb;
 
 namespace Turist.Tests;
 
-bool
 public class TransportWebServiceTests
 {
     private class FakeItinerarioRepository : IItinerarioRepository
@@ -83,6 +83,30 @@ public class TransportWebServiceTests
                 )
             );
         }
+
+          public Task<Itinerario?> GetByIdWithValidacionesAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Nuevo: itinerarios de un turista con sus paradas ordenadas
+        public Task<IEnumerable<Itinerario>> GetByTuristaIdWithParadasOrderedAsync(int turistaId)
+        {
+            var itinerarios = _itinerarios
+                .Where(i => i.ItinerarioTuristas != null &&
+                            i.ItinerarioTuristas.Any(t => t.TuristaID == turistaId))
+                .ToList();
+
+            foreach (var itinerario in itinerarios)
+            {
+                itinerario.ItinerarioParadas = itinerario.ItinerarioParadas
+                    .OrderBy(p => p.Orden)
+                    .ToList();
+            }
+
+            return Task.FromResult<IEnumerable<Itinerario>>(itinerarios);
+        }
+
     }
 
     private class FakeParadaRepository : IParadaRepository
@@ -149,7 +173,7 @@ public class TransportWebServiceTests
     }
 
     [Fact]
-    public void LoadGraph_CreaAristasParaParesConsecutivosDentroDeRadio()
+    public async Task LoadGraph_CreaAristasParaParesConsecutivosDentroDeRadio()
     {
         // Arrange
         var parada1 = CreateAtraccion(1, "Plaza", 23.135, -82.358);
@@ -176,7 +200,7 @@ public class TransportWebServiceTests
         );
 
         // Act
-        service.LoadAsync().GetAwaiter().GetResult();
+        await service.LoadAsync();
 
         // Assert - graph should have nodes and edges
         // We can't access private _graph directly, but we can test via ProposeAlternatives behavior
@@ -186,7 +210,7 @@ public class TransportWebServiceTests
     }
 
     [Fact]
-    public void LoadGraph_NoCreaAristaSiFueraDeRadio()
+    public async Task LoadGraph_NoCreaAristaSiFueraDeRadio()
     {
         // Arrange - paradas muy lejos
         var parada1 = CreateAtraccion(1, "Madrid", 40.4168, -3.7038);
@@ -213,8 +237,7 @@ public class TransportWebServiceTests
         );
 
         // Act
-        service.LoadAsync().GetAwaiter().GetResult();
-
+        await service.LoadAsync();
         // Assert - should not create edge, so propose alternatives from 1 to 2 with no direct path?
         // Dijkstra from 1 won't reach 2 if no edge
         var result = service.ProposeAlternatives(1, 1, 2, new Weight(100), _ => true);
@@ -222,7 +245,7 @@ public class TransportWebServiceTests
     }
 
     [Fact]
-    public void ProposeAlternatives_RetornaAlternativasOrdenadasPorPeso()
+    public async Task ProposeAlternatives_RetornaAlternativasOrdenadasPorPeso()
     {
         // Arrange - crear un grafo con origen, destino y alternativas
         var origen = CreateAtraccion(1, "Origen", 23.135, -82.358);
@@ -267,7 +290,7 @@ public class TransportWebServiceTests
         );
 
         // Act
-        service.LoadAsync().GetAwaiter().GetResult();
+        await service.LoadAsync();
 
         // Act
         var alternatives = service.ProposeAlternatives(2, 1, 4, new Weight(100), _ => true);
@@ -281,7 +304,7 @@ public class TransportWebServiceTests
     }
 
     [Fact]
-    public void ProposeAlternatives_FiltraPorFiltro()
+    public async Task ProposeAlternatives_FiltraPorFiltro()
     {
         // Arrange
         var origen = CreateAtraccion(1, "Origen", 23.135, -82.358);
@@ -309,30 +332,12 @@ public class TransportWebServiceTests
             closeRadiusKm: 10.0
         );
 
-        service.LoadAsync().GetAwaiter().GetResult();
+        await service.LoadAsync();
 
         // Act - filtrar para que solo acepte paradas con ID != 2
         var alternatives = service.ProposeAlternatives(5, 1, 4, new Weight(100), p => p.ParadaID != 2);
 
         // Assert
         Assert.DoesNotContain(2, alternatives);
-    }
-
-    [Fact]
-    public Task<IEnumerable<Itinerario>> GetByTuristaIdWithParadasOrderedAsync(int turistaId)
-    {
-        var itinerarios = itinerarios
-            .Where(i => i.ItinerarioTuristas != null &&
-                        i.ItinerarioTuristas.Any(t => t.TuristaID == turistaId))
-            .ToList();
-
-        foreach (var itinerario in itinerarios)
-        {
-            itinerario.ItinerarioParadas = itinerario.ItinerarioParadas
-                .OrderBy(p => p.Orden)
-                .ToList();
-        }
-
-        return Task.FromResult<IEnumerable<Itinerario>>(itinerarios);
     }
 }

@@ -9,4 +9,6 @@ public interface IModificacionRepository
     Task AddAsync(Modificacion modificacion);
     Task UpdateAsync(Modificacion modificacion);
     Task DeleteAsync(Modificacion modificacion);
+    //para que filtre por id
+    Task<IEnumerable<Modificacion>> GetByTuristaIdAsync(int turistaId);
 }

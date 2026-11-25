@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Turist.Services.DTOs.Modificacion;
 using Turist.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Turist.Api.Controllers;
 
@@ -50,17 +52,56 @@ public class ModificacionesController : ControllerBase
         catch (Exception ex) { return NotFound(ex.Message); }
     }
 
-    [HttpPost("solicitar")]
-    public async Task<ActionResult> SolicitarModificacion([FromBody] SolicitarModificacionDto dto)
+    private int ObtenerTuristaId()
+    {
+        var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(id, out var turistaId))
+            throw new UnauthorizedAccessException("No se pudo identificar al turista autenticado.");
+
+        return turistaId;
+    }
+
+    [Authorize(Roles = "Turista")]
+    [HttpGet("mis-solicitudes")]
+    public async Task<ActionResult<IEnumerable<ModificacionResponseDto>>> GetMisSolicitudes()
     {
         try
         {
-            await _service.SolicitarModificacionAsync(dto);
-            return Ok(new { mensaje = "Solicitud de modificación registrada exitosamente" });
+            var turistaId = ObtenerTuristaId();
+            var solicitudes = await _service.GetByTuristaIdAsync(turistaId);
+
+            return Ok(solicitudes);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { mensaje = ex.Message });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(500, new { mensaje = ex.Message });
+        }
+    }
+
+    [Authorize(Roles = "Turista")]
+    [HttpPost("solicitar")]
+    public async Task<ActionResult> Solicitar([FromBody] SolicitarModificacionDto dto)
+    {
+        try
+        {
+            var turistaId = ObtenerTuristaId();
+
+            await _service.SolicitarModificacionAsync(dto, turistaId);
+
+            return Ok(new { mensaje = "Solicitud registrada exitosamente" });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { mensaje = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
         }
     }
 }

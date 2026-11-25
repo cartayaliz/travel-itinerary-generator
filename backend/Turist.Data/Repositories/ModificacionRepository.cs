@@ -40,4 +40,13 @@ public class ModificacionRepository : IModificacionRepository
         _context.Modificaciones.Remove(modificacion);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<Modificacion>> GetByTuristaIdAsync(int turistaId)
+    {
+        return await _context.Modificaciones
+            .AsNoTracking()
+            .Where(m => m.TuristaID == turistaId)
+            .OrderByDescending(m => m.FechaSolicitud)
+            .ToListAsync();
+    }
 }

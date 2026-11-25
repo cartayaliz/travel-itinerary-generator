@@ -4,5 +4,8 @@ namespace Turist.Services.Interfaces;
 
 public interface IModificacionService : ICrudService<ModificacionResponseDto, ModificacionCreateDto>
 {
-    Task SolicitarModificacionAsync(SolicitarModificacionDto dto);
+
+    Task<IEnumerable<ModificacionResponseDto>> GetByTuristaIdAsync(int turistaId);
+
+    Task SolicitarModificacionAsync(SolicitarModificacionDto dto, int turistaId);
 }

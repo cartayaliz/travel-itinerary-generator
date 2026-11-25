@@ -86,22 +86,40 @@ public class ModificacionService : IModificacionService
         if (modificacion == null) throw new Exception("Modificación no encontrada.");
         await _repository.DeleteAsync(modificacion);
     }
-    //=============
+   
+    //nuevo para filtrar por turista id, revisar si las funciones anteriores siguen siendo necesarias
+    public async Task<IEnumerable<ModificacionResponseDto>> GetByTuristaIdAsync(int turistaId)
+    {
+        var modificaciones = await _repository.GetByTuristaIdAsync(turistaId);
+
+        return modificaciones.Select(m => new ModificacionResponseDto(
+            m.ModificacionID,
+            m.FechaSolicitud,
+            m.FechaRespuesta,
+            m.Estado,
+            m.Resultado,
+            m.ItinerarioID,
+            m.TuristaID,
+            m.GuiaID
+        ));
+    }
+ //=============
     //Solicita una modificacion de un itinerario por un turista
     //===============
-    public async Task SolicitarModificacionAsync(SolicitarModificacionDto dto)
+    public async Task SolicitarModificacionAsync(SolicitarModificacionDto dto, int turistaId)
     {
-        // Validar que el itinerario existe
+         // Validar que el itinerario existe
         var itinerario = await _itinerarioRepository.GetByIdAsync(dto.ItinerarioID);
+
         if (itinerario == null)
             throw new Exception("Itinerario no encontrado.");
 
-        // Validar que el turista esté asignado al itinerario 
-        var turistaAsignado = await _itinerarioRepository.IsTuristaAssignedAsync(dto.ItinerarioID, dto.TuristaID);
+        var turistaAsignado = await _itinerarioRepository
+            .IsTuristaAssignedAsync(dto.ItinerarioID, turistaId);
+ // Validar que el turista esté asignado al itinerario 
         if (!turistaAsignado)
             throw new Exception("El turista no está asignado a este itinerario.");
-
-        // Crear la Modificación
+  // Crear la Modificación
         var modificacion = new Modificacion
         {
             FechaSolicitud = DateTime.UtcNow,
@@ -109,7 +127,7 @@ public class ModificacionService : IModificacionService
             Estado = EstadoModificacion.Pendiente, // <-- Siempre empieza Pendiente
             Resultado = dto.Motivo,
             ItinerarioID = dto.ItinerarioID,
-            TuristaID = dto.TuristaID,
+            TuristaID = turistaId,
             GuiaID = dto.GuiaID // Puede ser null si no pide apoyo
         };
 
