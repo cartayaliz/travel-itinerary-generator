@@ -16,7 +16,7 @@ function AppRouter() {
       {/* Si la ruta es /, redirige automáticamente a Home */}
      <Route path="/" element={<Home/>} />
 
-      {/* Cuando la ruta sea /login, muestra el componente Login */}
+     
      <Route path="/login" element={<Login />} />
       
      <Route path="/register" element={<Register/>} />

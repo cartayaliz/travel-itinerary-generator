@@ -63,16 +63,18 @@
   
   /* Sección del guía */
   .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Alinea por arriba el título y el grupo de botones */
+  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+}
   
   .section-header h2 {
     margin: 0;
     font-size: 1.3rem;
     color: #374151;
+    flex-shrink: 0;
   }
   
   .itinerary-list {
@@ -102,7 +104,12 @@
     color: #6b7280;
     font-size: 0.9rem;
   }
-  
+  .itinerary-top-btn {
+    flex: 1;
+  width: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
   .status {
     padding: 0.3rem 0.8rem;
     border-radius: 12px;
@@ -155,7 +162,31 @@
   transform: scale(1.1); /* Se hace un poquito más grande */
 }
 .active-link {
-  background-color: #764ba2; /* El color morado */
+  background-color: #764ba2; 
   color: white !important;
   border-radius: 6px;
+}
+
+/* Estilo para el botón de exportar con solo el ícono */
+.btn-export-icon {
+  background-color: transparent;
+  color: #5a3286;
+  border: 1px solid #cac6c6;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+  flex-shrink: 0;
+  filter: contrast(1.25) brightness(0.85);
+}
+
+.btn-export-icon:hover {
+  background-color: #f0f0f0; /* Fondo gris suave al pasar el ratón */
+  border-color: #764ba2;
 }

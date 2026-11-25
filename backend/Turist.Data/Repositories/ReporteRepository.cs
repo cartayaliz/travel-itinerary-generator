@@ -99,21 +99,27 @@ public class ReporteRepository : IReporteRepository
     public async Task<IEnumerable<ReporteSatisfaccion>> GetSatisfaccionPorEsfuerzoAsync()
     {
         return await _context.Valoraciones
-            // Navegamos desde Valoración hasta la Parada a través de la Visita
-            .Include(v => v.Visita)
-                .ThenInclude(vis => vis!.Parada)
-            // Solo consideramos valoraciones asociadas a una Visita cuya Parada sea una Actividad
-            .Where(v => v.Visita != null && v.Visita.Parada is Actividad)
-            // Agrupamos por el nivel de esfuerzo
-            .GroupBy(v => ((Actividad)v.Visita!.Parada).NivelEsfuerzo)
-            // Calculamos el promedio de puntuación y el total de valoraciones por grupo
-            .Select(g => new ReporteSatisfaccion
-            {
-                Esfuerzo = g.Key.ToString(),
-                Promedio = g.Average(v => (double)v.Puntuacion),
-                Total = g.Count()
-            })
-            .ToListAsync();
+        .Where(v => v.Visita != null && v.Visita.Parada is Actividad)
+        .Select(v => new
+        {
+            Actividad = (Actividad)v.Visita!.Parada!,
+            v.Puntuacion
+        })
+        // Agrupamos por Id, Nombre y NivelEsfuerzo para obtener métricas por cada actividad
+        .GroupBy(x => new
+        {
+            x.Actividad.ParadaID, 
+            x.Actividad.Nombre,
+            x.Actividad.NivelEsfuerzo
+        })
+        .Select(g => new ReporteSatisfaccion
+        {
+            NombreActividad = g.Key.Nombre,
+            Esfuerzo = g.Key.NivelEsfuerzo.ToString(),
+            Promedio = g.Average(x => (double)x.Puntuacion),
+            Total = g.Count()
+        })
+        .ToListAsync();
     }
 
     /// <summary>
