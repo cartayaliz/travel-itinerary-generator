@@ -2,9 +2,9 @@ using Turist.Domain.Distances;
 using Turist.Domain.Graph;
 using Turist.Domain.Models;
 using Turist.Domain.Interfaces.Repositories;
-using Turist.Domain.Interfaces.Services;
+using Turist.Services.Interfaces;
 
-namespace Turist.Services.TransportWeb;
+namespace Turist.Services.Services;
 
 public class TransportWebService : ITransportWebService
 {
@@ -99,7 +99,7 @@ public class TransportWebService : ITransportWebService
                 || !filterStop(paradaAlt)
                 || !fDijkstra.hasDistance.TryGetValue(id, out var fd)
                 || !fd
-                || bDijkstra.hasDistance.TryGetValue(id, out var bd)
+                || !bDijkstra.hasDistance.TryGetValue(id, out var bd)
                 || !bd
                 || !fDijkstra.distances.TryGetValue(id, out var fWeight)
                 || !bDijkstra.distances.TryGetValue(id, out var bWeight))
@@ -134,5 +134,31 @@ public class TransportWebService : ITransportWebService
                 && _paradasById.ContainsKey(originId)
                 && _paradasById.ContainsKey(destinationId);
         }
+    }
+    public bool TryGetParada(int paradaId, out Parada parada)
+    => _paradasById.TryGetValue(paradaId, out parada!);
+
+    public IEnumerable<int> GetGraphNodeIds()
+        => _graph.Nodes;
+
+    public bool TryGetShortestWeight(int fromParadaId, int toParadaId, out Weight weight)
+    {
+        weight = Weight.AdditiveIdentity;
+
+        if (fromParadaId == toParadaId)
+            return true;
+
+        if (!_graph.ContainsNode(fromParadaId) || !_graph.ContainsNode(toParadaId))
+            return false;
+
+        var dijkstra = _graph.Dijkstra(fromParadaId);
+        if (!dijkstra.hasDistance.TryGetValue(toParadaId, out bool reachable) || !reachable)
+            return false;
+
+        if (!dijkstra.distances.TryGetValue(toParadaId, out Weight dist))
+            return false;
+
+        weight = dist;
+        return true;
     }
 }

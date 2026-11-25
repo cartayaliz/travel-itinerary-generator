@@ -54,7 +54,7 @@ public class WeightedGraph<TWeight> where TWeight :
         }
     }
 
-    public void AddNode(int node) => _adj[node] = [];
+    public void AddNode(int node) => _adj.TryAdd(node, []);
 
     public void RemoveNode(int node)
     {
@@ -67,14 +67,36 @@ public class WeightedGraph<TWeight> where TWeight :
 
     public bool ContainsNode(int node) => _adj.ContainsKey(node);
 
-    public void AddEdge(int from, int to, TWeight weight) => _adj[from].Add((to, weight));
+    public void AddEdge(int from, int to, TWeight weight)
+    {
+        _adj.TryAdd(from, []);
+        _adj.TryAdd(to, []);
 
-    public void RemoveEdge(int from, int to) => _adj[from].RemoveAll(n => n.to == to);
+        var neighbors = _adj[from];
+        for (int i = 0; i < neighbors.Count; i++)
+        {
+            if (neighbors[i].to == to)
+            {
+                // Conserva el menor peso si ya existe la arista
+                if (weight.CompareTo(neighbors[i].weight) < 0)
+                    neighbors[i] = (to, weight);
+                return;
+            }
+        }
+
+        neighbors.Add((to, weight));
+    }
+
+    public void RemoveEdge(int from, int to)
+    {
+        if (_adj.TryGetValue(from, out var neighbors))
+        neighbors.RemoveAll(n => n.to == to);
+    }
 
     public bool ContainsEdge(int from, int to) 
         => _adj.TryGetValue(from, out var neighbors) && neighbors.Any(n => n.to == to);
 
-    public IEnumerable<(int to, TWeight weight)> GetNeighbors(int from) => _adj[from];
+    public IEnumerable<(int to, TWeight weight)> GetNeighbors(int from) => _adj.TryGetValue(from, out var neighbors) ? neighbors : [];
 
     public TWeight? GetWeight(int from, int to) => _adj[from].FirstOrDefault(e => e.to == to).weight;
 
@@ -133,3 +155,25 @@ public class WeightedGraph<TWeight> where TWeight :
         }
     }
 }
+public static class DistanceCalculator
+    {
+        private const double EarthRadiusKm = 6371.0;
+
+        public static double ShorterDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            double dLat = DegreesToRadians(lat2 - lat1);
+            double dLon = DegreesToRadians(lon2 - lon1);
+
+            double rLat1 = DegreesToRadians(lat1);
+            double rLat2 = DegreesToRadians(lat2);
+
+            double a = Math.Pow(Math.Sin(dLat / 2), 2) +
+                    Math.Cos(rLat1) * Math.Cos(rLat2) *
+                    Math.Pow(Math.Sin(dLon / 2), 2);
+
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            return EarthRadiusKm * c;
+        }
+
+        private static double DegreesToRadians(double degrees) => degrees * Math.PI / 180.0;
+    }
