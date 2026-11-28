@@ -1,7 +1,7 @@
 using Turist.Domain.Graph;
 using Turist.Domain.Models;
 
-namespace Turist.Domain.Interfaces.Services;
+namespace Turist.Services.Interfaces;
 
 public interface ITransportWebService
 {
@@ -12,5 +12,7 @@ public interface ITransportWebService
         int destinationId,
         Weight maxWeight,
         Func<Parada, bool> filterStop);
-
+    bool TryGetParada(int paradaId, out Parada parada);
+    bool TryGetShortestWeight(int fromParadaId, int toParadaId, out Weight weight);
+    IEnumerable<int> GetGraphNodeIds();
 }

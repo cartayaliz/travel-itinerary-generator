@@ -78,6 +78,15 @@ builder.Services.AddScoped<IValoracionService, ValoracionService>();
 builder.Services.AddScoped<IItineraryGenerationStrategy, CriteriosItineraryGenerationStrategy>();
 builder.Services.AddScoped<IReporteService, ReporteService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ITransportWebService>(sp =>
+{
+    var itinerarioRepo = sp.GetRequiredService<IItinerarioRepository>();
+    var paradaRepo = sp.GetRequiredService<IParadaRepository>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    double closeRadiusKm = configuration.GetValue<double?>("TransportGraph:CloseRadiusKm") ?? 5.0;
+
+    return new TransportWebService(itinerarioRepo, paradaRepo, closeRadiusKm);
+});
 
 // 6. Configurar CORS para permitir peticiones desde React (Vite)
 builder.Services.AddCors(options =>
